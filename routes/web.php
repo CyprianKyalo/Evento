@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Auth::routes();
@@ -26,16 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Verifying Email
 Route::get('/verify', [App\Http\Controllers\Auth\RegisterController::class, 'verifyUser'])->name('verify.user');
 
-//Forgot Password
-// Route::get('/forgot-password', function () {
-// 	return view('auth.passwords.reset');
-// })->middleware('guest')->name('password.request');
-
-
-
-
-
-Route::get('/test-email', [App\Http\Controllers\MailController::class, 'sendSignupEmail'])->name('test-email');
+//Route::get('/test-email', [App\Http\Controllers\MailController::class, 'sendSignupEmail'])->name('test-email');
 
 //Email Verification notice
 Route::get('/email/verify', function () {
