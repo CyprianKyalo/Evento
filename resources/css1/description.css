@@ -1,0 +1,32 @@
+.description {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.description li {
+    list-style: none;
+    line-height: 25px;
+}
+
+.description-buttons {
+    display: inline-block;
+    width: 20%;
+    margin-left: 0;
+}
+
+.user-description {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.user-description figcaption {
+    margin: 40px 0 0 20px;
+}
+
+.user-description img {
+    border-radius: 50%;
+}
+
+#item-image {
+    margin-bottom: 20px;
+}
