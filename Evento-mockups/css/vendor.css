@@ -1,0 +1,10 @@
+#vendor-item-description {
+    border: 1px solid #ccc;
+    margin-left: 10px;
+}
+
+.vendor-buttons {
+    display: inline-block;
+    width: 20%;
+    margin-left: 9px;
+}
