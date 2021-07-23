@@ -22,11 +22,15 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
+        
+
         return view('home');
     }
 
-    public function personal_details() {
-        return view('profile');
+    public function personal_details($id) {
+        $users = User::findOrFail($id);
+
+        return view('profile')->withUser($user);
     }
 
     public function activity() {

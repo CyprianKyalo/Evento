@@ -13,19 +13,9 @@
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-eval("__webpack_require__(/*! ./bootstrap */ \"./resources/js/bootstrap.js\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvYXBwLmpzPzZkNDAiXSwibmFtZXMiOlsicmVxdWlyZSJdLCJtYXBwaW5ncyI6IkFBQUFBLG1CQUFPLENBQUMsZ0RBQUQsQ0FBUCIsImZpbGUiOiIuL3Jlc291cmNlcy9qcy9hcHAuanMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJyZXF1aXJlKCcuL2Jvb3RzdHJhcCcpO1xuIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/js/app.js\n");
-
-/***/ }),
-
-/***/ "./resources/js/bootstrap.js":
-/*!***********************************!*\
-  !*** ./resources/js/bootstrap.js ***!
-  \***********************************/
 /***/ (() => {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: [BABEL] C:\\laragon\\www\\Evento\\resources\\js\\bootstrap.js: Cannot find module '@babel/code-frame'\nRequire stack:\n- C:\\laragon\\www\\Evento\\node_modules\\@babel\\traverse\\lib\\path\\replacement.js\n- C:\\laragon\\www\\Evento\\node_modules\\@babel\\traverse\\lib\\path\\index.js\n- C:\\laragon\\www\\Evento\\node_modules\\@babel\\traverse\\lib\\context.js\n- C:\\laragon\\www\\Evento\\node_modules\\@babel\\traverse\\lib\\index.js\n- C:\\laragon\\www\\Evento\\node_modules\\@babel\\core\\lib\\index.js\n- C:\\laragon\\www\\Evento\\node_modules\\laravel-mix\\src\\FileCollection.js\n- C:\\laragon\\www\\Evento\\node_modules\\laravel-mix\\src\\tasks\\ConcatenateFilesTask.js\n- C:\\laragon\\www\\Evento\\node_modules\\laravel-mix\\src\\components\\Combine.js\n- C:\\laragon\\www\\Evento\\node_modules\\laravel-mix\\src\\components\\ComponentRegistrar.js\n- C:\\laragon\\www\\Evento\\node_modules\\laravel-mix\\src\\Mix.js\n- C:\\laragon\\www\\Evento\\node_modules\\laravel-mix\\setup\\webpack.config.js\n- C:\\laragon\\www\\Evento\\node_modules\\webpack-cli\\lib\\webpack-cli.js\n- C:\\laragon\\www\\Evento\\node_modules\\webpack-cli\\lib\\bootstrap.js\n- C:\\laragon\\www\\Evento\\node_modules\\webpack-cli\\bin\\cli.js\n- C:\\laragon\\www\\Evento\\node_modules\\webpack\\bin\\webpack.js\n    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:880:15)\n    at Function.Module._load (internal/modules/cjs/loader.js:725:27)\n    at Module.require (internal/modules/cjs/loader.js:952:19)\n    at require (C:\\laragon\\www\\Evento\\node_modules\\v8-compile-cache\\v8-compile-cache.js:159:20)\n    at Object.<anonymous> (C:\\laragon\\www\\Evento\\node_modules\\@babel\\traverse\\lib\\path\\replacement.js:13:18)\n    at Module._compile (C:\\laragon\\www\\Evento\\node_modules\\v8-compile-cache\\v8-compile-cache.js:192:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n    at Module.load (internal/modules/cjs/loader.js:928:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:769:14)\n    at Module.require (internal/modules/cjs/loader.js:952:19)");
+eval("// require('./bootstrap');//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvYXBwLmpzPzZkNDAiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEiLCJzb3VyY2VzQ29udGVudCI6WyIvLyByZXF1aXJlKCcuL2Jvb3RzdHJhcCcpO1xuIl0sImZpbGUiOiIuL3Jlc291cmNlcy9qcy9hcHAuanMuanMiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/js/app.js\n");
 
 /***/ }),
 

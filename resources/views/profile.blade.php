@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,14 +162,17 @@
         <article>
             <section id="profile-activity">
                 <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img">
-                <form action="">
-                    <input type="text" placeholder="Username">
-                    <input type="text" placeholder="Email">
-                    <input type="text" placeholder="Password">
+                <form action="{{route('update', $user->id)}}">
+                    {{method_field('PUT')}}
+                    {{csrf_field()}}
+                    <input type="text" placeholder="Username" value="{{$user->name}}">
+                    <input type="text" placeholder="Email" value="{{$user->email}}">
+                    <input type="text" placeholder="Password" value="{{$user->password}}">
                     <input type="text" placeholder="First Name">
                     <input type="text" placeholder="Last Name">
                     <label for="profile" style="margin: 10px;">Profile Picture</label>
                     <input type="file" name="profile" id="">
+                    <button id="profile-button">Update Profile</button>
                     <input type="button" value="Update Profile" id="profile-button">
                 </form>
             </section>
