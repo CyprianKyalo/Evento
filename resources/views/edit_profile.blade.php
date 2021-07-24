@@ -133,48 +133,20 @@
             width: 577px;
             color: #fff;
             background-color: #000;
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+        }
+
+        #profile-button:hover {
+            color: #000;
+            background-color: #fff;
         }
 
         #profile-activity {
             display: flex;
             padding: 20px;
             width: 90%;
-        }
-
-        /* equipments and services */
-        #item-equipment {
-            display: flex;
-            flex-wrap: wrap;
-            padding-top: 80px;
-        }
-
-        .card-link {
-            text-decoration: none;
-            width: 30%;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .card {
-            border: 1px solid #ccc;
-            width: 100%;
-            text-align: center;
-        }
-
-        .card:hover {
-            border: 1px solid #000;
-        }
-
-        .card ul {
-            padding: 0;
-            display: inline-block;
-        }
-
-        .card ul li {
-            list-style: none;
-            display: block;
-            padding: 10px;
-            color: #000;
         }
     </style>
 </head>
@@ -185,6 +157,17 @@
         </ul>
     </header>
     <main>
+        @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+        <br>
+        @endif
+
         <aside>
             <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
             <ul id="aside-navigation">
@@ -195,31 +178,22 @@
             </ul>
         </aside>
         <article>
-            <section id="item-equipment">
-                <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
-                <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
-                <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
+            <section id="profile-activity">
+                <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img">
+                <form action="{{route('update_profile')}}" method="POST">
+                    {{method_field('PUT')}}
+                    {{csrf_field()}}
+                    <input type="text" placeholder="Username" name="name" value="{{$user->name}}">
+                    
+                    <input type="text" placeholder="Email" name="email" value="{{$user->email}}">
+                    <input type="text" placeholder="Password">
+                    <input type="text" placeholder="First Name">
+                    <input type="text" placeholder="Last Name">
+                    <label for="profile" style="margin: 10px;">Profile Picture</label>
+                    <input type="file" name="profile" id="">
+                    <button id="profile-button">Update Profile</button>
+                    
+                </form>
             </section>
         </article>
     </main>

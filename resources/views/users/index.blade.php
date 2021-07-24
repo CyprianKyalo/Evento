@@ -2,6 +2,14 @@
 
 @section('content') 
 <div class="flex-container">
+	<div class="col-sm-12">
+		@if(session()->get('success'))
+		<div class="alert alert-success">
+			{{session()->get('success')}}
+		</div>
+		@endif
+	</div>
+
 	<div class="columns m-t-10">
 		<div class="column">
 			<h1 class="title">Manage Users</h1>
@@ -23,7 +31,7 @@
 		</thead>
 
 		<tbody>
-			@foreach ($user as $user)
+			@foreach ($users as $user)
 			<tr>
 				<th>{{$user->id}}</th>
 				<td>{{$user->name}}</td>

@@ -1,3 +1,49 @@
+{{-- @extends('layouts.app')
+
+@section('content')
+
+<div class="row">
+	<div class="col-sm-8 offset-sm-2">
+		<h1 class="display-3">Update your profile</h1>
+
+		@if($errors->any())
+		<div class="alert alert-danger">
+			<ul>
+				@foreach($errors->all() as $error)
+				<li>{{$error}}</li>
+				@endforeach
+			</ul>
+		</div>
+		<br>
+		@endif
+
+		<form action="{{route('users.update', $user->id)}}">
+			@method('PATCH')
+			@csrf
+
+			<div class="form-group">
+				<label for="name">Name:</label>
+				<input type="text" class="form-control" name="name" value="{{$user->name}}">
+			</div>
+
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input type="text" class="form-control" name="email" value="{{$user->email}}">
+			</div>
+
+			<div class="form-group">
+				<label for="profile-photo">Photo:</label>
+				<input type="text" class="form-control" name="profile-photo">
+			</div>
+
+			<button class="btn btn-primary">Update Profile</button>
+
+		</form>
+	</div>
+</div>
+
+@endsection() --}}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -157,10 +203,23 @@
         </ul>
     </header>
     <main>
+    	@if($errors->any())
+		<div class="alert alert-danger">
+			<ul>
+				@foreach($errors->all() as $error)
+				<li>{{$error}}</li>
+				@endforeach
+			</ul>
+		</div>
+		<br>
+		@endif
+
+
+
         <aside>
             <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
             <ul id="aside-navigation">
-                <li><a href="{{route('profile')}}" class="user-navigation">Profile</a></li>
+                <li><a href="{{route('users.index')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
                 <li><a href="{{route('equipment')}}" class="user-navigation">Equipment</a></li>
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
@@ -172,9 +231,9 @@
                 <form action="{{route('users.update', $user->id)}}" method="POST">
                     {{method_field('PUT')}}
                     {{csrf_field()}}
-                    <input type="text" placeholder="Username" value="{{$user->name}}">
+                    <input type="text" placeholder="Name" name="name" value="{{$user->name}}">
                     
-                    <input type="text" placeholder="Email" value="{{$user->email}}">
+                    <input type="text" placeholder="Email" name="email" value="{{$user->email}}">
                     <input type="text" placeholder="Password">
                     <input type="text" placeholder="First Name">
                     <input type="text" placeholder="Last Name">
@@ -182,7 +241,7 @@
                     <input type="file" name="profile" id="">
                     <button id="profile-button">Update Profile</button>
                     
-                    <input type="button" value="Update Profile" id="profile-button">
+                    
                 </form>
             </section>
         </article>

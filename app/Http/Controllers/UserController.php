@@ -18,7 +18,9 @@ class UserController extends Controller
     {
         // $users = User::all();
         // return view('users.index')->withUser($users);
-        
+        $users = User::all();
+
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -63,9 +65,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
 
-        return view('users.profile')->withUser($user);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -79,19 +81,20 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255',
-            'email' => 'required|email|unique:users, email,'.$id
+            'email' => 'required'
         ]);
 
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->bcrypt(password);
+        $user = User::find($id);
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        //$user->password = $request->bcrypt(password);
 
         if($user->save()) {
-            return redirect()->route('users.show', $id);
+            return redirect('/users')->with('success', 'User profile updated successfully!');
         } else {
             Session::flash('error', 'There was an problem saving the updated user info to the database. Please Try Again!');
-            return redirect()->route('users.index', $id);
+
+            return redirect()->route('users/edit', $id);
         }
 
     }
@@ -104,6 +107,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect('/users')->with('success', 'User profile deleted!');
     }
 }
