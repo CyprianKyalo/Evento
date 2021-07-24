@@ -36,12 +36,12 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
     	return view('index');
 	});
 
-	Route::get('/profile', [App\Http\Controllers\HomeController::class, 'personal_details'])->name('personal_details');
+	Route::get('/profile', [App\Http\Controllers\UserController::class, 'index'])->name('profile');
 	Route::get('/activity', [App\Http\Controllers\HomeController::class, 'activity'])->name('activity');
 	Route::get('/services', [App\Http\Controllers\HomeController::class, 'services'])->name('services');
 	Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'vendor'])->name('vendor');
 	Route::get('/description', [App\Http\Controllers\HomeController::class, 'description'])->name('description');
-	Route::get('/equipment', [App\Http\Controllers\HomeController::class, 'personal_details'])->name('equipment');
+	Route::get('/equipment', [App\Http\Controllers\HomeController::class, 'equipment'])->name('equipment');
 
 	Route::resource('/users', 'App\Http\Controllers\UserController');
 

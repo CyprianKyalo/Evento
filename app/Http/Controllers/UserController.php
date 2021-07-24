@@ -16,8 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index')->withUser($users);
+        // $users = User::all();
+        // return view('users.index')->withUser($users);
+        
     }
 
     /**
@@ -49,9 +50,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        // $user = User::findOrFail($id);
 
-        return view('users.profile')->withUser($user);
+        // return view('users.profile')->withUser($user);
     }
 
     /**

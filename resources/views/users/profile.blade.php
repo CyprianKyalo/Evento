@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,48 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evento | Landing</title>
-    {{-- <link rel="stylesheet" href="{{asset('css1/styles.css')}}" rel="stylesheet"> --}}
-    <style type="text/css">
-        .profile-img {
-            border-radius: 50%;
-        }
-
-        .profile-aside-img {
-            margin-bottom: 20px;
-        }
-
-        .profile-article-img {
-            height: 150px;
-            width: 150px;
-            margin-top: 25px;
-            margin-right: 15px;
-        }
-
-        input {
-            display: block;
-            padding: 15px;
-            margin: 10px;
-            width: 545px;
-            border: 1px solid #ccc;
-        }
-
-        form {
-            width: 600px;
-            margin: 20px;
-        }
-
-        #profile-button {
-            width: 577px;
-            color: #fff;
-            background-color: #000;
-        }
-
-        #profile-activity {
-            display: flex;
-            padding: 20px;
-            width: 90%;
-        }
-
+    <style>
+        /* general styling */
         * {
             margin: 0;
         }
@@ -141,6 +99,55 @@
             color: #000;
             background-color: #fff;
         }
+
+        /* profile */
+        .profile-img {
+            border-radius: 50%;
+        }
+
+        .profile-aside-img {
+            margin-bottom: 20px;
+        }
+
+        .profile-article-img {
+            height: 150px;
+            width: 150px;
+            margin-top: 25px;
+            margin-right: 15px;
+        }
+
+        input {
+            display: block;
+            padding: 15px;
+            margin: 10px;
+            width: 545px;
+            border: 1px solid #ccc;
+        }
+
+        form {
+            width: 600px;
+            margin: 20px;
+        }
+
+        #profile-button {
+            width: 577px;
+            color: #fff;
+            background-color: #000;
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+        }
+
+        #profile-button:hover {
+            color: #000;
+            background-color: #fff;
+        }
+
+        #profile-activity {
+            display: flex;
+            padding: 20px;
+            width: 90%;
+        }
     </style>
 </head>
 <body>
@@ -153,9 +160,9 @@
         <aside>
             <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
             <ul id="aside-navigation">
-                <li><a href="{{route('personal_details')}}" class="user-navigation">Profile</a></li>
+                <li><a href="{{route('profile')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
-                <li><a href="{{route('equipment')}}" class="user-navigation">Equipments</a></li>
+                <li><a href="{{route('equipment')}}" class="user-navigation">Equipment</a></li>
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
             </ul>
         </aside>
