@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth']);
     }
 
     /**
@@ -22,16 +22,12 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
-        
-
         return view('home');
     }
 
-    // public function personal_details($id) {
-    //     //$users = User::findOrFail($id);
-
-    //     return view('profile');
-    // }
+    public function personal_details() {
+        return view('profile');
+    }
 
     public function activity() {
         return view('activity');

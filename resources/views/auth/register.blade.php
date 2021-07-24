@@ -11,10 +11,10 @@
                         <p class="alert alert-{{$msg}}">{{Session::get('alert-'. $msg)}} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
                     @endif
                 @endforeach
-            </div>    
+            </div>                        
 
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header align-items-sm-end">{{ __('Register') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">

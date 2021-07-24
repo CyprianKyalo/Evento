@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\MailController;
 
 class RegisterController extends Controller
 {
@@ -62,12 +64,45 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+    // protected function create(array $data)
+    // {
+    //     return User::create([
+    //         'name' => $data['name'],
+    //         'email' => $data['email'],
+    //         'password' => Hash::make($data['password']),
+    //     ]);
+    // }
+
+    public function register(Request $request) {
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->verification_code = sha1(time());
+        $user->save();
+
+        if ($user != null) {
+            //Send Email
+            MailController::sendSignupEmail($user->name, $user->email, $user->verification_code);
+            //Show a message
+            return redirect()->back()->with(session()->flash('alert-success', 'Your account has been created. Please check your email for the verification link'));
+        }
+
+        //if user is not created, show error message
+        return redirect()->back()->with(session()->flash('alert-danger', 'Something went wrong! Please register again'));
+    }
+
+    public function verifyUser(Request $request) {
+        $verification_code = \Illuminate\Support\Facades\Request::get('code');
+        $user = User::where(['verification_code' => $verification_code])->first();
+
+        if ($user != null) {
+            $user->is_verified = 1;
+            $user->save();
+
+            return redirect()->route('login')->with(session()->flash('alert-success', 'Your account is verified. Please login!'));
+        }
+
+        return redirect()->route('register')->with(session()->flash('alert-danger', 'Invalid verification code!'));
     }
 }
