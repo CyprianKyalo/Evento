@@ -27,11 +27,11 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function personal_details($id) {
-        $users = User::findOrFail($id);
+    // public function personal_details($id) {
+    //     //$users = User::findOrFail($id);
 
-        return view('profile')->withUser($user);
-    }
+    //     return view('profile');
+    // }
 
     public function activity() {
         return view('activity');

@@ -43,4 +43,6 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::get('/description', [App\Http\Controllers\HomeController::class, 'description'])->name('description');
 	Route::get('/equipment', [App\Http\Controllers\HomeController::class, 'personal_details'])->name('equipment');
 
+	Route::resource('/users', 'App\Http\Controllers\UserController');
+
 });

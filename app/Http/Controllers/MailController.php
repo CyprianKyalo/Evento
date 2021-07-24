@@ -13,6 +13,7 @@ class MailController extends Controller
     		'name' => $name,
     		'verification_code' => $verification_code
     	];
+    	
     	Mail::to($email)->send(new SignupEmail($data));
     }
 }
