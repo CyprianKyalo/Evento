@@ -46,3 +46,6 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::resource('/users', 'App\Http\Controllers\UserController');
 
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
