@@ -190,13 +190,13 @@
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
-                <li><a href="{{route('equipment')}}" class="user-navigation">Equipment</a></li>
+                <li><a href="{{route('products.index')}}" class="user-navigation">Equipment</a></li>
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
             </ul>
         </aside>
         <article>
             <section id="item-equipment">
-                <a href="{{route('description')}}" class="card-link">
+                <a href="{{route('products.show', $product->id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span class="card-info-labels">Service:</span> name</li>
@@ -204,7 +204,7 @@
                         </ul>
                     </div>
                 </a>
-                <a href="{{route('description')}}" class="card-link">
+                {{-- <a href="{{route('description')}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span class="card-info-labels">Service:</span> name</li>
@@ -212,14 +212,14 @@
                         </ul>
                     </div>
                 </a>
-                <a href="{{route('description')}}" class="card-link">
+                <a href="{{route('descript ion')}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span class="card-info-labels">Service:</span> name</li>
                             <li><span class="card-info-labels">Vendor:</span> username</li>
                         </ul>
                     </div>
-                </a>
+                </a> --}}
             </section>
         </article>
     </main>

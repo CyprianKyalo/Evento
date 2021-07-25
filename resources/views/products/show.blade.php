@@ -191,7 +191,7 @@
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
-                <li><a href="{{route('equipment')}}" class="user-navigation">Equipment</a></li>
+                <li><a href="{{route('products.index')}}" class="user-navigation">Equipment</a></li>
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
             </ul>
         </aside>
@@ -204,9 +204,9 @@
             <section id="item-description">
                 <div class="description-container">
                     <ul class="description">
-                        <li>Equipment: name</li>
-                        <li>Decription: description of the equipment or service given by the owner.</li>
-                        <li>Price & Rate: Ksh 25,000 per day/hour</li>
+                        <li>Equipment: {{$product->name}}</li>
+                        <li>Decription: {{$product->description}}</li>
+                        <li>Price & Rate: ${{$product->price}}</li>
                     </ul>
                     <button class="description-buttons">Hire</button>
                     <button class="description-buttons">Buy</button>

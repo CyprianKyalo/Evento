@@ -207,7 +207,7 @@
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
-                <li><a href="{{route('equipment')}}" class="user-navigation">Equipment</a></li>
+                <li><a href="{{route('products.index')}}" class="user-navigation">Equipment</a></li>
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
             </ul>
         </aside>
@@ -224,7 +224,7 @@
             <section id="consumer-items">
                 <form class="vendor-info" action="">
                     <input type="text" placeholder="Item/Service name">
-                    <textarea name="item-description" id="vendor-item-description" cols="65" rows="10" placeholder="description"></textarea>
+                    <textarea name="item-description" id="vendor-item-description" cols="79" rows="10" placeholder="description"></textarea>
                     <label for="profile" style="margin: 10px;">Item/Service Image</label>
                     <input type="file" name="item-service" id="">
                     <button class="vendor-buttons">Hire out</button>

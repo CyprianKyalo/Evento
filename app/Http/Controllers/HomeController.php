@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -59,7 +60,7 @@ class HomeController extends Controller
         if($request->file()) {
             $file_name = time().'_'.$request->file('profile')->getClientOriginalName();
             $file_path = $request->file('profile')->storeAs('profile', $file_name, 'public/uploads');
-            $request->user()->image = $file_path;
+            $user->image = $file_path;
         }
 
         if($user->save()) {
@@ -73,11 +74,16 @@ class HomeController extends Controller
     }
 
     public function activity() {
-        return view('activity');
+        $products = Product::all();
+
+
+        return view('activity', compact('products'));
     }
 
-    public function equipment() {
-        return view('equipment');
+    public function my_products() {
+        $products = Product::all();
+
+        return view('my_products', compact('products'));
     }
 
     public function services() {
@@ -86,9 +92,5 @@ class HomeController extends Controller
 
     public function vendor() {
         return view('vendor');
-    }
-
-    public function description() {
-        return view('description');
     }
 }

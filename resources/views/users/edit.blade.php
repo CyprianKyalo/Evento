@@ -221,7 +221,7 @@
             <ul id="aside-navigation">
                 <li><a href="{{route('users.index')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
-                <li><a href="{{route('equipment')}}" class="user-navigation">Equipment</a></li>
+                <li><a href="{{route('products.index')}}" class="user-navigation">Equipment</a></li>
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
             </ul>
         </aside>

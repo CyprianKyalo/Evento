@@ -133,20 +133,65 @@
             width: 577px;
             color: #fff;
             background-color: #000;
-            padding: 15px;
-            border: 1px solid #ccc;
-            margin-left: 10px;
-        }
-
-        #profile-button:hover {
-            color: #000;
-            background-color: #fff;
         }
 
         #profile-activity {
             display: flex;
             padding: 20px;
             width: 90%;
+        }
+
+        /* consumer */
+        #user-mode-navigations {
+            padding: 30px;
+        }
+
+        #user-mode-navigations ul {
+            padding: 0;
+        }
+
+        #user-mode-navigations ul li {
+            list-style: none;
+            display: inline-block;
+        }
+
+        #user-mode-navigations ul li a {
+            text-decoration: none;
+        }
+
+        article h1 {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        article h3 {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        #consumer-items {
+            display: flex;
+            flex-wrap: wrap;
+            padding-top: 80px;
+        }
+
+        /* vendor */
+        #vendor-item-description {
+            border: 1px solid #ccc;
+            margin-left: 10px;
+        }
+
+        .vendor-buttons {
+            display: inline-block;
+            width: 20%;
+            margin-left: 9px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 0;
+        }
+
+        .vendor-buttons:hover {
+            background-color: #fff;
         }
     </style>
 </head>
@@ -157,17 +202,6 @@
         </ul>
     </header>
     <main>
-        @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-        <br>
-        @endif
-
         <aside>
             <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
             <ul id="aside-navigation">
@@ -178,21 +212,24 @@
             </ul>
         </aside>
         <article>
-            <section id="profile-activity">
-                <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img">
-                <form action="{{route('update_profile')}}" method="POST">
-                    {{method_field('PUT')}}
+            <nav id="user-mode-navigations">
+                <ul>
+                    <li><a href="{{route('activity')}}">Consumer</a></li>
+                    <li>/</li>
+                    <li><a href="{{route('products.create')}}">Vendor</a></li>
+                </ul>
+            </nav>
+            <h1>Welcome to your vendor mode.</h1>
+            <h3>Here's where you can hire out or sell items you have to other customers.</h3>
+            <section id="consumer-items">
+                <form class="vendor-info" action="{{route('products.store')}}" method="POST">
                     {{csrf_field()}}
-                    <input type="text" placeholder="Username" name="name" value="{{$user->name}}">
-                    
-                    <input type="text" placeholder="Email" name="email" value="{{$user->email}}">
-                    <input type="text" placeholder="Password">
-                    <input type="text" placeholder="First Name">
-                    <input type="text" placeholder="Last Name">
-                    <label for="profile" style="margin: 10px;">Profile Picture</label>
-                    <input type="file" name="profile" id="">
-                    <button id="profile-button">Update Profile</button>
-                    
+                    <input type="text" placeholder="Item/Service name" name="name">
+                    <textarea name="item-description" id="vendor-item-description" cols="79" rows="10" placeholder="description" name="description"></textarea>
+                    <label for="profile" style="margin: 10px;">Item/Service Image</label>
+                    <input type="file" name="item-image" id="">
+                    <button class="vendor-buttons">Hire out</button>
+                    <button class="vendor-buttons">Sell</button>
                 </form>
             </section>
         </article>

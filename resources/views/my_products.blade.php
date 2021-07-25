@@ -185,41 +185,28 @@
         </ul>
     </header>
     <main>
+        <h1>Your products</h1>
         <aside>
             <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
-                <li><a href="{{route('equipment')}}" class="user-navigation">Equipment</a></li>
+                <li><a href="{{route('products.index')}}" class="user-navigation">Equipment</a></li>
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
             </ul>
         </aside>
         <article>
             <section id="item-equipment">
-                <a href="{{route('description')}}" class="card-link">
+                @foreach($products as $product)
+                <a href="{{route('products.show', $product->id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
+                            <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
                             <li><span class="card-info-labels">Vendor:</span> username</li>
                         </ul>
                     </div>
                 </a>
-                <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
-                <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
+                @endforeach
             </section>
         </article>
     </main>

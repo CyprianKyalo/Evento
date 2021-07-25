@@ -244,7 +244,7 @@
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
-                <li><a href="{{route('equipment')}}" class="user-navigation">Equipment</a></li>
+                <li><a href="{{route('products.index')}}" class="user-navigation">Equipment</a></li>
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
             </ul>
         </aside>
@@ -253,13 +253,23 @@
                 <ul>
                     <li><a href="{{route('activity')}}">Consumer</a></li>
                     <li>/</li>
-                    <li><a href="{{route('vendor')}}">Vendor</a></li>
+                    <li><a href="{{route('products.create')}}">Vendor</a></li>
                 </ul>
             </nav>
             <h1>Welcome to your consumer mode.</h1>
             <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3>
             <section id="consumer-items">
-                <a href="{{route('description')}}" class="card-link">
+                @foreach($products as $product)
+                <a href="{{route('products.show', $product->id)}}" class="card-link">
+                    <div class="card equipment">
+                        <ul>
+                            <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
+                            <li><span class="card-info-labels">Vendor:</span> username</li>
+                        </ul>
+                    </div>
+                </a>
+                @endforeach
+                {{-- <a href="{{route('products.show')}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span class="card-info-labels">Equipment:</span> name</li>
@@ -267,22 +277,14 @@
                         </ul>
                     </div>
                 </a>
-                <a href="{{route('description')}}" class="card-link">
+                <a href="{{route('products.show')}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span class="card-info-labels">Equipment:</span> name</li>
                             <li><span class="card-info-labels">Vendor:</span> username</li>
                         </ul>
                     </div>
-                </a>
-                <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
+                </a> --}}
             </section>
         </article>
     </main>
