@@ -234,17 +234,27 @@
             <h1>Welcome to your vendor mode.</h1>
             <h3>Here's where you can hire out or sell items you have to other customers.</h3>
             <section id="consumer-items">
-                <form class="vendor-info" action="{{route('products.store')}}" method="POST">
+                <form class="vendor-info" action="{{route('products.update', $product->id)}}" method="POST">
                     {{csrf_field()}}
-                    <input type="text" placeholder="Item/Service name" name="name">
-                    <textarea name="description" id="vendor-item-description" cols="79" rows="10" placeholder="description" name="description"></textarea>
+                    {{method_field('PUT')}}
+                    <label for="name" style="margin: 10px;">Name of Product</label>
+                    <input type="text" placeholder="Item/Service name" name="name" value="{{$product->name}}">
+                  {{--   <textarea name="description" id="vendor-item-description" cols="79" rows="10" placeholder="description" name="description" value="{{$product->description}}"></textarea> --}}
+                    <label for="description" style="margin: 10px;">Product Description</label>
+                    <input type="text" name="description" value="{{$product->description}}">
 
                     <label for="profile" style="margin: 10px;">Item/Service Image</label>
                     <input type="file" name="item-image" id="">
 
-                    <input type="submit" >
-                    <button class="vendor-buttons">Hire out</button>
-                    <button class="vendor-buttons">Sell</button>
+                    {{-- <input type="submit" > --}}
+                    <button class="vendor-buttons">Update</button>
+
+                    <form action="{{route('products.destroy', $product->id)}}">
+                        {{csrf_field()}}
+                        {{method_field('DELETE')}}
+
+                        <button type="submit" class="vendor-buttons">Delete</button>
+                    </form>
                 </form>
             </section>
         </article>

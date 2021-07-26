@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -57,9 +58,9 @@ class HomeController extends Controller
         $pass = $request->get('password');
         $user->password = bcrypt($pass);
 
-        if($request->file()) {
+        if($request->file('profile')) {
             $file_name = time().'_'.$request->file('profile')->getClientOriginalName();
-            $file_path = $request->file('profile')->storeAs('profile', $file_name, 'public/uploads');
+            $file_path = $request->file('profile')->storeAs('uploads', $file_name, 'public');
             $user->image = $file_path;
         }
 
@@ -81,7 +82,11 @@ class HomeController extends Controller
     }
 
     public function my_products() {
-        $products = Product::all();
+        //$products = Product::all();
+
+        $products = DB::table('products')
+                        ->where('status', '=', 1)
+                        ->get();
 
         return view('my_products', compact('products'));
     }

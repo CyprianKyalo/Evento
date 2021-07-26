@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        // $products = Product::all();
+        $products = DB::table('products')
+                        ->where('status', '=', 1)
+                        ->get();
 
         return view('products.index', compact('products'));
     }
@@ -40,16 +44,26 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'item-image' => 'mimes:png,jpg,jpeg',
+            // 'item-image' => 'mimes:png,jpg,jpeg',
         ]);
 
-        if($request->file()) {
+        $product = new Product;
+
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = 40;
+        $product->status = 1;
+
+        if($request->file('item-image')) {
             $file_name = time().'_'.$request->file('item-image')->getClientOriginalName();
-            $file_path = $request->file('item-image')->storeAs('profile', $file_name, 'public/uploads');
-            $user->image = $file_path;
+            $file_path = $request->file('item-image')->storeAs('uploads', $file_name, 'public');
+
+            $product->image = $file_path;
         }
 
-        if 
+        $product->save();
+        
+        return redirect()->route('my_products')->with('success', 'Product created successfully!');
     }
 
     /**
@@ -61,6 +75,9 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        // //$product = DB::table('products')
+        //                 ->where('status', 1)
+        //                 ->get();
 
         return view('products.show', compact('product'));
     }
@@ -73,7 +90,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -83,9 +102,27 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+
+        ]);
+
+        $product->update($request->all());
+
+        // $product = Product::find($id);
+
+        // $product->name = $request->name;
+        // $product->description = $request->description;
+
+        // $product->update(['name' => $request->name]);
+        // $product->update(['description' => $request->description]);
+
+        // $product->update();
+        return redirect()->route('my_products')->with('success', 'Product updated successfully!');
+
     }
 
     /**
@@ -96,6 +133,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //$product = Product::find($id);
+
+        //$product->update('status' => 0);
+        $product = DB::table('products')
+                        ->where('id', '=', $id)
+                        ->update(['status' => 0]);
+
+        return redirect()->route('my_products')->with('success', 'Product Deleted successfully!');
     }
 }

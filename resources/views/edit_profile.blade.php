@@ -189,8 +189,10 @@
                     <input type="text" placeholder="Password">
                     <input type="text" placeholder="First Name">
                     <input type="text" placeholder="Last Name">
-                    <label for="profile" style="margin: 10px;">Profile Picture</label>
-                    <input type="file" name="profile" id="">
+
+                    <label for="imageprofile" style="margin: 10px;">Profile Picture</label>
+                    <input type="file" name="profile" id="imageprofile">
+                    
                     <button id="profile-button">Update Profile</button>
                     
                 </form>

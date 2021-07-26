@@ -198,7 +198,7 @@
         <article>
             <section id="item-equipment">
                 @foreach($products as $product)
-                <a href="{{route('products.show', $product->id)}}" class="card-link">
+                <a href="{{route('products.edit', $product->id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
