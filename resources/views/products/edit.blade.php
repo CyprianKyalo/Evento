@@ -234,7 +234,7 @@
             <h1>Welcome to your vendor mode.</h1>
             <h3>Here's where you can hire out or sell items you have to other customers.</h3>
             <section id="consumer-items">
-                <form class="vendor-info" action="{{route('products.update', $product->id)}}" method="POST">
+                <form class="vendor-info" action="{{route('products.update', $product->product_id)}}" method="POST">
                     {{csrf_field()}}
                     {{method_field('PUT')}}
                     <label for="name" style="margin: 10px;">Name of Product</label>
@@ -249,7 +249,7 @@
                     {{-- <input type="submit" > --}}
                     <button class="vendor-buttons">Update</button>
 
-                    <form action="{{route('products.destroy', $product->id)}}">
+                    <form action="{{route('products.destroy', $product->product_id)}}">
                         {{csrf_field()}}
                         {{method_field('DELETE')}}
 

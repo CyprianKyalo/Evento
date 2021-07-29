@@ -18,17 +18,23 @@ class UserSeeder extends Seeder
     {
         $users = [
         	[
-        		'name' => 'Admin, Admin',
+        		'first_name' => 'Administrator',
+                'last_name' => 'Admin',
+                'username' => 'Admin',
         		'email' => 'admin@evento.com',
         		'password' => bcrypt('admin'),
         	],
         	[
-        		'name' => 'Job, Weldon',
+        		'first_name' => 'Job',
+                'last_name' => 'Weldon',
+                'username' => 'Jeldy',
         		'email' => 'job@evento.com',
         		'password' => bcrypt('job'),
         	],
         	[
-        		'name' => 'Mark, Jay',
+        		'first_name' => 'Mark',
+                'last_name' => 'Jay',
+                'username' => 'theBeast',
         		'email' => 'mark@evento.com',
         		'password' => bcrypt('mark'),
         	],
@@ -36,7 +42,9 @@ class UserSeeder extends Seeder
 
         foreach ($users as $user) {
         	User::create([
-        		'name' => $user['name'],
+                'first_name' => $user['first_name'],
+                'last_name' => $user['last_name'],
+        		'username' => $user['username'],
         		'email' => $user['email'],
         		'password' => $user['password']
         	]);

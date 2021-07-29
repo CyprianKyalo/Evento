@@ -183,12 +183,12 @@
                 <form action="{{route('update_profile')}}" method="POST">
                     {{method_field('PUT')}}
                     {{csrf_field()}}
-                    <input type="text" placeholder="Username" name="name" value="{{$user->name}}">
+                    <input type="text" placeholder="Username" name="username" value="{{$user->username}}">
                     
                     <input type="text" placeholder="Email" name="email" value="{{$user->email}}">
-                    <input type="text" placeholder="Password">
-                    <input type="text" placeholder="First Name">
-                    <input type="text" placeholder="Last Name">
+                    <input type="text" placeholder="Password" name="password">
+                    <input type="text" placeholder="First Name" name="firstname" value="{{$user->first_name}}">
+                    <input type="text" placeholder="Last Name" name="lastname" value="{{$user->last_name}}">
 
                     <label for="imageprofile" style="margin: 10px;">Profile Picture</label>
                     <input type="file" name="profile" id="imageprofile">

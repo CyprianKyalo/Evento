@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\UserProduct;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -16,8 +18,16 @@ class ProductController extends Controller
     public function index()
     {
         // $products = Product::all();
-        $products = DB::table('products')
-                        ->where('status', '=', 1)
+        // $products = DB::table('products')
+        //                 ->where('status', '=', 1)
+        //                 ->get();
+
+        $products = DB::table('user_products')
+                        ->join('products', 'user_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->select('products.product_id', 'products.name', 'users.username')
+                        ->where('products.status', '=', 1)
+                        ->where('products.category', '=', 'equipment')
                         ->get();
 
         return view('products.index', compact('products'));
@@ -51,8 +61,8 @@ class ProductController extends Controller
 
         $product->name = $request->name;
         $product->description = $request->description;
-        $product->price = 40;
         $product->status = 1;
+        $product->category = "Equipment";
 
         if($request->file('item-image')) {
             $file_name = time().'_'.$request->file('item-image')->getClientOriginalName();
@@ -62,6 +72,19 @@ class ProductController extends Controller
         }
 
         $product->save();
+
+        $product_id = DB::table('products')
+                            ->select('product_id')
+                            ->where('created_at', NOW())
+                            ->value('product_id');
+
+        $userProduct = new UserProduct;
+        $userProduct->user_id = Auth::id();
+        $userProduct->product_id = $product_id;
+        $userProduct->price = 40;
+        $userProduct->status = "ongoing";
+
+        $userProduct->save();
         
         return redirect()->route('my_products')->with('success', 'Product created successfully!');
     }
@@ -72,14 +95,34 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($product_id)
     {
-        $product = Product::find($id);
-        // //$product = DB::table('products')
-        //                 ->where('status', 1)
-        //                 ->get();
+        $product = Product::find($product_id);
 
-        return view('products.show', compact('product'));
+        $user_id = DB::table('user_products')
+                        ->select('user_id')
+                        ->where('product_id', $product_id)
+                        ->value('user_id');
+
+        $price = DB::table('user_products')
+                        ->select('price')
+                        ->where('product_id', $product_id)
+                        ->value('price');
+
+        $username = DB::table('users')
+                        ->select('username')
+                        ->where('id', $user_id)
+                        ->value('username');
+
+        // $product = DB::table('user_products')
+        //                 ->join('products', 'user_products.product_id', '=', 'products.product_id')
+        //                 ->join('users', 'user_products.user_id', '=', 'users.id')
+        //                 ->select('products.product_id', 'products.name', 'products.description', 'users.username')
+                        
+        //                 ->get();
+        
+
+        return view('products.show', compact('product', 'username', 'price'));
     }
 
     /**
@@ -137,7 +180,7 @@ class ProductController extends Controller
 
         //$product->update('status' => 0);
         $product = DB::table('products')
-                        ->where('id', '=', $id)
+                        ->where('product_id', '=', $id)
                         ->update(['status' => 0]);
 
         return redirect()->route('my_products')->with('success', 'Product Deleted successfully!');

@@ -260,7 +260,7 @@
             <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3>
             <section id="consumer-items">
                 @foreach($products as $product)
-                <a href="{{route('products.show', $product->id)}}" class="card-link">
+                <a href="{{route('products.show', $product->product_id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>

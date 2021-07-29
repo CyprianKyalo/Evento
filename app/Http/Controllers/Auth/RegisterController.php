@@ -43,7 +43,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    /**
+    /** 
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -75,7 +75,7 @@ class RegisterController extends Controller
 
     public function register(Request $request) {
         $user = new User();
-        $user->name = $request->name;
+        $user->username = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->verification_code = sha1(time());
@@ -83,7 +83,7 @@ class RegisterController extends Controller
 
         if ($user != null) {
             //Send Email
-            MailController::sendSignupEmail($user->name, $user->email, $user->verification_code);
+            MailController::sendSignupEmail($user->username, $user->email, $user->verification_code);
             //Show a message
             return redirect()->back()->with(session()->flash('alert-success', 'Your account has been created. Please check your email for the verification link'));
         }

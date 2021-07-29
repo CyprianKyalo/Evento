@@ -18,17 +18,17 @@ class ProductSeeder extends Seeder
         	[
         		'name' => 'Tents',
         		'description' => 'We can deploy tents at your destination at affordable prices',
-        		'price' => 30,
+                'category' => 'equipment',
         	],
         	[
         		'name' => 'Catering',
         		'description' => 'We make the best dishes and servings for any amount of people',
-        		'price' => 40,
+                'category' => 'service'
         	],
         	[
         		'name' => 'Public Address System',
         		'description' => 'The best PA system; DJ inclusive',
-        		'price' => 50,
+                'category' => 'equipment'
         	],
         ];
 
@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
         	Product::create([
         		'name' => $product['name'],
         		'description' => $product['description'],
-        		'price' => $product['price']
+        		'category' => $product['category'],
         	]);
         }
     }

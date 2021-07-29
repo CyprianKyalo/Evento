@@ -199,14 +199,14 @@
             <img id="item-image" src="https://via.placeholder.com/500x200" alt="An image of the product or service">
             <figure class="user-description">
                 <img src="https://via.placeholder.com/100" alt="owner's profile image" id="user-profile-image">
-                <figcaption>@username</figcaption>
+                <figcaption>{{$username}}</figcaption>
             </figure>
             <section id="item-description">
                 <div class="description-container">
                     <ul class="description">
                         <li>Equipment: {{$product->name}}</li>
                         <li>Decription: {{$product->description}}</li>
-                        <li>Price & Rate: ${{$product->price}}</li>
+                        <li>Price & Rate: ${{$price}}</li>
                     </ul>
                     <button class="description-buttons">Hire</button>
                     <button class="description-buttons">Buy</button>

@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             LaratrustSeeder::class,
             UserSeeder::class,
             ProductSeeder::class,
+            HiredProductsSeeder::class,
+            UserProductSeeder::class,
         ]);
     }
 }

@@ -45,15 +45,20 @@ class HomeController extends Controller
 
     public function update_profile(Request $request) {
         $this->validate($request, [
-            'name' => 'required|max:255',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'username' => 'required|max:255',
             'email' => 'required',
-            'profile' => 'mimes:png,jpg,jpeg'
+            'password' => 'password',
+            'profile' => 'mimes:png,jpg,jpeg',
         ]);
 
         $id = Auth::id();
 
         $user = User::find($id);
-        $user->name = $request->get('name');
+        $user->first_name = $request->get('firstname');
+        $user->last_name = $request->get('lastname');
+        $user->username = $request->get('username');
         $user->email = $request->get('email');
         $pass = $request->get('password');
         $user->password = bcrypt($pass);
@@ -71,28 +76,42 @@ class HomeController extends Controller
 
             return redirect()->route('edit_profile', $id);
         }
-
+ 
     }
 
     public function activity() {
-        $products = Product::all();
+        // $products = Product::all();
+        $products = DB::table('products')
+                        ->where('status', '=', 1)
+                        ->get();
 
 
         return view('activity', compact('products'));
     }
 
-    public function my_products() {
-        //$products = Product::all();
+    public function my_products() {       
 
-        $products = DB::table('products')
-                        ->where('status', '=', 1)
+        $products = DB::table('user_products')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->join('products', 'user_products.product_id', '=', 'products.product_id')
+                        ->select('products.product_id', 'products.name', 'users.username')
+                        ->where('products.status', '=', 1)
+                        ->where('user_products.user_id', '=', Auth::id())
                         ->get();
 
         return view('my_products', compact('products'));
     }
 
     public function services() {
-        return view('services');
+        $products = DB::table('user_products')
+                        ->join('products', 'user_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->select('products.product_id', 'products.name', 'users.username')
+                        ->where('products.status', '=', 1)
+                        ->where('products.category', '=', 'service')
+                        ->get();
+
+        return view('services', compact('products'));
     }
 
     public function vendor() {

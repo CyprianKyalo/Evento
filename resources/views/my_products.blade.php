@@ -185,7 +185,6 @@
         </ul>
     </header>
     <main>
-        <h1>Your products</h1>
         <aside>
             <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
             <ul id="aside-navigation">
@@ -196,13 +195,14 @@
             </ul>
         </aside>
         <article>
+            <h1>Your products</h1>
             <section id="item-equipment">
                 @foreach($products as $product)
-                <a href="{{route('products.edit', $product->id)}}" class="card-link">
+                <a href="{{route('products.edit', $product->product_id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
+                            {{-- <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li> --}}
                         </ul>
                     </div>
                 </a>

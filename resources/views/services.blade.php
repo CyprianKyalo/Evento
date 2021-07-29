@@ -196,14 +196,16 @@
         </aside>
         <article>
             <section id="item-equipment">
-                <a href="{{route('products.show', $product->id)}}" class="card-link">
+                @foreach($products as $product)
+                <a href="{{route('products.show', $product->product_id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
-                            <li><span class="card-info-labels">Service:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
+                            <li><span class="card-info-labels">Service:</span> {{$product->name}}</li>
+                            <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li>
                         </ul>
                     </div>
                 </a>
+                @endforeach
                 {{-- <a href="{{route('description')}}" class="card-link">
                     <div class="card equipment">
                         <ul>
