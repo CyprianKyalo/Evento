@@ -43,6 +43,7 @@ class ProductCrudController extends CrudController
         CRUD::column('name');
         CRUD::column('description');
         CRUD::column('category');
+        CRUD::column('status');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -64,6 +65,7 @@ class ProductCrudController extends CrudController
         CRUD::field('name');
         CRUD::field('description');
         CRUD::field('category');
+        CRUD::field('status');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

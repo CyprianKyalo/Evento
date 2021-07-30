@@ -169,7 +169,8 @@
         @endif
 
         <aside>
-            <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
+            {{-- <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img"> --}}
+            <img src="/uploads/avatars/{{$user->image}}" class="profile-img">
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
@@ -180,7 +181,7 @@
         <article>
             <section id="profile-activity">
                 <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img">
-                <form action="{{route('update_profile')}}" method="POST">
+                <form action="{{route('update_profile')}}" method="POST" enctype="multipart/form-data">
                     {{method_field('PUT')}}
                     {{csrf_field()}}
                     <input type="text" placeholder="Username" name="username" value="{{$user->username}}">
@@ -190,7 +191,7 @@
                     <input type="text" placeholder="First Name" name="firstname" value="{{$user->first_name}}">
                     <input type="text" placeholder="Last Name" name="lastname" value="{{$user->last_name}}">
 
-                    <label for="imageprofile" style="margin: 10px;">Profile Picture</label>
+                    <label style="margin: 10px;">Profile Picture</label>
                     <input type="file" name="profile" id="imageprofile">
                     
                     <button id="profile-button">Update Profile</button>
