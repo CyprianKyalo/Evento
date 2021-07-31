@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evento | Landing</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
     <style>
         /* general styling */
         * {
@@ -234,7 +245,7 @@
             <h1>Welcome to your vendor mode.</h1>
             <h3>Here's where you can hire out or sell items you have to other customers.</h3>
             <section id="consumer-items">
-                <form class="vendor-info" action="{{route('products.update', $product->product_id)}}" method="POST">
+                <form class="vendor-info" action="{{route('products.update', $product->product_id)}}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     {{method_field('PUT')}}
                     <label for="name" style="margin: 10px;">Name of Product</label>
@@ -247,13 +258,17 @@
                     <input type="file" name="item-image" id="">
 
                     {{-- <input type="submit" > --}}
-                    <button class="vendor-buttons">Update</button>
+                    <form action="{{route('products.update', $product->product_id)}}">
+                        {{csrf_field()}}
+                        {{method_field('PATCH')}}
+                        <button class="vendor-buttons">Update</button>         
+                    </form>
 
                     <form action="{{route('products.destroy', $product->product_id)}}">
                         {{csrf_field()}}
                         {{method_field('DELETE')}}
 
-                        <button type="submit" class="vendor-buttons">Delete</button>
+                        <button class="vendor-buttons">Delete</button>
                     </form>
                 </form>
             </section>

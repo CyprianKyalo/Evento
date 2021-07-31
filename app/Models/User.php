@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Laratrust\Traits\LaratrustUserTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable implements MustVerifyEmail 
 {
@@ -47,4 +48,16 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function product() {
+        return $this->hasMany(Product::class);
+    }
+
+    public function hiredproduct() {
+        return $this->hasMany(HiredProduct::class);
+    }
+
+    public function userproduct() {
+        return $this->hasMany(UserProduct::class);
+    }
 }

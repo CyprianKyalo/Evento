@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evento | Landing</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <style>
         /* general styling */
         * {
@@ -157,17 +168,6 @@
         </ul>
     </header>
     <main>
-        @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-        <br>
-        @endif
-
         <aside>
             {{-- <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img"> --}}
             <img src="/uploads/avatars/{{$user->image}}" class="profile-img">
@@ -179,6 +179,15 @@
             </ul>
         </aside>
         <article>
+
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger">
+                    {{$error}}
+            </div>
+            @endforeach
+        @endif
+        <br>
             <section id="profile-activity">
                 <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img">
                 <form action="{{route('update_profile')}}" method="POST" enctype="multipart/form-data">
@@ -187,7 +196,7 @@
                     <input type="text" placeholder="Username" name="username" value="{{$user->username}}">
                     
                     <input type="text" placeholder="Email" name="email" value="{{$user->email}}">
-                    <input type="text" placeholder="Password" name="password">
+                    <input type="password" placeholder="Password" name="password">
                     <input type="text" placeholder="First Name" name="firstname" value="{{$user->first_name}}">
                     <input type="text" placeholder="Last Name" name="lastname" value="{{$user->last_name}}">
 

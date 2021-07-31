@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\UserProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Image;
 
 class ProductController extends Controller
 {
@@ -22,13 +23,20 @@ class ProductController extends Controller
         //                 ->where('status', '=', 1)
         //                 ->get();
 
+        // $products = Product::with('user')
+        //                 ->where('products.status', '=', 1)
+        //                 ->where('products.category', '=', 'equipment')
+        //                 ->get();
+
         $products = DB::table('user_products')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
-                        ->select('products.product_id', 'products.name', 'users.username')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
                         ->where('products.status', '=', 1)
                         ->where('products.category', '=', 'equipment')
                         ->get();
+
+        //dd($products);
 
         return view('products.index', compact('products'));
     }
@@ -54,7 +62,8 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            // 'item-image' => 'mimes:png,jpg,jpeg',
+            'category' => 'required',
+            'item-image' => 'mimes:png,jpg,jpeg',
         ]);
 
         $product = new Product;
@@ -62,13 +71,14 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
         $product->status = 1;
-        $product->category = "Equipment";
+        $product->category = $request->category;
 
-        if($request->file('item-image')) {
-            $file_name = time().'_'.$request->file('item-image')->getClientOriginalName();
-            $file_path = $request->file('item-image')->storeAs('uploads', $file_name, 'public');
-
-            $product->image = $file_path;
+        if($request->hasFile('item-image')) {
+            $itemImage = $request->file('item-image');
+            $filename = time(). '.' .$itemImage->getClientOriginalName();
+            Image::make($itemImage)->resize(300, 300)->save(public_path('/uploads/products/' . $filename));
+            
+            $product->image_path = $filename;        
         }
 
         $product->save();
@@ -145,26 +155,48 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
             'description' => 'required',
+            'item-image' => 'mimes:png,jpg,jpeg',
 
         ]);
 
-        $product->update($request->all());
+        $product = Product::find($id);
+        $product->name = $request->get('name');
+        $product->description = $request->get('description');
 
-        // $product = Product::find($id);
 
-        // $product->name = $request->name;
-        // $product->description = $request->description;
+        if($request->hasFile('item-image')) {
+            $itemImage = $request->file('item-image');
+            $filename = time(). '.' .$itemImage->getClientOriginalName();
+            Image::make($itemImage)->resize(300, 300)->save(public_path('/uploads/products/' . $filename));
+            
+            $product->image_path = $filename;        
+        }
 
-        // $product->update(['name' => $request->name]);
-        // $product->update(['description' => $request->description]);
+        if($product->save()) {
+            return redirect('/my_products')->with('success', 'Product updated successfully!');
+        } else {
+            Session::flash('error', 'There was an problem saving the updated user info to the database. Please Try Again!');
 
-        // $product->update();
-        return redirect()->route('my_products')->with('success', 'Product updated successfully!');
+            return redirect()->route('/products.edit', $id);
+        }
+
+        // $product->update($request->all());
+
+        // // $product = Product::find($id);
+
+        // // $product->name = $request->name;
+        // // $product->description = $request->description;
+
+        // // $product->update(['name' => $request->name]);
+        // // $product->update(['description' => $request->description]);
+
+        // // $product->update();
+        // return redirect()->route('my_products')->with('success', 'Product updated successfully!');
 
     }
 

@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('description');
             $table->integer('status')->default(1);
             $table->string('category');
-            $table->string('image_path')->nullable();
+            $table->string('image_path')->default('default.jpg');
             $table->timestamps();
         });
     }

@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evento | Landing</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
     <style>
         /* general styling */
         * {
@@ -157,7 +168,18 @@
         </ul>
     </header>
     <main>
-        @if($errors->any())
+
+        <aside>
+            <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
+            <ul id="aside-navigation">
+                <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
+                <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
+                <li><a href="{{route('products.index')}}" class="user-navigation">Equipment</a></li>
+                <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
+            </ul>
+        </aside>
+        <article>
+            @if($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach($errors->all() as $error)
@@ -178,21 +200,16 @@
     </div>
 
 
-
-        <aside>
-            <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
-            <ul id="aside-navigation">
-                <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
-                <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
-                <li><a href="{{route('products.index')}}" class="user-navigation">Equipment</a></li>
-                <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
-            </ul>
-        </aside>
-        <article>
             <section id="profile-activity">
-                <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img">
-                    <label>Name: </label>
-                    <pre>{{$user->name}}</pre>
+                <img src="/uploads/avatars/{{$user->image}}" alt="user profile" class="profile-img profile-article-img">
+                    <label>First Name</label>
+                    <pre>{{$user->first_name}}</pre>
+
+                    <label>Last Name</label>
+                    <pre>{{$user->last_name}}</pre>
+
+                    <label>Username: </label>
+                    <pre>{{$user->username}}</pre>
                    
                     <label>Email: </label>
                     <pre>{{$user->email}}</pre>

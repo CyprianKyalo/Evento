@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evento | Landing</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
     <style>
         /* general styling */
         * {
@@ -196,7 +207,8 @@
             </ul>
         </aside>
         <article>
-            <img id="item-image" src="https://via.placeholder.com/500x200" alt="An image of the product or service">
+            {{-- <img id="item-image" src="https://via.placeholder.com/500x200" alt="An image of the product or service"> --}}
+            <img src="/uploads/products/{{$product->image_path}}" alt="" id="item-image">
             <figure class="user-description">
                 <img src="https://via.placeholder.com/100" alt="owner's profile image" id="user-profile-image">
                 <figcaption>{{$username}}</figcaption>

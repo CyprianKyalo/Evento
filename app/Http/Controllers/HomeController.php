@@ -109,7 +109,7 @@ class HomeController extends Controller
         $products = DB::table('user_products')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
-                        ->select('products.product_id', 'products.name', 'users.username')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
                         ->where('products.status', '=', 1)
                         ->where('user_products.user_id', '=', Auth::id())
                         ->get();
@@ -121,7 +121,7 @@ class HomeController extends Controller
         $products = DB::table('user_products')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
-                        ->select('products.product_id', 'products.name', 'users.username')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
                         ->where('products.status', '=', 1)
                         ->where('products.category', '=', 'service')
                         ->get();

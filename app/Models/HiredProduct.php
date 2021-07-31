@@ -20,4 +20,8 @@ class HiredProduct extends Model
     	'hire_ended_at',
     	'status',    	
     ];
+
+    public function user() {
+    	return $this->belongsTo(User::class, 'user_id', 'hire_id');
+    }
 }

@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evento | Landing</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
     <style>
         /* general styling */
         * {
@@ -200,6 +211,7 @@
                 <a href="{{route('products.show', $product->product_id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
+                            <li><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 300px; height: 250px"></li>
                             <li><span class="card-info-labels">Service:</span> {{$product->name}}</li>
                             <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li>
                         </ul>

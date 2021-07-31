@@ -17,7 +17,12 @@ class Product extends Model
     protected $fillable = [
     	'name',
     	'description',
-    	'category',   
+    	'category',
+    	'image_path',   
     	'status', 	
     ];
+
+    public function user() {
+    	return $this->belongsTo(User::class);
+    }
 }

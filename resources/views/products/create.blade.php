@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evento | Landing</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <style>
         /* general styling */
         * {
@@ -202,18 +213,6 @@
         </ul>
     </header>
     <main>
-
-        @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-        <br>
-        @endif
-
         <aside>
             <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
             <ul id="aside-navigation">
@@ -224,6 +223,16 @@
             </ul>
         </aside>
         <article>
+
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger">
+                    {{$error}}
+            </div>
+            @endforeach
+        @endif
+        <br>
+
             <nav id="user-mode-navigations">
                 <ul>
                     <li><a href="{{route('activity')}}">Consumer</a></li>
@@ -234,17 +243,23 @@
             <h1>Welcome to your vendor mode.</h1>
             <h3>Here's where you can hire out or sell items you have to other customers.</h3>
             <section id="consumer-items">
-                <form class="vendor-info" action="{{route('products.store')}}" method="POST">
+                <form class="vendor-info" action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <input type="text" placeholder="Item/Service name" name="name">
-                    <textarea name="description" id="vendor-item-description" cols="79" rows="10" placeholder="description" name="description"></textarea>
+                    <textarea name="description" id="vendor-item-description" cols="71.9" rows="10" placeholder="description" name="description"></textarea>
 
-                    <label for="profile" style="margin: 10px;">Item/Service Image</label>
+                    <label for="Category">Choose a category</label>
+                    <select name="category" id="category">
+                        <option value="equipment">Equipment</option>
+                        <option value="service">Service</option>
+                    </select>
+
+                    <label for="item-image" style="margin: 10px;">Item/Service Image</label>
                     <input type="file" name="item-image" id="">
 
-                    <input type="submit" >
-                    <button class="vendor-buttons">Hire out</button>
-                    <button class="vendor-buttons">Sell</button>
+                    {{-- <input type="submit" > --}}
+                    <button class="vendor-buttons">Upload</button>
+                    {{-- <button class="vendor-buttons"><a href="{{route('activity')}}"></a>Back</button> --}}
                 </form>
             </section>
         </article>
