@@ -9,6 +9,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Image;
 
+
 class HomeController extends Controller
 {
     /**
@@ -33,6 +34,7 @@ class HomeController extends Controller
     public function view_profile() {
         $id = Auth::id();
         $user = User::find($id);
+
 
         return view('view_profile', compact("user"));
     }

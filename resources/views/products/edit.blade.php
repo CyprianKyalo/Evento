@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     <style>
         /* general styling */
         * {
@@ -250,7 +250,7 @@
                     {{method_field('PUT')}}
                     <label for="name" style="margin: 10px;">Name of Product</label>
                     <input type="text" placeholder="Item/Service name" name="name" value="{{$product->name}}">
-                  {{--   <textarea name="description" id="vendor-item-description" cols="79" rows="10" placeholder="description" name="description" value="{{$product->description}}"></textarea> --}}
+    
                     <label for="description" style="margin: 10px;">Product Description</label>
                     <input type="text" name="description" value="{{$product->description}}">
 
@@ -270,10 +270,14 @@
 
                         <button class="vendor-buttons">Delete</button>
                     </form>
+
+                    {{-- <button type="button" class="btn btn-danger productdeletebtn">Delete</button> --}}
                 </form>
             </section>
         </article>
     </main>
+
+
     <footer>
         <p>&copy2021 Evento, Inc.</p>
     </footer>

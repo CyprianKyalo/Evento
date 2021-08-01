@@ -25,4 +25,12 @@ class Product extends Model
     public function user() {
     	return $this->belongsTo(User::class);
     }
+
+    public function hiredproduct() {
+    	return $this->hasMany(HiredProduct::class);
+    }
+
+    public function userproduct() {
+    	return $this->hasMany(UserProduct::class);
+    }
 }

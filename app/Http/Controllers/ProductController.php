@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Image;
 
+
 class ProductController extends Controller
 {
     /**
