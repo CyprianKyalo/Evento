@@ -202,10 +202,11 @@
 
             <section id="profile-activity">
                 <img src="/uploads/avatars/{{$user->image}}" alt="user profile" class="profile-img profile-article-img">
-                    <label>First Name</label>
+                    <label>First Name:    </label>
                     <pre>{{$user->first_name}}</pre>
+                    <br>
 
-                    <label>Last Name</label>
+                    <label>Last Name:  </label>
                     <pre>{{$user->last_name}}</pre>
 
                     <label>Username: </label>

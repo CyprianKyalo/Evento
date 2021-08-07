@@ -235,15 +235,15 @@
             </ul>
         </aside>
         <article>
-            <nav id="user-mode-navigations">
+            {{-- <nav id="user-mode-navigations">
                 <ul>
                     <li><a href="{{route('activity')}}">Consumer</a></li>
                     <li>/</li>
                     <li><a href="{{route('products.create')}}">Vendor</a></li>
                 </ul>
-            </nav>
-            <h1>Welcome to your vendor mode.</h1>
-            <h3>Here's where you can hire out or sell items you have to other customers.</h3>
+            </nav> --}}
+            <h1>Edit Product</h1>
+            {{-- <h3>Here's where you can hire out or sell items you have to other customers.</h3> --}}
             <section id="consumer-items">
                 <form class="vendor-info" action="{{route('products.update', $product->product_id)}}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
@@ -253,6 +253,16 @@
     
                     <label for="description" style="margin: 10px;">Product Description</label>
                     <input type="text" name="description" value="{{$product->description}}">
+
+                    <label for="price">Price</label>
+                    <input type="price" name="price" placeholder="Price" value="{{$price}}">
+
+                    <label for="Status">Choose the product's status</label>
+                    <select name="status" id="category">
+                        <option value="tohire">To Hire</option>
+                        <option value="tosell">To Sell</option>
+                    </select>
+                    <br>
 
                     <label for="profile" style="margin: 10px;">Item/Service Image</label>
                     <input type="file" name="item-image" id="">
@@ -264,12 +274,12 @@
                         <button class="vendor-buttons">Update</button>         
                     </form>
 
-                    <form action="{{route('products.destroy', $product->product_id)}}">
+                    {{-- <form action="{{route('products.destroy', $product->product_id)}}">
                         {{csrf_field()}}
                         {{method_field('DELETE')}}
 
                         <button class="vendor-buttons">Delete</button>
-                    </form>
+                    </form> --}}
 
                     {{-- <button type="button" class="btn btn-danger productdeletebtn">Delete</button> --}}
                 </form>

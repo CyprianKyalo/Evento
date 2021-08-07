@@ -254,6 +254,15 @@
                         <option value="service">Service</option>
                     </select>
 
+                    <input type="number" name="price" placeholder="Price">
+
+                    <label for="Status">Choose the product's status</label>
+                    <select name="status" id="category">
+                        <option value="tohire">To Hire</option>
+                        <option value="tosell">To Sell</option>
+                    </select>
+                    <br>
+
                     <label for="item-image" style="margin: 10px;">Item/Service Image</label>
                     <input type="file" name="item-image" id="">
 

@@ -65,6 +65,8 @@ class ProductController extends Controller
             'description' => 'required',
             'category' => 'required',
             'item-image' => 'mimes:png,jpg,jpeg',
+            'price' => 'required',
+            'status' => 'required',
         ]);
 
         $product = new Product;
@@ -82,22 +84,26 @@ class ProductController extends Controller
             $product->image_path = $filename;        
         }
 
-        $product->save();
-
-        $product_id = DB::table('products')
+        if($product->save()) {
+            $product_id = DB::table('products')
                             ->select('product_id')
                             ->where('created_at', NOW())
                             ->value('product_id');
 
-        $userProduct = new UserProduct;
-        $userProduct->user_id = Auth::id();
-        $userProduct->product_id = $product_id;
-        $userProduct->price = 40;
-        $userProduct->status = "ongoing";
+            $userProduct = new UserProduct;
+            $userProduct->user_id = Auth::id();
+            $userProduct->product_id = $product_id;
+            $userProduct->price = $request->price;
+            $userProduct->status = $request->status;
 
-        $userProduct->save();
+            $userProduct->save();
+            
+            return redirect()->route('my_products')->with('success', 'Product created successfully!');   
+        } else {
+            return redirect()->route('my_products')->with('error', 'There was an error uploading the product. Please Try Again!');
+        }
+
         
-        return redirect()->route('my_products')->with('success', 'Product created successfully!');
     }
 
     /**
@@ -146,7 +152,12 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        return view('products.edit', compact('product'));
+        $price = DB::table('user_products')
+                        ->select('price')
+                        ->where('product_id', $id)
+                        ->value('price');
+        
+        return view('products.edit', compact('product', 'price'));
     }
 
     /**
@@ -162,6 +173,8 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'item-image' => 'mimes:png,jpg,jpeg',
+            'price' => 'required',
+            'status' => 'required',
 
         ]);
 
@@ -179,6 +192,13 @@ class ProductController extends Controller
         }
 
         if($product->save()) {
+            DB::table('user_products')
+                        ->where('product_id', $id)
+                        ->update([
+                            'price' => $request->price,
+                            'status' => $request->status]);
+
+
             return redirect('/my_products')->with('success', 'Product updated successfully!');
         } else {
             Session::flash('error', 'There was an problem saving the updated user info to the database. Please Try Again!');
