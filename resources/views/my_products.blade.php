@@ -187,17 +187,75 @@
             padding: 10px;
             color: #000;
         }
+
+        /* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
     </style>
 </head>
 <body>
     <header>
         <ul>
-            <li><a href="#">Logout</a></li>
+            <img src="/uploads/avatars/{{Auth::user()->image}}" style="width: 50px; height: 50px; border-radius: 50%;">
+
+            <div class="dropdown">
+                <button class="dropbtn">{{Auth::user()->username}}</button>
+                <div class="dropdown-content">
+                    <a href="{{ route('logout') }}" style="" 
+                        onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                </div>
+            </div>
+            
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </ul>
     </header>
     <main>
         <aside>
-            <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img">
+            <img src="/uploads/avatars/{{Auth::user()->image}}" class="profile-img profile-article-img">
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
                 <li><a href="{{route('activity')}}" class="user-navigation">Activity</a></li>
@@ -225,19 +283,52 @@
         </div>
         @endif
     </div>
-            <h1>Your products</h1>
+            <h1>My products</h1>
             <section id="item-equipment">
-                @foreach($products as $product)
-                <a href="{{route('products.edit', $product->product_id)}}" class="card-link">
+                
+                {{-- <a href="{{route('products.edit', $product->product_id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><img src="/uploads/products/{{$product->image_path}}" alt=""></li>
                             <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
-                            {{-- <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li> --}}
+                            
                         </ul>
                     </div>
-                </a>
-                @endforeach
+                </a> --}}
+
+                <table class="table table-striped" style="text-align: center;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    
+                    @foreach($products as $product)
+                    <tbody>
+                        <tr>
+                            <td><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 80xp"></td>
+                            <td>{{$product->name}}</td>
+                            <td>{{$product->description}}</td>
+                            <td>{{$product->category}}</td>
+                            <td>{{$product->price}}</td>
+                            <td><a href="{{route('products.edit', $product->product_id)}}" class="btn btn-primary">Edit</a></td>
+                            {{-- <td><form action="{{route('products.destroy', $product->product_id)}}" method="POST">
+                                    {{csrf_field()}}
+                                    {{method_field('DELETE')}}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form></td>       --}}                
+                        </tr>
+                    </tbody>
+                    
+                    @endforeach
+                </table>
+                {{-- @endforeach --}}
             </section>
         </article>
     </main>

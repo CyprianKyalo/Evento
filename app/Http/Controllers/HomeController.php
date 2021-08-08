@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\HiredProduct;
 use Illuminate\Support\Facades\DB;
 use Image;
 
@@ -98,10 +99,19 @@ class HomeController extends Controller
 
     public function activity() {
         // $products = Product::all();
-        $products = DB::table('products')
-                        ->where('status', '=', 1)
+        // $products = DB::table('products')
+        //                 ->where('status', '=', 1)
+        //                 ->get();
+
+        $products = DB::table('user_products')
+                        ->join('products', 'user_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
+                        ->where('products.status', '=', 1)
+                        ->where('user_products.status', '=', 'ongoing')
                         ->get();
 
+        //dd($products);
 
         return view('activity', compact('products'));
     }
@@ -111,7 +121,7 @@ class HomeController extends Controller
         $products = DB::table('user_products')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
+                        ->select('products.product_id', 'products.name', 'products.description', 'products.category', 'products.image_path', 'users.username', 'user_products.price')
                         ->where('products.status', '=', 1)
                         ->where('user_products.user_id', '=', Auth::id())
                         ->get();
@@ -133,5 +143,40 @@ class HomeController extends Controller
 
     public function vendor() {
         return view('vendor');
+    }
+
+    public function hire(Request $request) {
+        $id = $request->get('id');
+        $product = Product::find($id);
+
+        return view('hire', compact('product'));
+    }
+
+    public function hire_product(Request $request) {
+        $this->validate($request, [
+            'date_of_hire' => 'required',
+            'duration' => 'required',
+        ]);
+
+        $user_id = Auth::id();
+        $id = $request->get('id');
+        $prod_id = DB::table('products')
+                            ->select('product_id')
+                            ->where('product_id', $id)
+                            ->value('prod_id');
+
+
+        $hiredproduct = new HiredProduct;
+        $hiredproduct->user_id = $user_id;
+        $hiredproduct->product_id = $prod_id;
+        $hiredproduct->hired_at = $request->get('date_of_hire');
+        $hiredproduct->duration = $request->get('duration');
+        $hiredproduct->status = 'ongoing';
+
+        if ($hiredproduct->save()) {
+            return redirect('/activity')->with('success', 'Product hired successfully!');
+        } else {
+            return redirect('/hire')->with('error', 'There was an error. Please Try Again!');
+        }
     }
 }

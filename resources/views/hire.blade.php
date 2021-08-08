@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     <style>
         /* general styling */
         * {
@@ -152,40 +152,57 @@
             width: 90%;
         }
 
-        /* equipments and services */
-        #item-equipment {
+        /* consumer */
+        #user-mode-navigations {
+            padding: 30px;
+        }
+
+        #user-mode-navigations ul {
+            padding: 0;
+        }
+
+        #user-mode-navigations ul li {
+            list-style: none;
+            display: inline-block;
+        }
+
+        #user-mode-navigations ul li a {
+            text-decoration: none;
+        }
+
+        article h1 {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        article h3 {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        #consumer-items {
             display: flex;
             flex-wrap: wrap;
             padding-top: 80px;
         }
 
-        .card-link {
-            text-decoration: none;
-            width: 30%;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .card {
+        /* vendor */
+        #vendor-item-description {
             border: 1px solid #ccc;
-            width: 100%;
-            text-align: center;
+            margin-left: 10px;
         }
 
-        .card:hover {
-            border: 1px solid #000;
-        }
-
-        .card ul {
-            padding: 0;
+        .vendor-buttons {
             display: inline-block;
+            width: 20%;
+            margin-left: 9px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 0;
         }
 
-        .card ul li {
-            list-style: none;
-            display: block;
-            padding: 10px;
-            color: #000;
+        .vendor-buttons:hover {
+            background-color: #fff;
         }
 
         /* Dropdown Button */
@@ -253,6 +270,7 @@
         </ul>
     </header>
     <main>
+
         <aside>
             <img src="/uploads/avatars/{{Auth::user()->image}}" class="profile-img profile-article-img">
             <ul id="aside-navigation">
@@ -263,37 +281,54 @@
             </ul>
         </aside>
         <article>
-            <section id="item-equipment">
-                @foreach($products as $product)
-                <a href="{{route('products.show', $product->product_id)}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span><img src="/uploads/products/{{$product->image_path}}" alt=""></span></li>
-                            <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
-                            <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li>
-                        </ul>
-                    </div>
-                </a>
-                {{-- <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
-                <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a> --}}
+
+             @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
                 @endforeach
+            </ul>
+        </div>
+        <br>
+        @endif
+        
+            <h1>Hire Product</h1>
+
+            <section id="consumer-items">
+                <form class="vendor-info" action="{{route('hire_product')}}" method="POST">
+                    {{csrf_field()}}
+                    {{-- {{method_field('PUT')}} --}}
+
+                    
+                    <label for="name" style="margin: 10px;">Date of Hire</label>
+                    <input type="date" placeholder="Item/Service name" name="date_of_hire">
+    
+                    <label for="description" style="margin: 10px;">Duration</label>
+                    <input type="text" name="duration" placeholder="Eg. 5 Hours, 2 Days">
+
+                    <input type="text" hidden value="{{$product->product_id}}" name="id">
+
+                    {{-- <form action="">
+                        {{csrf_field()}}
+                        {{method_field('PATCH')}} --}}
+                        <button class="vendor-buttons">Hire</button>         
+                    {{-- </form> --}}
+
+                    {{-- <form action="{{route('products.destroy', $product->product_id)}}">
+                        {{csrf_field()}}
+                        {{method_field('DELETE')}}
+
+                        <button class="vendor-buttons">Delete</button>
+                    </form> --}}
+
+                    {{-- <button type="button" class="btn btn-danger productdeletebtn">Delete</button> --}}
+                </form>
             </section>
         </article>
     </main>
+
+
     <footer>
         <p>&copy2021 Evento, Inc.</p>
     </footer>

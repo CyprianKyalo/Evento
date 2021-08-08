@@ -229,13 +229,18 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //$product = Product::find($id);
+        $product = Product::find($id);
 
         //$product->update('status' => 0);
-        $product = DB::table('products')
+        
+        if ($product->save()) {
+            DB::table('products')
                         ->where('product_id', '=', $id)
                         ->update(['status' => 0]);
 
-        return redirect()->route('my_products')->with('success', 'Product Deleted successfully!');
+            return redirect()->route('my_products')->with('success', 'Product Deleted successfully!');
+        } else {
+            return redirect()->route('my_products')->with('error', 'There was an error deleting the product!');
+        }
     }
 }

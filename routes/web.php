@@ -44,6 +44,8 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::get('/services', [App\Http\Controllers\HomeController::class, 'services'])->name('services');
 	Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'vendor'])->name('vendor');
 	Route::get('/my_products', [App\Http\Controllers\HomeController::class, 'my_products'])->name('my_products');
+	Route::get('/hire', [App\Http\Controllers\HomeController::class, 'hire'])->name('hire');
+	Route::post('/hire_product', [App\Http\Controllers\HomeController::class, 'hire_product'])->name('hire_product');
 	//Route::get('/description', [App\Http\Controllers\HomeController::class, 'description'])->name('description');
 	//Route::get('/equipment', [App\Http\Controllers\HomeController::class, 'equipment'])->name('equipment');
 
