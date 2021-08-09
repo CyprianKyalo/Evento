@@ -79,7 +79,12 @@ class RegisterController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->verification_code = sha1(time());
+
+        //$user = User::find(1);
+        
+
         $user->save();
+        $user->attachRole('user');
 
         if ($user != null) {
             //Send Email
