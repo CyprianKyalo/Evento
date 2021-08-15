@@ -15,7 +15,7 @@
 			<h1 class="title">Manage Users</h1>
 		</div>
 		<div class="column">
-			<a href="{{'users.create'}}" class="button is-primary is-pulled-right"><i class="fa fa-user-add"></i>Create New User</a>
+			<a href="{{'users.create'}}" class="btn btn-primary"><i class="fa fa-user-add"></i>Create New User</a>
 		</div>
 	</div>
 	<hr>
@@ -23,7 +23,7 @@
 		<thead>
 			<tr>
 				<th>ID</th>
-				<th>Name</th>
+				<th>User Name</th>
 				<th>Email</th>
 				<th>Date Created</th>
 				<th>Actions</th>
@@ -34,10 +34,10 @@
 			@foreach ($users as $user)
 			<tr>
 				<th>{{$user->id}}</th>
-				<td>{{$user->name}}</td>
+				<td>{{$user->username}}</td>
 				<td>{{$user->email}}</td>
 				<td>{{$user->created_at->toFormattedDateString()}}</td>
-				<td><a href="{{route('users.edit', $user->id)}}" class="button is-outlined">Edit</a></td>
+				<td><a href="{{route('user_admin.edit', $user->id)}}" class="btn btn-primary">Edit</a></td>
 			</tr>
 			@endforeach
 		</tbody>

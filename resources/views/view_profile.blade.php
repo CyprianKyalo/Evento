@@ -258,23 +258,29 @@
 
 
             <section id="profile-activity">
-                <img src="/uploads/avatars/{{$user->image}}" alt="user profile" class="profile-img profile-article-img">
-                    <label>First Name:    </label>
-                    <pre>{{$user->first_name}}</pre>
-                    <br>
 
-                    <label>Last Name:  </label>
+                <img src="/uploads/avatars/{{$user->image}}" alt="user profile" class="profile-img profile-article-img">
+
+                    <ul>
+                        <h1>My Profile</h1>
+                        <label>First Name</label>
+                    <pre>{{$user->first_name}}</pre>
+                   
+                    <label>Last Name</label>
                     <pre>{{$user->last_name}}</pre>
 
-                    <label>Username: </label>
+                    <label>Username</label>
                     <pre>{{$user->username}}</pre>
                    
-                    <label>Email: </label>
+                    <label>Email</label>
                     <pre>{{$user->email}}</pre>
                     
                     
-                <a href="{{route('edit_profile')}}">Edit Profile</a>
-                <a href="{{route('my_products')}}"><br>View my Products</a>
+                    <a href="{{route('edit_profile')}}" class="btn btn-primary">Edit Profile</a>
+                    <a href="{{route('my_products')}}" class="btn btn-primary">View my Products</a>
+                            
+                    </ul>
+                    
             </section>
         </article>
     </main>

@@ -297,8 +297,7 @@
                     <li><a href="{{route('products.create')}}">Vendor</a></li>
                 </ul>
             </nav>
-            <h1>Welcome to your vendor mode.</h1>
-            <h3>Here's where you can hire out or sell items you have to other customers.</h3>
+            <h1>Upload a Product</h1>
             <section id="consumer-items">
                 <form class="vendor-info" action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}

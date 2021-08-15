@@ -248,9 +248,11 @@
             <section id="profile-activity">
                 {{-- <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img"> --}}
                 <img src="/uploads/avatars/{{$user->image}}" class="profile-img profile-article-img">
+
                 <form action="{{route('update_profile')}}" method="POST" enctype="multipart/form-data">
                     {{method_field('PUT')}}
                     {{csrf_field()}}
+                    <h1>My Profile</h1>
                     <input type="text" placeholder="Username" name="username" value="{{$user->username}}">
                     
                     <input type="text" placeholder="Email" name="email" value="{{$user->email}}">

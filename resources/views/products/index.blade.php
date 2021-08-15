@@ -263,6 +263,7 @@
             </ul>
         </aside>
         <article>
+            <h1>Equipment</h1>
             <section id="item-equipment">
                 @foreach($products as $product)
                 <a href="{{route('products.show', $product->product_id)}}" class="card-link">

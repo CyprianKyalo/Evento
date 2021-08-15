@@ -1,4 +1,5 @@
 @extends('layouts.app')
+{{-- @include('layouts.sidebar') --}}
 
 @section('content') 
 <div class="flex-container">
@@ -15,29 +16,28 @@
 			<h1 class="title">Manage Users</h1>
 		</div>
 		<div class="column">
-			<a href="{{'users.create'}}" class="button is-primary is-pulled-right"><i class="fa fa-user-add"></i>Create New User</a>
+			<a href="{{'product_admin.create'}}" class="btn btn-primary"><i class="fa fa-user-add"></i>Create New Product</a>
 		</div>
 	</div>
-	<hr>
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>ID</th>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Date Created</th>
+				<th>Product Name</th>
+				<th>Description</th>
+				<th>Status</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			@foreach ($users as $user)
+			@foreach ($products as $product)
 			<tr>
-				<th>{{$user->id}}</th>
-				<td>{{$user->name}}</td>
-				<td>{{$user->email}}</td>
-				<td>{{$user->created_at->toFormattedDateString()}}</td>
-				<td><a href="{{route('users.edit', $user->id)}}" class="button is-outlined">Edit</a></td>
+				<th>{{$product->product_id}}</th>
+				<td>{{$product->name}}</td>
+				<td>{{$product->description}}</td>
+				<td>{{$product->status}}</td>
+				<td><a href="{{-- {{route('user_admin.edit', $user->id)}} --}}" class="btn btn-primary">Edit</a></td>
 			</tr>
 			@endforeach
 		</tbody>

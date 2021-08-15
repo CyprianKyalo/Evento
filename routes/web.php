@@ -52,4 +52,13 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::resource('users', 'App\Http\Controllers\UserController');
 	Route::resource('products', 'App\Http\Controllers\ProductController');
 
+	//Admin
+	Route::prefix('admin')->group(function () {
+		// Route::get('/user', function () {
+		// 	return view('edit')->name('admin.user.edit');
+		// });
+		Route::resource('user_admin', 'App\Http\Controllers\UserController');
+		Route::resource('product_admin', 'App\Http\Controllers\ProductController');
+	});
+
 });

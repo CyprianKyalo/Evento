@@ -331,11 +331,11 @@
                         <button class="vendor-buttons">Update</button>         
                     </form>
 
-                    <form action="{{route('products.destroy', $product->product_id)}}" method="POST">
+                    {{-- <form action="{{route('products.destroy', $product->product_id)}}" method="POST">
                         {{csrf_field()}}
                         {{method_field('DELETE')}}
                         <button type="submit" class="vendor-buttons">Delete</button>
-                    </form>
+                    </form> --}}
 
                     {{-- <form action="{{route('products.destroy', $product->product_id)}}">
                         {{csrf_field()}}

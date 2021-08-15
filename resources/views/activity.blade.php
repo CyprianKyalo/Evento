@@ -330,14 +330,22 @@
             <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3>
             <section id="consumer-items">
                 @foreach($products as $product)
+                {{-- <?php
+                    $new_array = array_merge($products, $username);
+                ?> --}}
+                {{-- @foreach($new_array as $product) --}}
+                {{-- @foreach($username as $user) --}}
+            
                 <a href="{{route('products.show', $product->product_id)}}" class="card-link">
                     <div class="card equipment">
                         <ul>
+                            <li><img src="/uploads/products/{{$product->image_path}}" alt=""></li>
                             <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
-                            <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li>
+                            {{-- <li><span class="card-info-labels">Vendor:</span> {{$user}}</li> --}}
                         </ul>
                     </div>
                 </a>
+                {{-- @endforeach --}}
                 @endforeach
                 {{-- <a href="{{route('products.show')}}" class="card-link">
                     <div class="card equipment">

@@ -29,7 +29,13 @@ class ProductController extends Controller
         //                 ->where('products.category', '=', 'equipment')
         //                 ->get();
 
-        $products = DB::table('user_products')
+        if (Auth::user()->hasRole('administrator')) {
+            $products = Product::all();
+
+            return view('admin.product_admin.index', compact('products'));
+            
+        } elseif (Auth::user()->hasRole('user')) {
+            $products = DB::table('user_products')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
                         ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
@@ -37,9 +43,12 @@ class ProductController extends Controller
                         ->where('products.category', '=', 'equipment')
                         ->get();
 
-        //dd($products);
+            //dd($products);
 
-        return view('products.index', compact('products'));
+            return view('products.index', compact('products'));
+        }
+
+        
     }
 
     /**
