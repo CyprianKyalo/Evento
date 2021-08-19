@@ -13,9 +13,13 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
+    
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     <style>
         /* general styling */
         * {
@@ -152,40 +156,57 @@
             width: 90%;
         }
 
-        /* equipments and services */
-        #item-equipment {
+        /* consumer */
+        #user-mode-navigations {
+            padding: 30px;
+        }
+
+        #user-mode-navigations ul {
+            padding: 0;
+        }
+
+        #user-mode-navigations ul li {
+            list-style: none;
+            display: inline-block;
+        }
+
+        #user-mode-navigations ul li a {
+            text-decoration: none;
+        }
+
+        article h1 {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        article h3 {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        #consumer-items {
             display: flex;
             flex-wrap: wrap;
             padding-top: 80px;
         }
 
-        .card-link {
-            text-decoration: none;
-            width: 30%;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .card {
+        /* vendor */
+        #vendor-item-description {
             border: 1px solid #ccc;
-            width: 100%;
-            text-align: center;
+            margin-left: 10px;
         }
 
-        .card:hover {
-            border: 1px solid #000;
-        }
-
-        .card ul {
-            padding: 0;
+        .vendor-buttons {
             display: inline-block;
+            width: 20%;
+            margin-left: 9px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 0;
         }
 
-        .card ul li {
-            list-style: none;
-            display: block;
-            padding: 10px;
-            color: #000;
+        .vendor-buttons:hover {
+            background-color: #fff;
         }
 
         /* Dropdown Button */
@@ -253,6 +274,7 @@
         </ul>
     </header>
     <main>
+
         <aside>
             <img src="/uploads/avatars/{{Auth::user()->image}}" class="profile-img profile-article-img">
             <ul id="aside-navigation">
@@ -263,40 +285,75 @@
             </ul>
         </aside>
         <article>
-            <h3>Results for equipment</h3>
 
-            {{-- Search tool for searching for a service --}}
-            <form action="{{route('search_equip')}}" class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" name="query" class="form-control" placeholder="Search" style="width: 200px !important">
-                </div>
-                <button class="btn btn-primary">Search</button>
-            </form>
+             @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+        <br>
+        @endif
+            
 
-            {{-- Section detailing the equipment --}}
-            <section id="item-equipment">
-                @if(is_null($products))
-                    <p>No equipment like that</p>
-                    <h1>Nothing</h1>
-                @else
-               @foreach($products as $product)
-                <div class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span><a href="{{route('products.show', $product->product_id)}}"><img src="/uploads/products/{{$product->image_path}}" alt=""></a></span></li>
-                            <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
-                             <li><span class="card-info-labels"></span> {{$product->description}}</li>
-                              <li><span class="card-info-labels"></span><img src="/uploads/avatars/{{$product->image}}" alt="" style="width: 50px; height: 50px; border-radius: 50%"></li>
-                            <li><span class="card-info-labels">by </span> <a href="{{route('vendor_profile', $product->id)}}">{{$product->username}}</a></li>
-                        </ul>
+            <section id="consumer-items">
+                <div class="container" style="display: flex;">
+            
+                    <div class="card" style="width: 30rem">
+                        @foreach($vendor as $vend)
+                        <img src="/uploads/avatars/{{$vend->image}}" alt="" style="border-radius: 50%; width: 100px; align-self: center; margin-top: -3.5em">
+                        
+
+                        <p>{{$vend->location}}</p>
+
+                        <p>{{$vend->about}}</p>
+
+                        <p>Rate per hour</p>
+
+                        <p>Events Organized</p>
+
+                        @endforeach
+                    </div>
+
+                    <div class="container">
+                        <a href="#">My Products ({{count($product)}})</a>
+                        <a href="#">On Hire</a>
+                        <a href="{{route('products.create')}}" class="btn btn-primary"><i class='fa fa-plus'></i>  Add New Product</a>
+                        <div class="container" style="border: 1px solid black;">
+                            <div class="row row-cols-1 row-cols-md-3 g-4" >
+                                @foreach($products as $product)
+                                <div class="col">
+                                    
+                                    <div class="card h-100">
+                                        
+                                   
+                                        
+                                        <img src="/uploads/products/{{$product->image_path}}" alt="" class="card-img-top" style="height: 300px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{$product->name}}</h5>
+                                            <p class="card-text">{{$product->description}}</p>
+                                            <h5>Rate</h5>
+                                            <p>{{$product->price}}</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                @endforeach
+
+
+
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                @endforeach
-                @endif
             </section>
         </article>
     </main>
+
+
     <footer>
         <p>&copy2021 Evento, Inc.</p>
     </footer>

@@ -274,15 +274,18 @@
 
             <section id="item-equipment">
                 @foreach($products as $product)
-                <a href="{{route('products.show', $product->product_id)}}" class="card-link">
+                <div class="card-link">
                     <div class="card equipment">
                         <ul>
-                            <li><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 300px; height: 250px"></li>
-                            <li><span class="card-info-labels">Service:</span> {{$product->name}}</li>
-                            <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li>
+                            <li><span><a href="{{route('products.show', $product->product_id)}}"><img src="/uploads/products/{{$product->image_path}}" alt=""></a></span></li>
+                            <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
+                             <li><span class="card-info-labels"></span> {{$product->description}}</li>
+                              <li><span class="card-info-labels"></span><img src="/uploads/avatars/{{$product->image}}" alt="" style="width: 50px; height: 50px; border-radius: 50%"></li>
+                            <li><span class="card-info-labels">by </span> <a href="{{route('vendor_profile', $product->id)}}">{{$product->username}}</a></li>
                         </ul>
                     </div>
-                </a>
+                </div>
+                
                 @endforeach
                 {{-- <a href="{{route('description')}}" class="card-link">
                     <div class="card equipment">

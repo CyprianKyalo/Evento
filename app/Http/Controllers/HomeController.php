@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\HiredProduct;
+use App\Models\VendorDetails;
 use Illuminate\Support\Facades\DB;
 use Image;
 
@@ -143,10 +144,11 @@ class HomeController extends Controller
         }
     }
 
+    //Code to add the vendor details
     public function update_vendor(Request $request) {
         $this->validate($request, [
             'location' => 'required',
-            'about' => 'required',
+            'about_me' => 'required',
             'pnumber' => 'required',
         ]);
 
@@ -154,12 +156,15 @@ class HomeController extends Controller
         $vendordetail = new VendorDetails;
 
         $vendordetail->user_id = Auth::id();
-        $vendordetail->location = $request->location;
-        $vendordetail->about = $request->about_me;
-        $vendordetail->pnumber = $request->pnumber;
+
+        $vendordetail->location = $request->get('location');
+        $vendordetail->about = $request->get('about_me');
+        $vendordetail->pnumber = $request->get('pnumber');
+
+        // dd($vendordetail);
 
         if($vendordetail->save()) {
-            return redirect('/vendor_details')->with('success', 'Vendor profile updated successfully!');
+            return view('products.create')->with('success', 'Vendor profile updated successfully!');
         } else {
             Session::flash('error', 'There was an problem saving the updated user info to the database. Please Try Again!');
 
@@ -178,22 +183,6 @@ class HomeController extends Controller
                         ->where('user_products.user_id', '=', Auth::id())
                         ->get();
 
-        // $ids = DB::table('users')
-        //             ->select('id')
-        //             ->get();
-    
-        // $id_arr = array();
-        // for ($i=0; $i < count($ids); $i++) { 
-        //     $id_arr[] = $ids[$i]->id;
-            
-        // }
-      
-        // if(in_array('2', $id_arr)){
-        //     dd("ID found");
-        // } else{
-        //     dd("ID not found");
-        // }
-
 
         return view('my_products', compact('products'));
     }
@@ -202,7 +191,7 @@ class HomeController extends Controller
         $products = DB::table('user_products')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username', 'products.description', 'users.id', 'users.image')
                         ->where('products.status', '=', 1)
                         ->where('products.category', '=', 'service')
                         ->get();
@@ -210,8 +199,8 @@ class HomeController extends Controller
         return view('services', compact('products'));
     }
 
-    public function vendor() {
-        return view('vendor');
+    public function vendor_details() {
+        return view('vendor_details');
     }
 
     public function hire(Request $request) {
@@ -242,6 +231,7 @@ class HomeController extends Controller
         $hiredproduct->duration = $request->get('duration');
         $hiredproduct->status = 'ongoing';
 
+
         if ($hiredproduct->save()) {
             return redirect('/activity')->with('success', 'Product hired successfully!');
         } else {
@@ -249,5 +239,35 @@ class HomeController extends Controller
         }
     }
 
+    public function vendor_profile($id) {
+        // $id = $request->get('id');
+
+        $vendor = DB::table('users')
+                    ->join('vendor_details', 'users.id', '=', 'vendor_details.user_id')
+                    ->where('users.id', $id)
+                    ->get();
+
+        
+        $product = DB::table('user_products')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->join('products', 'user_products.product_id', '=', 'products.product_id')
+                        ->select('products.product_id', 'products.name', 'products.description', 'products.category', 'products.image_path', 'users.username', 'user_products.price')
+                        ->where('products.status', '=', 1)
+                        ->where('user_products.user_id', '=', $id)
+                        ->get();
+
+        $products = DB::table('user_products')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->join('products', 'user_products.product_id', '=', 'products.product_id')
+                        ->select('products.product_id', 'products.name', 'products.description', 'products.category', 'products.image_path', 'users.username', 'user_products.price')
+                        ->where('products.status', '=', 1)
+                        ->where('user_products.user_id', '=', $id)
+                        ->take(6)
+                        ->get();
+
+
+
+        return view('vendor_profile', compact('vendor', 'products', 'product'));
+    }
 
 }

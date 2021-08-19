@@ -50,6 +50,7 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::get('search_serv', [App\Http\Controllers\ProductController::class, 'search_serv'])->name('search_serv');
 	Route::get('/vendor_details', [App\Http\Controllers\HomeController::class, 'vendor_details'])->name('vendor_details');
 	Route::post('/update_vendor', [App\Http\Controllers\HomeController::class, 'update_vendor'])->name('update_vendor');
+	Route::get('/vendor_profile/{id}', [App\Http\Controllers\HomeController::class, 'vendor_profile'])->name('vendor_profile');
 
 	Route::get('/daraja', [App\Http\Controllers\Payments\Mpesa\MpesaController::class, 'index'])->name('daraja');
 	Route::post('get-token', [App\Http\Controllers\Payments\Mpesa\MpesaController::class, 'getAccessToken']);

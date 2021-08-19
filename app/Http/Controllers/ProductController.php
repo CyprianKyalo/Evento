@@ -39,7 +39,7 @@ class ProductController extends Controller
             $products = DB::table('user_products')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username', 'products.description', 'users.image', 'users.id')
                         ->where('products.status', '=', 1)
                         ->where('products.category', '=', 'equipment')
                         ->get();
@@ -59,23 +59,25 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $ids = DB::table('vendor_details')
-                    ->select('user_id')
-                    ->get();
+        // $ids = DB::table('vendor_details')
+        //             ->select('user_id')
+        //             ->get();
     
-        //Create an array of all the user_ids in the vendor_details table
-        $id_arr = array();
-        for ($i=0; $i < count($ids); $i++) { 
-            $id_arr[] = $ids[$i]->user_id;
+        // //Create an array of all the user_ids in the vendor_details table
+        // $id_arr = array();
+        // for ($i=0; $i < count($ids); $i++) { 
+        //     $id_arr[] = $ids[$i]->user_id;
             
-        }
+        // }
       
-        //Check if the logged in user is in the vendors_details table
-        if(in_array(Auth::id(), $id_arr)){
-            return view('products.create');
-        } else{
-            return view('vendor_details');
-        }
+        // //Check if the logged in user is in the vendors_details table
+        // if(in_array(Auth::id(), $id_arr)){
+        //     return view('products.create');
+        // } else{
+        //     return view('vendor_details');
+        // }
+
+        return view('products.create');
 
        
         
@@ -115,33 +117,24 @@ class ProductController extends Controller
             $product->image_path = $filename;        
         }
 
-        $ids = array('1', '2');
-
-        if(in_array('3', $ids)) {
 
 
+        if($product->save()) {
+            $product_id = DB::table('products')
+                            ->select('product_id')
+                            ->where('created_at', NOW())
+                            ->value('product_id');
 
-            if($product->save()) {
-                $product_id = DB::table('products')
-                                ->select('product_id')
-                                ->where('created_at', NOW())
-                                ->value('product_id');
+            $userProduct = new UserProduct;
+            $userProduct->user_id = Auth::id();
+            $userProduct->product_id = $product_id;
+            $userProduct->price = $request->price;
+            $userProduct->status = $request->status;
+            $userProduct->save();
 
-                $userProduct = new UserProduct;
-                $userProduct->user_id = Auth::id();
-                $userProduct->product_id = $product_id;
-                $userProduct->price = $request->price;
-                $userProduct->status = $request->status;
-
-                $userProduct->save();
-                
-                return redirect()->route('my_products')->with('success', 'Product created successfully!');   
-            } else {
-                return redirect()->route('my_products')->with('error', 'There was an error uploading the product. Please Try Again!');
-            }
-
+            return redirect()->route('my_products')->with('success', 'Product created successfully!');   
         } else {
-            return redirect('product.create')->with('status', 'ID not found');
+            return redirect()->route('my_products')->with('error', 'There was an error uploading the product. Please Try Again!');
         }
 
         
@@ -290,7 +283,7 @@ class ProductController extends Controller
         $data = DB::table('user_products')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username', 'products.description', 'users.id', 'users.image')
                         ->where('products.status', '=', 1)
                         ->where('products.category', '=', 'equipment')
                         ->where('products.name', 'like', '%'. $request->input('query'). '%')
@@ -306,7 +299,7 @@ class ProductController extends Controller
         $data = DB::table('user_products')
                         ->join('products', 'user_products.product_id', '=', 'products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username', 'products.description', 'users.id', 'users.image')
                         ->where('products.status', '=', 1)
                         ->where('products.category', '=', 'service')
                         ->where('products.name', 'like', '%'. $request->input('query'). '%')

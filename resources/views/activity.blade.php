@@ -330,7 +330,36 @@
                 <ul>
                     <li><a href="{{route('activity')}}">Consumer</a></li>
                     <li>/</li>
-                    <li><a href="{{route('products.create')}}">Vendor</a></li>
+                    <li><?php
+                        use Illuminate\Support\Facades\DB;
+
+                        $ids = DB::table('vendor_details')
+                                     ->select('user_id')
+                                     ->get();
+                    
+                        //Create an array of all the user_ids in the vendor_details table
+                        $id_arr = array();
+                        for ($i=0; $i < count($ids); $i++) { 
+                            $id_arr[] = $ids[$i]->user_id;
+                            
+                        }
+                      
+                        //Check if the logged in user is in the vendors_details table
+                        if(in_array(Auth::id(), $id_arr)){
+                           ?><a href="{{route('products.create')}}">Vendor</a><?php
+                        } else{
+                            ?><a href="{{route('vendor_details')}}">Vendor</a><?php
+                        }
+
+                        //$ids = array('1', '2');
+
+                        //if(in_array('4', $ids)) {
+                            //return 1;
+                          //  ?>{{-- <a href="{{route('products.create')}}">Vendor</a> --}}<?php
+                        //} else {
+                        //    ?>{{-- <a href="{{route('vendor_details')}}">Vendor</a> --}}<?php
+                        //}
+                    ?></li>
                 </ul>
             </nav>
 

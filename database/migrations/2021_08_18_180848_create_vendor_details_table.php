@@ -20,7 +20,8 @@ class CreateVendorDetailsTable extends Migration
             //$table->foreign('product_id')->references('product_id')->on('products');
             $table->string('location');
             $table->longText('about');
-            $table->mediumInteger('pnumber');
+            $table->string('pnumber');
+            $table->timestamps();
         });
     }
 

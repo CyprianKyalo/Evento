@@ -279,7 +279,22 @@
                 <li><a href="{{route('services')}}" class="user-navigation">Services</a></li>
             </ul>
         </aside>
+
         <article>
+            @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger">
+                    {{$error}}
+            </div>
+            @endforeach
+        @endif
+        
+        @if (session('status'))
+            <div class="alert alert-danger">
+                {{ session('status') }}
+            </div>
+        @endif
+        
             <nav id="user-mode-navigations">
                 <ul>
                     <li><a href="{{route('activity')}}">Consumer</a></li>
@@ -293,9 +308,9 @@
                     {{-- {{method_field('PUT')}} --}}
                     {{csrf_field()}}
                     <label for="fname">First Name</label>
-                   <input type="text" name="fname" placeholder="First Name" value="{{Auth::user()->first_name}}" disabled>
+                   <input type="text" name="fname" placeholder="First Name" value="{{Auth::user()->first_name}}" disabled style="cursor: not-allowed;">
                    <label for="lname">Last Name</label>
-                   <input type="text" name="lname" placeholder="Last Name" value="{{Auth::user()->last_name}}" disabled>
+                   <input type="text" name="lname" placeholder="Last Name" value="{{Auth::user()->last_name}}" disabled style="cursor: not-allowed;">
                    <label for="location">Location</label>
                    <input type="text" name="location" placeholder="Location">
                    <label for="about_me">About You</label>
@@ -303,7 +318,7 @@
                    <label for="pnumber">Phone Number</label>
                    <input type="number" name="pnumber" placeholder="+254700000000">
 
-                   <button class="btn btn-primary">Submit</button>
+                   <button class="vendor-buttons">Submit</button>
                 </form>
             </section>
         </article>
