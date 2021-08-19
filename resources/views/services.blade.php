@@ -264,6 +264,14 @@
         </aside>
         <article>
             <h1>Services</h1>
+
+            <form action="{{route('search_serv')}}" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search" style="width: 200px !important">
+                </div>
+                <button class="btn btn-primary">Search</button>
+            </form>
+
             <section id="item-equipment">
                 @foreach($products as $product)
                 <a href="{{route('products.show', $product->product_id)}}" class="card-link">

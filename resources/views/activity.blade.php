@@ -299,7 +299,7 @@
         </aside>
         <article>
 
-            @if($errors->any())
+            {{-- @if($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach($errors->all() as $error)
@@ -308,6 +308,14 @@
                     </ul>
                 </div>
                 <br>
+            @endif --}}
+
+            @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger">
+                    {{$error}}
+            </div>
+            @endforeach
             @endif
 
             <div class="col-sm-12">

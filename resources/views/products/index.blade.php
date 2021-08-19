@@ -264,6 +264,16 @@
         </aside>
         <article>
             <h1>Equipment</h1>
+
+            {{-- Search functionality --}}
+            <form action="{{route('search_equip')}}" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search" style="width: 200px !important">
+                </div>
+                <button class="btn btn-primary">Search</button>
+            </form>
+
+            {{-- Shows all equipment --}}
             <section id="item-equipment">
                 @foreach($products as $product)
                 <a href="{{route('products.show', $product->product_id)}}" class="card-link">
@@ -275,22 +285,7 @@
                         </ul>
                     </div>
                 </a>
-                {{-- <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
-                <a href="{{route('description')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a> --}}
+                
                 @endforeach
             </section>
         </article>

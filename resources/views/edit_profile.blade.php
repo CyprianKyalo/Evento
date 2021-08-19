@@ -244,7 +244,7 @@
             </div>
             @endforeach
         @endif
-        <br>
+        {{-- <br> --}}
             <section id="profile-activity">
                 {{-- <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img"> --}}
                 <img src="/uploads/avatars/{{$user->image}}" class="profile-img profile-article-img">

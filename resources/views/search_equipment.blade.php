@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    
     <style>
         /* general styling */
         * {
@@ -152,57 +152,40 @@
             width: 90%;
         }
 
-        /* consumer */
-        #user-mode-navigations {
-            padding: 30px;
-        }
-
-        #user-mode-navigations ul {
-            padding: 0;
-        }
-
-        #user-mode-navigations ul li {
-            list-style: none;
-            display: inline-block;
-        }
-
-        #user-mode-navigations ul li a {
-            text-decoration: none;
-        }
-
-        article h1 {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        article h3 {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        #consumer-items {
+        /* equipments and services */
+        #item-equipment {
             display: flex;
             flex-wrap: wrap;
             padding-top: 80px;
         }
 
-        /* vendor */
-        #vendor-item-description {
-            border: 1px solid #ccc;
-            margin-left: 10px;
+        .card-link {
+            text-decoration: none;
+            width: 30%;
+            margin-right: auto;
+            margin-left: auto;
         }
 
-        .vendor-buttons {
+        .card {
+            border: 1px solid #ccc;
+            width: 100%;
+            text-align: center;
+        }
+
+        .card:hover {
+            border: 1px solid #000;
+        }
+
+        .card ul {
+            padding: 0;
             display: inline-block;
-            width: 20%;
-            margin-left: 9px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 0;
         }
 
-        .vendor-buttons:hover {
-            background-color: #fff;
+        .card ul li {
+            list-style: none;
+            display: block;
+            padding: 10px;
+            color: #000;
         }
 
         /* Dropdown Button */
@@ -280,58 +263,34 @@
             </ul>
         </aside>
         <article>
+            <h3>Results for equipment</h3>
 
-        @if($errors->any())
-            @foreach($errors->all() as $error)
-                <div class="alert alert-danger">
-                    {{$error}}
-            </div>
-            @endforeach
-        @endif
-        
-        @if (session('status'))
-            <div class="alert alert-danger">
-                {{ session('status') }}
-            </div>
-        @endif
+            {{-- Search tool for searching for a service --}}
+            <form action="{{route('search_equip')}}" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search" style="width: 200px !important">
+                </div>
+                <button class="btn btn-primary">Search</button>
+            </form>
 
-
-            <nav id="user-mode-navigations">
-                <ul>
-                    <li><a href="{{route('activity')}}">Consumer</a></li>
-                    <li>/</li>
-                    <li><a href="{{route('products.create')}}">Vendor</a></li>
-                </ul>
-            </nav>
-            <h1>Upload a Product</h1>
-            <section id="consumer-items">
-                <form class="vendor-info" action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
-                    {{csrf_field()}}
-                    <input type="text" placeholder="Item/Service name" name="name">
-                    <textarea name="description" id="vendor-item-description" cols="71.9" rows="10" placeholder="description" name="description"></textarea>
-
-                    <label for="Category">Choose a category</label>
-                    <select name="category" id="category">
-                        <option value="equipment">Equipment</option>
-                        <option value="service">Service</option>
-                    </select>
-
-                    <input type="number" name="price" placeholder="Price">
-
-                    <label for="Status">Choose the product's status</label>
-                    <select name="status" id="category">
-                        <option value="tohire">To Hire</option>
-                        <option value="tosell">To Sell</option>
-                    </select>
-                    <br>
-
-                    <label for="item-image" style="margin: 10px;">Item/Service Image</label>
-                    <input type="file" name="item-image" id="">
-
-                    {{-- <input type="submit" > --}}
-                    <button class="vendor-buttons">Upload</button>
-                    {{-- <button class="vendor-buttons"><a href="{{route('activity')}}"></a>Back</button> --}}
-                </form>
+            {{-- Section detailing the equipment --}}
+            <section id="item-equipment">
+                @if(is_null($products))
+                    <p>No equipment like that</p>
+                    <h1>Nothing</h1>
+                @else
+                @foreach($products as $product)
+                <a href="{{route('products.show', $product->product_id)}}" class="card-link">
+                    <div class="card equipment">
+                        <ul>
+                            <li><span><img src="/uploads/products/{{$product->image_path}}" alt=""></span></li>
+                            <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
+                            <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li>
+                        </ul>
+                    </div>
+                </a>
+                @endforeach
+                @endif
             </section>
         </article>
     </main>

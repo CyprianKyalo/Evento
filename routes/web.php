@@ -46,6 +46,14 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::get('/my_products', [App\Http\Controllers\HomeController::class, 'my_products'])->name('my_products');
 	Route::get('/hire', [App\Http\Controllers\HomeController::class, 'hire'])->name('hire');
 	Route::post('/hire_product', [App\Http\Controllers\HomeController::class, 'hire_product'])->name('hire_product');
+	Route::get('search_equip', [App\Http\Controllers\ProductController::class, 'search_equip'])->name('search_equip');
+	Route::get('search_serv', [App\Http\Controllers\ProductController::class, 'search_serv'])->name('search_serv');
+	Route::get('/vendor_details', [App\Http\Controllers\HomeController::class, 'vendor_details'])->name('vendor_details');
+	Route::post('/update_vendor', [App\Http\Controllers\HomeController::class, 'update_vendor'])->name('update_vendor');
+
+	Route::get('/daraja', [App\Http\Controllers\Payments\Mpesa\MpesaController::class, 'index'])->name('daraja');
+	Route::post('get-token', [App\Http\Controllers\Payments\Mpesa\MpesaController::class, 'getAccessToken']);
+	Route::post('register-urls', [App\Http\Controllers\Payments\Mpesa\MpesaController::class, 'registerURLS']);
 	//Route::get('/description', [App\Http\Controllers\HomeController::class, 'description'])->name('description');
 	//Route::get('/equipment', [App\Http\Controllers\HomeController::class, 'equipment'])->name('equipment');
 

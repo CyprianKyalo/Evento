@@ -8,7 +8,7 @@ use App\Models\UserProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Image;
-
+use Session;
 
 class ProductController extends Controller
 {
@@ -17,6 +17,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         // $products = Product::all();
@@ -58,7 +59,28 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $ids = DB::table('vendor_details')
+                    ->select('user_id')
+                    ->get();
+    
+        //Create an array of all the user_ids in the vendor_details table
+        $id_arr = array();
+        for ($i=0; $i < count($ids); $i++) { 
+            $id_arr[] = $ids[$i]->user_id;
+            
+        }
+      
+        //Check if the logged in user is in the vendors_details table
+        if(in_array(Auth::id(), $id_arr)){
+            return view('products.create');
+        } else{
+            return view('vendor_details');
+        }
+
+       
+        
+
+       
     }
 
     /**
@@ -93,23 +115,33 @@ class ProductController extends Controller
             $product->image_path = $filename;        
         }
 
-        if($product->save()) {
-            $product_id = DB::table('products')
-                            ->select('product_id')
-                            ->where('created_at', NOW())
-                            ->value('product_id');
+        $ids = array('1', '2');
 
-            $userProduct = new UserProduct;
-            $userProduct->user_id = Auth::id();
-            $userProduct->product_id = $product_id;
-            $userProduct->price = $request->price;
-            $userProduct->status = $request->status;
+        if(in_array('3', $ids)) {
 
-            $userProduct->save();
-            
-            return redirect()->route('my_products')->with('success', 'Product created successfully!');   
+
+
+            if($product->save()) {
+                $product_id = DB::table('products')
+                                ->select('product_id')
+                                ->where('created_at', NOW())
+                                ->value('product_id');
+
+                $userProduct = new UserProduct;
+                $userProduct->user_id = Auth::id();
+                $userProduct->product_id = $product_id;
+                $userProduct->price = $request->price;
+                $userProduct->status = $request->status;
+
+                $userProduct->save();
+                
+                return redirect()->route('my_products')->with('success', 'Product created successfully!');   
+            } else {
+                return redirect()->route('my_products')->with('error', 'There was an error uploading the product. Please Try Again!');
+            }
+
         } else {
-            return redirect()->route('my_products')->with('error', 'There was an error uploading the product. Please Try Again!');
+            return redirect('product.create')->with('status', 'ID not found');
         }
 
         
@@ -251,5 +283,37 @@ class ProductController extends Controller
         } else {
             return redirect()->route('my_products')->with('error', 'There was an error deleting the product!');
         }
+    }
+
+    public function search_equip(Request $request) {
+        // return $request->input();
+        $data = DB::table('user_products')
+                        ->join('products', 'user_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
+                        ->where('products.status', '=', 1)
+                        ->where('products.category', '=', 'equipment')
+                        ->where('products.name', 'like', '%'. $request->input('query'). '%')
+                        ->get();
+
+        // $data = Product::where('name', 'like', '%'. $request->input('query'). '%')->get();
+
+        return view('search_equipment', ['products' => $data]);
+    }
+
+     public function search_serv(Request $request) {
+        // return $request->input();
+        $data = DB::table('user_products')
+                        ->join('products', 'user_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'users.username')
+                        ->where('products.status', '=', 1)
+                        ->where('products.category', '=', 'service')
+                        ->where('products.name', 'like', '%'. $request->input('query'). '%')
+                        ->get();
+
+        // $data = Product::where('name', 'like', '%'. $request->input('query'). '%')->get();
+
+        return view('search_services', ['products' => $data]);
     }
 }

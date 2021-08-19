@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    
     <style>
         /* general styling */
         * {
@@ -129,9 +129,9 @@
 
         input {
             display: block;
-            padding: 15px;
-            margin: 10px;
-            width: 545px;
+            padding: 10px;
+            /*margin: 10px;*/
+            width: 170px;
             border: 1px solid #ccc;
         }
 
@@ -280,57 +280,30 @@
             </ul>
         </aside>
         <article>
-
-        @if($errors->any())
-            @foreach($errors->all() as $error)
-                <div class="alert alert-danger">
-                    {{$error}}
-            </div>
-            @endforeach
-        @endif
-        
-        @if (session('status'))
-            <div class="alert alert-danger">
-                {{ session('status') }}
-            </div>
-        @endif
-
-
             <nav id="user-mode-navigations">
                 <ul>
                     <li><a href="{{route('activity')}}">Consumer</a></li>
                     <li>/</li>
-                    <li><a href="{{route('products.create')}}">Vendor</a></li>
+                    <li><a href="{{route('vendor')}}">Vendor</a></li>
                 </ul>
             </nav>
-            <h1>Upload a Product</h1>
-            <section id="consumer-items">
-                <form class="vendor-info" action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
+            <h1>Fill in your vendor details</h1>
+            <section id="">
+                <form class="vendor-info" action="{{route('update_vendor')}}" method="POST">
+                    {{-- {{method_field('PUT')}} --}}
                     {{csrf_field()}}
-                    <input type="text" placeholder="Item/Service name" name="name">
-                    <textarea name="description" id="vendor-item-description" cols="71.9" rows="10" placeholder="description" name="description"></textarea>
+                    <label for="fname">First Name</label>
+                   <input type="text" name="fname" placeholder="First Name" value="{{Auth::user()->first_name}}" disabled>
+                   <label for="lname">Last Name</label>
+                   <input type="text" name="lname" placeholder="Last Name" value="{{Auth::user()->last_name}}" disabled>
+                   <label for="location">Location</label>
+                   <input type="text" name="location" placeholder="Location">
+                   <label for="about_me">About You</label>
+                   <textarea name="about_me" name="about_me" id="about_me" cols="100" rows="5" placeholder="Give an introduction about yourself..."></textarea>
+                   <label for="pnumber">Phone Number</label>
+                   <input type="number" name="pnumber" placeholder="+254700000000">
 
-                    <label for="Category">Choose a category</label>
-                    <select name="category" id="category">
-                        <option value="equipment">Equipment</option>
-                        <option value="service">Service</option>
-                    </select>
-
-                    <input type="number" name="price" placeholder="Price">
-
-                    <label for="Status">Choose the product's status</label>
-                    <select name="status" id="category">
-                        <option value="tohire">To Hire</option>
-                        <option value="tosell">To Sell</option>
-                    </select>
-                    <br>
-
-                    <label for="item-image" style="margin: 10px;">Item/Service Image</label>
-                    <input type="file" name="item-image" id="">
-
-                    {{-- <input type="submit" > --}}
-                    <button class="vendor-buttons">Upload</button>
-                    {{-- <button class="vendor-buttons"><a href="{{route('activity')}}"></a>Back</button> --}}
+                   <button class="btn btn-primary">Submit</button>
                 </form>
             </section>
         </article>

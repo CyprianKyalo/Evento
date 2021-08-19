@@ -109,27 +109,6 @@ class HomeController extends Controller
             return view('admin.user_admin.index', compact('users'));
 
         } elseif (Auth::user()->hasRole('user')) {
-            // $user_id = Auth::id();
-
-            // $product_id = DB::table('hired_products')
-            //             ->select('product_id')
-            //             ->where('user_id', $user_id)
-            //             ->where('status', 'ongoing')
-            //             ->value('product_id');
-
-            // $products = Product::find($product_id);
-
-            // $user_id = DB::table('user_products')
-            //             ->select('user_id')
-            //             ->where('product_id', $product_id)
-            //             ->value('user_id');
-
-            // $username = DB::table('users') 
-            //                 ->select('username')
-            //                 ->where('id', $user_id)
-            //                 ->where('username');
-
-            // dd($products, $product_id, $user_id, $username);
 
 
             $products = DB::table('hired_products')
@@ -162,7 +141,30 @@ class HomeController extends Controller
 
             return view('activity', compact('products'));
         }
+    }
 
+    public function update_vendor(Request $request) {
+        $this->validate($request, [
+            'location' => 'required',
+            'about' => 'required',
+            'pnumber' => 'required',
+        ]);
+
+        
+        $vendordetail = new VendorDetails;
+
+        $vendordetail->user_id = Auth::id();
+        $vendordetail->location = $request->location;
+        $vendordetail->about = $request->about_me;
+        $vendordetail->pnumber = $request->pnumber;
+
+        if($vendordetail->save()) {
+            return redirect('/vendor_details')->with('success', 'Vendor profile updated successfully!');
+        } else {
+            Session::flash('error', 'There was an problem saving the updated user info to the database. Please Try Again!');
+
+            return redirect()->route('vendor_details');
+        }
         
     }
 
@@ -175,6 +177,23 @@ class HomeController extends Controller
                         ->where('products.status', '=', 1)
                         ->where('user_products.user_id', '=', Auth::id())
                         ->get();
+
+        // $ids = DB::table('users')
+        //             ->select('id')
+        //             ->get();
+    
+        // $id_arr = array();
+        // for ($i=0; $i < count($ids); $i++) { 
+        //     $id_arr[] = $ids[$i]->id;
+            
+        // }
+      
+        // if(in_array('2', $id_arr)){
+        //     dd("ID found");
+        // } else{
+        //     dd("ID not found");
+        // }
+
 
         return view('my_products', compact('products'));
     }
@@ -229,4 +248,6 @@ class HomeController extends Controller
             return redirect('/hire')->with('error', 'There was an error. Please Try Again!');
         }
     }
+
+
 }

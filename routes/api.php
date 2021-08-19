@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('validation', [App\Http\Controllers\Payments\Mpesa\MPESAResponsesController::class, 'validation']);
+
+Route::post('confirmation', [App\Http\Controllers\Payments\Mpesa\MPESAResponsesController::class, 'confirmation']);
+
+Route::post('simulate', [App\Http\Controllers\Payments\Mpesa\MpesaController::class, 'simulateTransaction'])->name('simulate');
+

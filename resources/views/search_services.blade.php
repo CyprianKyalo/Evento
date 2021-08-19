@@ -152,57 +152,40 @@
             width: 90%;
         }
 
-        /* consumer */
-        #user-mode-navigations {
-            padding: 30px;
-        }
-
-        #user-mode-navigations ul {
-            padding: 0;
-        }
-
-        #user-mode-navigations ul li {
-            list-style: none;
-            display: inline-block;
-        }
-
-        #user-mode-navigations ul li a {
-            text-decoration: none;
-        }
-
-        article h1 {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        article h3 {
-            margin: 15px 0;
-            padding-left: 20px;
-        }
-
-        #consumer-items {
+        /* equipments and services */
+        #item-equipment {
             display: flex;
             flex-wrap: wrap;
             padding-top: 80px;
         }
 
-        /* vendor */
-        #vendor-item-description {
-            border: 1px solid #ccc;
-            margin-left: 10px;
+        .card-link {
+            text-decoration: none;
+            width: 30%;
+            margin-right: auto;
+            margin-left: auto;
         }
 
-        .vendor-buttons {
+        .card {
+            border: 1px solid #ccc;
+            width: 100%;
+            text-align: center;
+        }
+
+        .card:hover {
+            border: 1px solid #000;
+        }
+
+        .card ul {
+            padding: 0;
             display: inline-block;
-            width: 20%;
-            margin-left: 9px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 0;
         }
 
-        .vendor-buttons:hover {
-            background-color: #fff;
+        .card ul li {
+            list-style: none;
+            display: block;
+            padding: 10px;
+            color: #000;
         }
 
         /* Dropdown Button */
@@ -280,24 +263,29 @@
             </ul>
         </aside>
         <article>
-            <nav id="user-mode-navigations">
-                <ul>
-                    <li><a href="{{route('activity')}}">Consumer</a></li>
-                    <li>/</li>
-                    <li><a href="{{route('vendor')}}">Vendor</a></li>
-                </ul>
-            </nav>
-            <h1>Welcome to your vendor mode.</h1>
-            <h3>Here's where you can hire out or sell items you have to other customers.</h3>
-            <section id="consumer-items">
-                <form class="vendor-info" action="">
-                    <input type="text" placeholder="Item/Service name">
-                    <textarea name="item-description" id="vendor-item-description" cols="79" rows="10" placeholder="description"></textarea>
-                    <label for="profile" style="margin: 10px;">Item/Service Image</label>
-                    <input type="file" name="item-service" id="">
-                    <button class="vendor-buttons">Hire out</button>
-                    <button class="vendor-buttons">Sell</button>
-                </form>
+            <h3>Results for services</h3>
+
+            {{-- Search tool for searching for a service --}}
+            <form action="{{route('search_serv')}}" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search" style="width: 200px !important">
+                </div>
+                <button class="btn btn-primary">Search</button>
+            </form>
+
+            {{-- Section detailing the products --}}
+            <section id="item-equipment">
+                @foreach($products as $product)
+                <a href="{{route('products.show', $product->product_id)}}" class="card-link">
+                    <div class="card equipment">
+                        <ul>
+                            <li><span><img src="/uploads/products/{{$product->image_path}}" alt=""></span></li>
+                            <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
+                            <li><span class="card-info-labels">Vendor:</span> {{$product->username}}</li>
+                        </ul>
+                    </div>
+                </a>
+                @endforeach
             </section>
         </article>
     </main>
