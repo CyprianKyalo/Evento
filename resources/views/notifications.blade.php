@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     <style>
         /* general styling */
         * {
@@ -144,48 +144,20 @@
             width: 577px;
             color: #fff;
             background-color: #000;
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+        }
+
+        #profile-button:hover {
+            color: #000;
+            background-color: #fff;
         }
 
         #profile-activity {
             display: flex;
             padding: 20px;
             width: 90%;
-        }
-
-        /* equipments and services */
-        #item-equipment {
-            display: flex;
-            flex-wrap: wrap;
-            padding-top: 80px;
-        }
-
-        .card-link {
-            text-decoration: none;
-            width: 30%;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .card {
-            border: 1px solid #ccc;
-            width: 100%;
-            text-align: center;
-        }
-
-        .card:hover {
-            border: 1px solid #000;
-        }
-
-        .card ul {
-            padding: 0;
-            display: inline-block;
-        }
-
-        .card ul li {
-            list-style: none;
-            display: block;
-            padding: 10px;
-            color: #000;
         }
 
         /* Dropdown Button */
@@ -229,7 +201,6 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
-
     </style>
 </head>
 <body>
@@ -255,6 +226,7 @@
     </header>
     <main>
         <aside>
+            {{-- <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img"> --}}
             <img src="/uploads/avatars/{{Auth::user()->image}}" class="profile-img profile-article-img">
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
@@ -264,72 +236,28 @@
             </ul>
         </aside>
         <article>
-            @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-        <br>
-        @endif
 
+            <section id="">
+                <div class="card" style="width: 40rem">
+                    <div class="card-header">Notifications</div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                @foreach($notifications as $notification)
+                                <li class="list-group-item">
+                                    @if($notification->type == 'App\Notifications\AlertNotification')
+                                        {{$notification->data['product_name']}} was hired
 
-    <div class="col-sm-12">
-        @if(session()->get('success'))
-        <div class="alert alert-success">
-            {{session()->get('success')}}
-        </div>
-        @endif
-    </div>
-            <h1>My products</h1>
-            <section id="item-equipment">
-                
-                {{-- <a href="{{route('products.edit', $product->product_id)}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><img src="/uploads/products/{{$product->image_path}}" alt=""></li>
-                            <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
-                            
-                        </ul>
-                    </div>
-                </a> --}}
+                                        <a href="{{-- {{route('products.show', $notification->data['product_id'])}} --}}{{route('hired_products')}}" class="btn float-right btn-sm btn-info">View Product</a>
+                                    @endif
+                                </li>
+                                @endforeach
+                           </ul>
+                   </div>  
 
-                <table class="table table-striped" style="text-align: center;">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                            
-                        </tr>
-                    </thead>
-                    
-                    @foreach($products as $product)
-                    <tbody>
-                        <tr>
-                            <td><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 80xp"></td>
-                            <td>{{$product->name}}</td>
-                            <td>{{$product->description}}</td>
-                            <td>{{$product->category}}</td>
-                            <td>{{$product->price}}</td>
-                            <td><a href="{{route('products.edit', $product->product_id)}}" class="btn btn-primary">Edit</a></td>
-                            <form action="{{route('products.destroy', $product->product_id)}}" method="POST">
-                                    {{csrf_field()}}
-                                    {{method_field('DELETE')}}
-                                    <td><button type="submit" class="btn btn-danger">Delete</button></td>
-                                </form>                      
-                        </tr>
-                    </tbody>
-                    
-                    @endforeach
-                </table>
-                {{-- @endforeach --}}
+                </div>
+               
+
+               
             </section>
         </article>
     </main>

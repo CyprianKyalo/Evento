@@ -10,6 +10,8 @@ use App\Models\HiredProduct;
 use App\Models\VendorDetails;
 use Illuminate\Support\Facades\DB;
 use Image;
+use App\Notifications\AlertNotification;
+use Notification;
 
 
 class HomeController extends Controller
@@ -30,7 +32,19 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
-        return view('home');
+        $user = User::find(Auth::id());
+        // $notifications = new AlertNotification;
+
+        // $notifications = $user->notifications;
+
+        //dd(auth()->user());
+        // foreach ($user->notifications as $notification) {
+        //     echo $notification->type;
+        // }
+
+        // dd($notifications);
+
+        return view('index', compact('user'));
     }
 
     public function view_profile() {
@@ -118,7 +132,7 @@ class HomeController extends Controller
                         
                         ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username')
                         ->where('hired_products.user_id', Auth::id())
-                        ->where('hired_products.status', '=', 'ongoing')
+                        ->where('hired_products.status', '=', 'closed')
                         
                         ->get();
 
@@ -241,12 +255,38 @@ class HomeController extends Controller
         $hiredproduct->duration = $request->get('duration');
         $hiredproduct->hired_ended_at = $request->get('end');
         $hiredproduct->total_price = $request->get('total_price');
-        $hiredproduct->status = 'ongoing';
-
-        // dd($hiredproduct);
+        $hiredproduct->status = 'pending';
+       
 
         if ($hiredproduct->save()) {
-            return redirect('/activity')->with('success', 'Product hired successfully!');
+            $product = DB::table('products')
+                    ->join('hired_products', 'products.product_id', '=', 'hired_products.product_id')
+                    
+                    ->where('hired_products.product_id', $prod_id)
+                    // ->get()
+                    // ->latest()->first();
+                    ->orderBy('hired_products.created_at', 'DESC')
+                
+                    ->first();
+
+
+            // $product = Product::find($product_id);
+            // dd($product);
+
+            $id = DB::table('user_products')
+                        // ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->select('users.id')
+                        ->where('user_products.product_id', '=', $prod_id)
+                        ->value('users.id');
+
+        //dd($user);
+        // dd($product);
+
+        $user = User::find($id);
+        $user->notify(new AlertNotification($product));
+        
+        return redirect('/activity')->with('success', 'Product hired successfully!');
         } else {
             return redirect('/hire')->with('error', 'There was an error. Please Try Again!');
         }
@@ -283,4 +323,173 @@ class HomeController extends Controller
         return view('vendor_profile', compact('vendor', 'products', 'product'));
     }
 
+    //Create a notifications function
+    public function notifications() {
+        auth()->user()->unreadNotifications->markAsRead();
+
+        return view('notifications', [
+            'notifications' => auth()->user()->notifications()->paginate(5)
+        ]);
+    }
+
+    public function pending() {
+        if (Auth::user()->hasRole('administrator')) {
+            $users = User::all();
+            // dd($users);
+            return view('admin.user_admin.index', compact('users'));
+
+        } elseif (Auth::user()->hasRole('user')) {
+
+
+            $products = DB::table('hired_products')
+                        ->join('products', 'hired_products.product_id', '=', 'products.product_id')
+                        ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.duration', 'hired_products.hired_ended_at', 'hired_products.hired_at')
+                        ->where('hired_products.user_id', Auth::id())
+                        ->where('hired_products.status', '=', 'pending')
+                        ->orderBy('hired_products.created_at', 'DESC')
+                        ->get();
+
+                        // dd($products);
+
+            return view('items.pending', compact('products'));
+        }
+    }
+
+    public function accepted() {
+        if (Auth::user()->hasRole('administrator')) {
+            $users = User::all();
+            // dd($users);
+            return view('admin.user_admin.index', compact('users'));
+
+        } elseif (Auth::user()->hasRole('user')) {
+
+
+            $products = DB::table('hired_products')
+                        ->join('products', 'hired_products.product_id', '=', 'products.product_id')
+                        ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
+                        ->join('users', 'user_products.user_id', '=', 'users.id')
+                        
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.duration', 'hired_products.hired_ended_at', 'hired_products.hired_at')
+                        ->where('hired_products.user_id', Auth::id())
+                        ->where('hired_products.status', '=', 'confirmed')
+                        ->orderBy('hired_products.created_at', 'DESC')
+                        ->get();
+
+            return view('items.accepted', compact('products'));
+        }
+    }
+
+    public function declined() {
+        if (Auth::user()->hasRole('administrator')) {
+            $users = User::all();
+            // dd($users);
+            return view('admin.user_admin.index', compact('users'));
+
+        } elseif (Auth::user()->hasRole('user')) {
+
+
+            
+            $products = DB::table('hired_products')
+                        ->join('products', 'hired_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'hired_products.user_id', '=', 'users.id')
+                        
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.hired_at', 'hired_products.duration', 'hired_products.hired_ended_at')
+                        ->where('hired_products.user_id', Auth::id())
+                        ->where('hired_products.status', '=', 'declined')
+                        
+                        ->get();
+
+            return view('items.declined', compact('products'));
+        }
+    }
+
+    public function cancelled() {
+        if (Auth::user()->hasRole('administrator')) {
+            $users = User::all();
+            // dd($users);
+            return view('admin.user_admin.index', compact('users'));
+
+        } elseif (Auth::user()->hasRole('user')) {
+
+
+            
+            $products = DB::table('hired_products')
+                        ->join('products', 'hired_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'hired_products.user_id', '=', 'users.id')
+                        
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.hired_at', 'hired_products.duration', 'hired_products.hired_ended_at')
+                        ->where('hired_products.user_id', Auth::id())
+                        ->where('hired_products.status', '=', 'cancelled')
+                        
+                        ->get();
+
+            return view('items.cancelled', compact('products'));
+        }
+    }
+
+    public function history() {
+        return view('history');
+    }
+
+
+    //Obtain the products that are hired
+    public function products_hired() {
+        $products = DB::table('hired_products')
+                        ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
+                        ->join('products', 'hired_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'hired_products.user_id', '=', 'users.id')
+                        ->where('user_products.user_id', Auth::id())
+                        ->where('hired_products.status', '=', 'pending')
+                        ->orderBy('hired_products.created_at', 'DESC')
+                        ->paginate(5);
+
+        // dd($products);
+        // return view('hired_products', [
+        //     'products' => $products->paginate(5)
+        // ]);
+        return view('hired_products', compact('products'));
+    }
+
+
+    //Confirm a product is available for hire
+    public function confirm($hire_on) {
+        // $product = Product::find($id);
+        $hiredproduct = new HiredProduct;
+
+        $hiredproduct->status = 'confirmed';
+
+        $affected = DB::table('hired_products')
+                        ->where('hired_at', $hire_on)
+                        ->update(['status' => 'confirmed']);
+
+        // dd($affected);
+
+
+
+        //$product->update('status' => 0);
+        if($affected) {
+            // DB::table('hired_products')
+            //         ->where('product_id', $id)
+            //         ->update(['status' => 'confirmed']);
+
+            return redirect()->route('hired_products')->with('success', 'Offer Confirmed successfully!!');
+        } else {
+            return redirect()->route('hired_products')->with('error', 'There was an error! Please Try Again');
+        }
+
+        
+        
+        // if ($product->save()) {
+        //     DB::table('products')
+        //                 ->where('product_id', '=', $id)
+        //                 ->update(['status' => 0]);
+
+        //     return redirect()->route('my_products')->with('success', 'Product Deleted successfully!');
+        // } else {
+        //     return redirect()->route('my_products')->with('error', 'There was an error deleting the product!');
+        // }
+    }
 }

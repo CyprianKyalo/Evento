@@ -16,6 +16,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -76,6 +79,17 @@
                                 </li>
 
                             @elseif(Auth::user()->hasRole('user'))
+
+                            <li class="nav-item">
+                                            <a href="{{route('notifications')}}" class="nav-link">
+                                                <span class="badge badge-info"><i class="fa fa-bell"></i>
+                                            {{$user->unreadNotifications->count()}} Unread Notifications
+                                            </span>
+                                            </a>
+                                        </li>
+
+                            
+
                                 <img src="/uploads/avatars/{{Auth::user()->image}}" style="width: 50px; height: 50px; border-radius: 50%;">
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -95,6 +109,8 @@
 
                                     </div>
                                 </li>
+
+
                             @endif    
                         @endguest
                     </ul>

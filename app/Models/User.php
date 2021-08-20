@@ -10,6 +10,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Laratrust\Traits\LaratrustUserTrait;
 use Illuminate\Database\Eloquent\Model;
 
+
 class User extends Authenticatable implements MustVerifyEmail 
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;

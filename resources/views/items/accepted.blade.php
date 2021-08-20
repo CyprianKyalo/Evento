@@ -351,33 +351,24 @@
                             ?><a href="{{route('vendor_details')}}">Vendor</a><?php
                         }
 
-                        //$ids = array('1', '2');
-
-                        //if(in_array('4', $ids)) {
-                            //return 1;
-                          //  ?>{{-- <a href="{{route('products.create')}}">Vendor</a> --}}<?php
-                        //} else {
-                        //    ?>{{-- <a href="{{route('vendor_details')}}">Vendor</a> --}}<?php
-                        //}
                     ?></li>
                 </ul>
             </nav>
 
-            <h1>Welcome to your consumer mode.</h1>
-            <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3>
+            <h1>Accepted Offers</h1>
+            {{-- <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3> --}}
 
             <a href="{{route('pending')}}" class="btn btn-primary">Pending</a>
             <a href="{{route('accepted')}}" class="btn btn-primary">Accepted</a>
             <a href="{{route('declined')}}" class="btn btn-primary">Declined</a>
             <a href="{{route('cancelled')}}" class="btn btn-primary">Cancelled</a>
-            <a href="{{route('history')}}" class="btn btn-primary">History</a>
 
             <section id="consumer-items">
 
 
 
                 @foreach($products as $product)
-                <div class="card-link">
+                {{-- <div class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span><a href="{{route('products.show', $product->product_id)}}"><img src="/uploads/products/{{$product->image_path}}" alt=""></a></span></li>
@@ -387,25 +378,36 @@
                             <li><span class="card-info-labels">by </span> <a href="{{route('vendor_profile', $product->id)}}">{{$product->username}}</a></li>
                         </ul>
                     </div>
-                </div>
-                
+                </div> --}}
+
+                    <table class="table">
+                      <thead style="text-align: center;">
+                        <tr>
+                          <th scope="col">Image</th>
+                          <th scope="col">Product Name</th>
+                          <th scope="col">Vendor</th>
+                          <th scope="col">Duration</th>
+                          <th scope="col">Hired On</th>
+                          <th scope="col">Hire ending at</th>
+                          <th scope="col">Duration</th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody style="text-align: center;">
+                        <tr>
+                          <th scope="row"><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 100px"></th>
+                          <td>{{$product->name}}</td>
+                          <td>{{$product->username}}</td>
+                          <td>{{$product->duration}}</td>
+                          <td>{{$product->hired_at}}</td>
+                          <td>{{$product->hired_ended_at}}</td>
+                          <td>{{$product->duration}}</td>
+                          
+                        </tr>
+                      </tbody>
+                    </table>                
                 @endforeach
-                {{-- <a href="{{route('products.show')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
-                <a href="{{route('products.show')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a> --}}
+                
             </section>
         </article>
     </main>

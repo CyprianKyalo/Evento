@@ -51,6 +51,16 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::get('/vendor_details', [App\Http\Controllers\HomeController::class, 'vendor_details'])->name('vendor_details');
 	Route::post('/update_vendor', [App\Http\Controllers\HomeController::class, 'update_vendor'])->name('update_vendor');
 	Route::get('/vendor_profile/{id}', [App\Http\Controllers\HomeController::class, 'vendor_profile'])->name('vendor_profile');
+	Route::get('/notifications',  [App\Http\Controllers\HomeController::class, 'notifications'])->name('notifications');
+	Route::get('/pending', [App\Http\Controllers\HomeController::class, 'pending'])->name('pending');
+	Route::get('/accepted', [App\Http\Controllers\HomeController::class, 'accepted'])->name('accepted');
+	Route::get('/declined', [App\Http\Controllers\HomeController::class, 'declined'])->name('declined');
+	Route::get('/cancelled', [App\Http\Controllers\HomeController::class, 'cancelled'])->name('cancelled');
+	Route::get('/history', [App\Http\Controllers\HomeController::class, 'pending'])->name('history');
+	Route::get('/hired_products', [App\Http\Controllers\HomeController::class, 'products_hired'])->name('hired_products');
+	Route::get('/confirm/{id}', [App\Http\Controllers\HomeController::class, 'confirm'])->name('confirm');
+
+
 
 	Route::get('/daraja', [App\Http\Controllers\Payments\Mpesa\MpesaController::class, 'index'])->name('daraja');
 	Route::post('get-token', [App\Http\Controllers\Payments\Mpesa\MpesaController::class, 'getAccessToken']);

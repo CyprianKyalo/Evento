@@ -310,6 +310,7 @@
                 <br>
             @endif --}}
 
+
             @if($errors->any())
             @foreach($errors->all() as $error)
                 <div class="alert alert-danger">
@@ -322,6 +323,14 @@
                 @if(session()->get('success'))
                 <div class="alert alert-success">
                     {{session()->get('success')}}
+                </div>
+                @endif
+            </div>
+
+            <div class="col-sm-12">
+                @if(session()->get('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{session()->get('error')}}
                 </div>
                 @endif
             </div>
@@ -351,33 +360,28 @@
                             ?><a href="{{route('vendor_details')}}">Vendor</a><?php
                         }
 
-                        //$ids = array('1', '2');
-
-                        //if(in_array('4', $ids)) {
-                            //return 1;
-                          //  ?>{{-- <a href="{{route('products.create')}}">Vendor</a> --}}<?php
-                        //} else {
-                        //    ?>{{-- <a href="{{route('vendor_details')}}">Vendor</a> --}}<?php
-                        //}
                     ?></li>
                 </ul>
             </nav>
 
-            <h1>Welcome to your consumer mode.</h1>
-            <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3>
-
+            <h1>Hired Products</h1>
+            {{-- <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3> --}}
+{{-- 
             <a href="{{route('pending')}}" class="btn btn-primary">Pending</a>
             <a href="{{route('accepted')}}" class="btn btn-primary">Accepted</a>
             <a href="{{route('declined')}}" class="btn btn-primary">Declined</a>
-            <a href="{{route('cancelled')}}" class="btn btn-primary">Cancelled</a>
-            <a href="{{route('history')}}" class="btn btn-primary">History</a>
+            <a href="{{route('cancelled')}}" class="btn btn-primary">Cancelled</a> --}}
+
+            <a href="#" class="btn btn-primary">Confirmed</a>
+            <a href="#" class="btn btn-primary">Declined</a>
+            <a href="#" class="btn btn-primary">Completed</a>
 
             <section id="consumer-items">
 
 
 
                 @foreach($products as $product)
-                <div class="card-link">
+                {{-- <div class="card-link">
                     <div class="card equipment">
                         <ul>
                             <li><span><a href="{{route('products.show', $product->product_id)}}"><img src="/uploads/products/{{$product->image_path}}" alt=""></a></span></li>
@@ -387,25 +391,41 @@
                             <li><span class="card-info-labels">by </span> <a href="{{route('vendor_profile', $product->id)}}">{{$product->username}}</a></li>
                         </ul>
                     </div>
-                </div>
-                
+                </div> --}}
+
+                    <table class="table">
+                      <thead style="text-align: center;">
+                        <tr>
+                          <th scope="col">Image</th>
+                          <th scope="col">Product Name</th>
+                          <th scope="col">Consumer</th>
+                          <th scope="col">Hired On</th>
+                          <th scope="col">Hire ending at</th>
+                          <th scope="col">Duration</th>
+                          <th scope="col">Total Price</th>
+                          <th scope="col">Confirm</th>
+                          <th scope="col">Decline</th>
+                        </tr>
+                      </thead>
+                      <tbody style="text-align: center;">
+                        <tr>
+                          <th scope="row"><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 100px"></th>
+                          <td>{{$product->name}}</td>
+                          <td>{{$product->username}}</td>
+                          <td>{{$product->hired_at}}</td>
+                          <td>{{$product->hired_ended_at}}</td>
+                          <td>{{$product->duration}}</td>
+                          <td>Ksh. {{$product->total_price}}</td>
+                          <td><a href="{{route('confirm', $product->hired_at)}}" class="btn btn-primary">Confirm</a></td>
+                          <td><a href="#" class="btn btn-danger">Decline</a></td>
+                        </tr>
+                      </tbody>
+                    </table>                
                 @endforeach
-                {{-- <a href="{{route('products.show')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a>
-                <a href="{{route('products.show')}}" class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span class="card-info-labels">Equipment:</span> name</li>
-                            <li><span class="card-info-labels">Vendor:</span> username</li>
-                        </ul>
-                    </div>
-                </a> --}}
+
+                <div class="d-flex justify-content-center" style="align-items: center; font-size: 10px">
+                    {!! $products->links() !!}
+                </div>
             </section>
         </article>
     </main>
