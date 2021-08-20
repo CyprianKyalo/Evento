@@ -301,11 +301,33 @@
                     {{-- {{method_field('PUT')}} --}}
 
                     
-                    <label for="name" style="margin: 10px;">Date of Hire</label>
-                    <input type="date" placeholder="Item/Service name" name="date_of_hire">
+                    <label for="date_of_hire" style="margin: 10px;">Date of Hire</label>
+                    <input type="date" name="date_of_hire" id="date_of_hire">
+
+                    <label for="start_time">Choose the start time</label>
+                    <input type="time" name="start_time" id="start_time">
+
+                    <label for="end_date">End Date of Hire</label>
+                    <input type="date" name="end_date" id="end_date">
+
+                    <label for="end_time">Choose the completion time</label>
+                    <input type="time" name="end_time" id="end_time">
+
+
+                    <input type="text" hidden value="{{$price}}" id="item_price">
+                    <h4 id="price"></h4>
     
-                    <label for="description" style="margin: 10px;">Duration</label>
-                    <input type="text" name="duration" placeholder="Eg. 5 Hours, 2 Days">
+                    {{-- <label for="description" style="margin: 10px;">Duration</label>
+                    <input type="text" name="duration" placeholder="Eg. 5 Hours, 2 Days" id="duration">
+ --}}
+                    <h4 id="dur"></h4>
+                    <input type="text" id="duration" name="duration" value="" hidden>
+                    <input type="text" name="start" id="start" value="" hidden>
+                    <input type="text" name="end" id="end" value="" hidden>
+                    <input type="text" name="total_price" id="total_price" value="" hidden>
+
+
+                    <button id="generate">Generate Duration</button>
 
                     <input type="text" hidden value="{{$product->product_id}}" name="id">
 
@@ -323,10 +345,53 @@
                     </form> --}}
 
                     {{-- <button type="button" class="btn btn-danger productdeletebtn">Delete</button> --}}
+
                 </form>
             </section>
         </article>
     </main>
+
+    <script>
+        document.getElementById('generate').addEventListener('click', (event) => {
+        
+            event.preventDefault();
+
+            var startDate = document.getElementById('date_of_hire').value;
+            var startTime = document.getElementById('start_time').value;
+
+            var endDate = document.getElementById('end_date').value;
+            var endTime = document.getElementById('end_time').value;
+      
+            const start = new Date(startDate + ' ' + startTime);
+            const end = new Date(endDate + ' ' + endTime);
+            
+            var duration = Math.abs(end - start);
+            var minutes = duration/60000;
+            var hours = minutes/60;
+
+            var itprice = document.getElementById('item_price').value;
+            var totprice = itprice * hours;
+
+            var starting = document.getElementById('start').value = startDate + ' ' + startTime;
+            var ending = document.getElementById('end').value = endDate + ' ' + endTime;
+
+            if (start > end) {
+                alert('Start time cannot be greater than end time');
+            } else {
+                var totprice = totprice.toFixed(2);
+                document.getElementById('price').innerHTML = 'Ksh. ' + totprice;
+
+                document.getElementById('total_price').value = totprice;
+
+                var hours = hours.toFixed(2);
+                document.getElementById('dur').innerHTML = hours + ' hours'; 
+
+                document.getElementById('duration').value = hours + ' hours'; 
+            }
+
+        });
+      
+    </script>
 
 
     <footer>

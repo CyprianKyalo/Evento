@@ -116,7 +116,7 @@ class HomeController extends Controller
                         ->join('products', 'hired_products.product_id', '=', 'products.product_id')
                         ->join('users', 'hired_products.user_id', '=', 'users.id')
                         
-                        ->select('products.product_id', 'products.name', 'products.image_path')
+                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username')
                         ->where('hired_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'ongoing')
                         
@@ -207,13 +207,23 @@ class HomeController extends Controller
         $id = $request->get('id');
         $product = Product::find($id);
 
-        return view('hire', compact('product'));
+        $price = DB::table('products')
+                    ->join('user_products', 'products.product_id', '=', 'user_products.product_id')
+                    ->select('user_products.price')
+                    ->where('user_products.product_id', $id)
+                    ->value('user_products.price');
+        // dd(gettype($price));
+
+        return view('hire', compact('product', 'price'));
     }
 
     public function hire_product(Request $request) {
         $this->validate($request, [
-            'date_of_hire' => 'required',
+            'start' => 'required',
+            'end' => 'required',
             'duration' => 'required',
+            'total_price' => 'required',
+            
         ]);
 
         $user_id = Auth::id();
@@ -227,10 +237,13 @@ class HomeController extends Controller
         $hiredproduct = new HiredProduct;
         $hiredproduct->user_id = $user_id;
         $hiredproduct->product_id = $prod_id;
-        $hiredproduct->hired_at = $request->get('date_of_hire');
+        $hiredproduct->hired_at = $request->get('start');
         $hiredproduct->duration = $request->get('duration');
+        $hiredproduct->hired_ended_at = $request->get('end');
+        $hiredproduct->total_price = $request->get('total_price');
         $hiredproduct->status = 'ongoing';
 
+        // dd($hiredproduct);
 
         if ($hiredproduct->save()) {
             return redirect('/activity')->with('success', 'Product hired successfully!');

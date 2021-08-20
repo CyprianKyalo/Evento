@@ -18,6 +18,7 @@ class HiredProduct extends Model
     	'hired_at',
     	'duration',
     	'hire_ended_at',
+        'total_price',
     	'status',    	
     ];
 

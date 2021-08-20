@@ -367,22 +367,18 @@
             <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3>
             <section id="consumer-items">
                 @foreach($products as $product)
-                {{-- <?php
-                    $new_array = array_merge($products, $username);
-                ?> --}}
-                {{-- @foreach($new_array as $product) --}}
-                {{-- @foreach($username as $user) --}}
-            
-                <a href="{{route('products.show', $product->product_id)}}" class="card-link">
+                <div class="card-link">
                     <div class="card equipment">
                         <ul>
-                            <li><img src="/uploads/products/{{$product->image_path}}" alt=""></li>
+                            <li><span><a href="{{route('products.show', $product->product_id)}}"><img src="/uploads/products/{{$product->image_path}}" alt=""></a></span></li>
                             <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
-                            {{-- <li><span class="card-info-labels">Vendor:</span> {{$user}}</li> --}}
+                             <li><span class="card-info-labels"></span> {{$product->description}}</li>
+                              <li><span class="card-info-labels"></span><img src="/uploads/avatars/{{$product->image}}" alt="" style="width: 50px; height: 50px; border-radius: 50%"></li>
+                            <li><span class="card-info-labels">by </span> <a href="{{route('vendor_profile', $product->id)}}">{{$product->username}}</a></li>
                         </ul>
                     </div>
-                </a>
-                {{-- @endforeach --}}
+                </div>
+                
                 @endforeach
                 {{-- <a href="{{route('products.show')}}" class="card-link">
                     <div class="card equipment">

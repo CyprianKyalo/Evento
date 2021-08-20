@@ -22,6 +22,7 @@ class CreateHiredProductsTable extends Migration
             $table->dateTime('hired_at')->default(DB::raw('NOW()'));
             $table->string('duration');
             $table->string('hired_ended_at')->nullable();
+            $table->string('total_price');
             $table->string('status')->nullable();
             $table->timestamps();
         });
