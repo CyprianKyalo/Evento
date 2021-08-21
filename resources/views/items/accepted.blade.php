@@ -367,7 +367,7 @@
 
 
 
-                @foreach($products as $product)
+                
                 {{-- <div class="card-link">
                     <div class="card equipment">
                         <ul>
@@ -380,34 +380,61 @@
                     </div>
                 </div> --}}
 
+                    <?php $total_price = 0;?>
+
+
                     <table class="table">
                       <thead style="text-align: center;">
                         <tr>
                           <th scope="col">Image</th>
                           <th scope="col">Product Name</th>
                           <th scope="col">Vendor</th>
-                          <th scope="col">Duration</th>
                           <th scope="col">Hired On</th>
                           <th scope="col">Hire ending at</th>
                           <th scope="col">Duration</th>
+                          <th scope="col">Total Price</th>
                           
                         </tr>
                       </thead>
+                      @foreach($products as $product)
                       <tbody style="text-align: center;">
                         <tr>
                           <th scope="row"><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 100px"></th>
                           <td>{{$product->name}}</td>
                           <td>{{$product->username}}</td>
-                          <td>{{$product->duration}}</td>
                           <td>{{$product->hired_at}}</td>
                           <td>{{$product->hired_ended_at}}</td>
                           <td>{{$product->duration}}</td>
+                          <td>Ksh. {{$product->total_price}}</td>
+
+                          <?php $total_price += $product->total_price?>
+
+                          {{-- <form action="{{route('hire', $product->product_id)}}" method="GET">
+                            {{csrf_field()}}
+                            <input type="text" hidden value="{{$product->product_id}}" name="id">
+                            <td><a href="{{route('hire', $product->product_id)}}" class="btn btn-primary">Edit</a></td>
+                            <td><button class="btn btn-primary">Edit</button></td>
+                            
+                            </form>
                           
+                          <td><a href="#" class="btn btn-danger">Cancel</a></td> --}}
                         </tr>
                       </tbody>
+                      @endforeach
+                      <tfoot style="text-align: center;">
+                          <tr>
+                              <td style="font-size: 25px; ">Total</td>
+                               <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td style="font-size: 25px">Ksh. <?php echo number_format((float)$total_price, 2, '.', '');?></td>
+                          </tr>
+                      </tfoot>
                     </table>                
-                @endforeach
                 
+
             </section>
         </article>
     </main>

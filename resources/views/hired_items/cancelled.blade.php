@@ -310,6 +310,7 @@
                 <br>
             @endif --}}
 
+
             @if($errors->any())
             @foreach($errors->all() as $error)
                 <div class="alert alert-danger">
@@ -322,6 +323,14 @@
                 @if(session()->get('success'))
                 <div class="alert alert-success">
                     {{session()->get('success')}}
+                </div>
+                @endif
+            </div>
+
+            <div class="col-sm-12">
+                @if(session()->get('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{session()->get('error')}}
                 </div>
                 @endif
             </div>
@@ -355,19 +364,24 @@
                 </ul>
             </nav>
 
-            <h1>Pending Offers</h1>
+            <h1>Declined Offers</h1>
             {{-- <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3> --}}
-
+{{-- 
             <a href="{{route('pending')}}" class="btn btn-primary">Pending</a>
             <a href="{{route('accepted')}}" class="btn btn-primary">Accepted</a>
             <a href="{{route('declined')}}" class="btn btn-primary">Declined</a>
-            <a href="{{route('cancelled')}}" class="btn btn-primary">Cancelled</a>
+            <a href="{{route('cancelled')}}" class="btn btn-primary">Cancelled</a> --}}
+
+            <a href="{{route('hired_products')}}" class="btn btn-primary">Offers</a>
+            <a href="{{route('hired_accepted')}}" class="btn btn-primary">Confirmed</a>
+            <a href="{{route('hired_declined')}}" class="btn btn-primary">Declined</a>
+            <a href="{{route('hired_completed')}}" class="btn btn-primary">Completed</a>
 
             <section id="consumer-items">
 
 
 
-                
+                @foreach($products as $product)
                 {{-- <div class="card-link">
                     <div class="card equipment">
                         <ul>
@@ -380,24 +394,20 @@
                     </div>
                 </div> --}}
 
-                    <?php $total_price = 0;?>
-
-
                     <table class="table">
                       <thead style="text-align: center;">
                         <tr>
                           <th scope="col">Image</th>
                           <th scope="col">Product Name</th>
-                          <th scope="col">Vendor</th>
+                          <th scope="col">Consumer</th>
                           <th scope="col">Hired On</th>
                           <th scope="col">Hire ending at</th>
                           <th scope="col">Duration</th>
+                          {{-- <th scope="col">Location</th> --}}
                           <th scope="col">Total Price</th>
-                          <th scope="col">Edit</th>
-                          <th scope="col">Cancel</th>
+                         
                         </tr>
                       </thead>
-                      @foreach($products as $product)
                       <tbody style="text-align: center;">
                         <tr>
                           <th scope="row"><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 100px"></th>
@@ -407,35 +417,15 @@
                           <td>{{$product->hired_ended_at}}</td>
                           <td>{{$product->duration}}</td>
                           <td>Ksh. {{$product->total_price}}</td>
-
-                          <?php $total_price += $product->total_price?>
-
-                          <form action="{{route('hire', $product->product_id)}}" method="GET">
-                            {{csrf_field()}}
-                            <input type="text" hidden value="{{$product->product_id}}" name="id">
-                            {{-- <td><a href="{{route('hire', $product->product_id)}}" class="btn btn-primary">Edit</a></td> --}}
-                            <td><button class="btn btn-primary">Edit</button></td>
-                            
-                            </form>
                           
-                          <td><a href="#" class="btn btn-danger">Cancel</a></td>
                         </tr>
                       </tbody>
-                      @endforeach
-                      <tfoot style="text-align: center;">
-                          <tr>
-                              <td style="font-size: 25px; ">Total</td>
-                               <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td style="font-size: 25px">Ksh. <?php echo number_format((float)$total_price, 2, '.', '');?></td>
-                          </tr>
-                      </tfoot>
                     </table>                
-                
+                @endforeach
 
+                <div class="d-flex justify-content-center" style="align-items: center; font-size: 10px">
+                    {!! $products->links() !!}
+                </div>
             </section>
         </article>
     </main>

@@ -371,16 +371,17 @@
             <a href="{{route('accepted')}}" class="btn btn-primary">Accepted</a>
             <a href="{{route('declined')}}" class="btn btn-primary">Declined</a>
             <a href="{{route('cancelled')}}" class="btn btn-primary">Cancelled</a> --}}
-
-            <a href="#" class="btn btn-primary">Confirmed</a>
-            <a href="#" class="btn btn-primary">Declined</a>
-            <a href="#" class="btn btn-primary">Completed</a>
+            <a href="{{route('hired_products')}}" class="btn btn-primary">Offers</a>
+            <a href="{{route('hired_accepted')}}" class="btn btn-primary">Confirmed</a>
+            <a href="{{route('hired_declined')}}" class="btn btn-primary">Declined</a>
+            <a href="{{route('hired_completed')}}" class="btn btn-primary">Completed</a>
 
             <section id="consumer-items">
 
+                <?php $total_price = 0;?>
 
 
-                @foreach($products as $product)
+                
                 {{-- <div class="card-link">
                     <div class="card equipment">
                         <ul>
@@ -407,6 +408,7 @@
                           <th scope="col">Decline</th>
                         </tr>
                       </thead>
+                      @foreach($products as $product)
                       <tbody style="text-align: center;">
                         <tr>
                           <th scope="row"><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 100px"></th>
@@ -416,16 +418,34 @@
                           <td>{{$product->hired_ended_at}}</td>
                           <td>{{$product->duration}}</td>
                           <td>Ksh. {{$product->total_price}}</td>
+
+                          <?php $total_price += $product->total_price?>
+
+
                           <td><a href="{{route('confirm', $product->hired_at)}}" class="btn btn-primary">Confirm</a></td>
                           <td><a href="#" class="btn btn-danger">Decline</a></td>
                         </tr>
                       </tbody>
+                        @endforeach
+                      <tfoot style="text-align: center;">
+                          <tr>
+                              <td style="font-size: 25px; ">Total</td>
+                               <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td style="font-size: 25px">Ksh. <?php echo number_format((float)$total_price, 2, '.', '');?></td>
+                          </tr>
+                      </tfoot>
                     </table>                
-                @endforeach
+               
 
-                <div class="d-flex justify-content-center" style="align-items: center; font-size: 10px">
+
+
+                {{-- <div class="d-flex justify-content-center" style="align-items: center; font-size: 10px">
                     {!! $products->links() !!}
-                </div>
+                </div> --}}
             </section>
         </article>
     </main>

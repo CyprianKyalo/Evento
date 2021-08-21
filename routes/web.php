@@ -59,6 +59,11 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::get('/history', [App\Http\Controllers\HomeController::class, 'pending'])->name('history');
 	Route::get('/hired_products', [App\Http\Controllers\HomeController::class, 'products_hired'])->name('hired_products');
 	Route::get('/confirm/{id}', [App\Http\Controllers\HomeController::class, 'confirm'])->name('confirm');
+	//hired_items routes for vendor interface
+	Route::get('/hired_accepted', [App\Http\Controllers\HomeController::class, 'hired_accepted'])->name('hired_accepted');
+	Route::get('/hired_declined', [App\Http\Controllers\HomeController::class, 'hired_declined'])->name('hired_declined');
+	Route::get('/hired_completed', [App\Http\Controllers\HomeController::class, 'hired_completed'])->name('hired_completed');
+	Route::get('/close/{id}', [App\Http\Controllers\HomeController::class, 'close'])->name('close');
 
 
 

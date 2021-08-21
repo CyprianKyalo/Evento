@@ -346,7 +346,7 @@ class HomeController extends Controller
                         ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
                         
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.duration', 'hired_products.hired_ended_at', 'hired_products.hired_at')
+                        // ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.duration', 'hired_products.hired_ended_at', 'hired_products.hired_at')
                         ->where('hired_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'pending')
                         ->orderBy('hired_products.created_at', 'DESC')
@@ -372,7 +372,7 @@ class HomeController extends Controller
                         ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
                         
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.duration', 'hired_products.hired_ended_at', 'hired_products.hired_at')
+                        // ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.duration', 'hired_products.hired_ended_at', 'hired_products.hired_at')
                         ->where('hired_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'confirmed')
                         ->orderBy('hired_products.created_at', 'DESC')
@@ -396,7 +396,7 @@ class HomeController extends Controller
                         ->join('products', 'hired_products.product_id', '=', 'products.product_id')
                         ->join('users', 'hired_products.user_id', '=', 'users.id')
                         
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.hired_at', 'hired_products.duration', 'hired_products.hired_ended_at')
+                        // ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.hired_at', 'hired_products.duration', 'hired_products.hired_ended_at')
                         ->where('hired_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'declined')
                         
@@ -420,7 +420,7 @@ class HomeController extends Controller
                         ->join('products', 'hired_products.product_id', '=', 'products.product_id')
                         ->join('users', 'hired_products.user_id', '=', 'users.id')
                         
-                        ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.hired_at', 'hired_products.duration', 'hired_products.hired_ended_at')
+                        // ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.hired_at', 'hired_products.duration', 'hired_products.hired_ended_at')
                         ->where('hired_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'cancelled')
                         
@@ -444,7 +444,8 @@ class HomeController extends Controller
                         ->where('user_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'pending')
                         ->orderBy('hired_products.created_at', 'DESC')
-                        ->paginate(5);
+                        // ->paginate(5));
+                        ->get();
 
         // dd($products);
         // return view('hired_products', [
@@ -471,25 +472,85 @@ class HomeController extends Controller
 
         //$product->update('status' => 0);
         if($affected) {
-            // DB::table('hired_products')
-            //         ->where('product_id', $id)
-            //         ->update(['status' => 'confirmed']);
 
             return redirect()->route('hired_products')->with('success', 'Offer Confirmed successfully!!');
         } else {
-            return redirect()->route('hired_products')->with('error', 'There was an error! Please Try Again');
+            return redirect()->route('hired_products')->with('error', 'There was an error accepting the offer! Please Try Again');
         }
+    }
 
-        
-        
-        // if ($product->save()) {
-        //     DB::table('products')
-        //                 ->where('product_id', '=', $id)
-        //                 ->update(['status' => 0]);
+    //Closing a product after hire
+    public function close($hire_on) {
+        // $product = Product::find($id);
+        $hiredproduct = new HiredProduct;
 
-        //     return redirect()->route('my_products')->with('success', 'Product Deleted successfully!');
-        // } else {
-        //     return redirect()->route('my_products')->with('error', 'There was an error deleting the product!');
-        // }
+        $hiredproduct->status = 'closed';
+
+        $affected = DB::table('hired_products')
+                        ->where('hired_at', $hire_on)
+                        ->update(['status' => 'closed']);
+
+        // dd($affected);
+
+
+
+        //$product->update('status' => 0);
+        if($affected) {
+
+            return redirect()->route('hired_products')->with('success', 'Offer Closed successfully!!');
+        } else {
+            return redirect()->route('hired_products')->with('error', 'There was an error closing the offer! Please Try Again');
+        }
+    }
+
+    public function hired_accepted() {
+        $products = DB::table('hired_products')
+                        ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
+                        ->join('products', 'hired_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'hired_products.user_id', '=', 'users.id')
+                        ->where('user_products.user_id', Auth::id())
+                        ->where('hired_products.status', '=', 'confirmed')
+                        ->orderBy('hired_products.created_at', 'DESC')
+                        ->paginate(5);
+
+        // dd($products);
+        // return view('hired_products', [
+        //     'products' => $products->paginate(5)
+        // ]);
+        return view('hired_items.confirmed', compact('products'));
+    }
+
+    public function hired_declined() {
+        $products = DB::table('hired_products')
+                        ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
+                        ->join('products', 'hired_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'hired_products.user_id', '=', 'users.id')
+                        ->where('user_products.user_id', Auth::id())
+                        ->where('hired_products.status', '=', 'cancelled')
+                        ->orderBy('hired_products.created_at', 'DESC')
+                        ->paginate(5);
+
+        // dd($products);
+        // return view('hired_products', [
+        //     'products' => $products->paginate(5)
+        // ]);
+        return view('hired_items.cancelled', compact('products'));
+    }
+
+    public function hired_completed() {
+        $products = DB::table('hired_products')
+                        ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
+                        ->join('products', 'hired_products.product_id', '=', 'products.product_id')
+                        ->join('users', 'hired_products.user_id', '=', 'users.id')
+                        ->where('user_products.user_id', Auth::id())
+                        ->where('hired_products.status', '=', 'closed')
+                        ->orderBy('hired_products.created_at', 'DESC')
+                        ->paginate(5);
+
+        // dd($products);
+        // return view('hired_products', [
+        //     'products' => $products->paginate(5)
+        // ]);
+        return view('hired_items.completed', compact('products'));
     }
 }
