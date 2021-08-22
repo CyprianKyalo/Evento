@@ -44,6 +44,8 @@ class UserproductCrudController extends CrudController
         CRUD::column('price');
         CRUD::column('status');
 
+        $this->crud->enableExportButtons();
+
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');

@@ -24,6 +24,7 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	    Route::crud('role', 'RoleCrudController');
 	    Route::crud('permission', 'PermissionCrudController');
 	    Route::get('charts/weekly-users', 'Charts\WeeklyUsersChartController@response')->name('charts.weekly-users.index');
+	    Route::get('user/{id}/disable', 'UserCrudController@disable');
 	}); 
 
 });// this should be the absolute last line of this file

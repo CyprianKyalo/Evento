@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
+        'status',
         'image',
     ];
 
@@ -50,12 +51,18 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    // public function product() {
+    //     return $this->belongsTo(Product::class);
+    // }
     public function product() {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany('App\Models\Product');
     }
 
-    public function hiredproduct() {
-        return $this->hasMany(HiredProduct::class);
+    // public function hiredproduct() {
+    //     return $this->hasMany(HiredProduct::class);
+    // }
+     public function hiredproduct() {
+        return $this->hasMany('App\Models\Product');
     }
 
     public function userproduct() {
@@ -64,5 +71,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function role() {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function suspend($crud = false) {
+        return '<a class="btn btn-sm btn-link" target="_blank" href="http://google.com?q='.urlencode($this->text).'" data-toggle="tooltip" title="Just a demo custom button."><i class="fa fa-search"></i> Google it</a>';
     }
 }

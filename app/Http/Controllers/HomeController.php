@@ -119,9 +119,10 @@ class HomeController extends Controller
         //                 ->get();
 
         if (Auth::user()->hasRole('administrator')) {
-            $users = User::all();
+            // $users = User::all();
             // dd($users);
-            return view('admin.user_admin.index', compact('users'));
+            // dd(0);
+            return redirect('/admin/user_admin');
 
         } elseif (Auth::user()->hasRole('user')) {
 

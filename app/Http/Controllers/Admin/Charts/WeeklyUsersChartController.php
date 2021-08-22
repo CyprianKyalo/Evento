@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Charts;
 
 use Backpack\CRUD\app\Http\Controllers\ChartController;
 use ConsoleTVs\Charts\Classes\Chartjs\Chart;
+use App\Models\User;
+use Backpack\CRUD\app\Library\Widget;
 
 /**
  * Class WeeklyUsersChartController
@@ -14,6 +16,8 @@ class WeeklyUsersChartController extends ChartController
 {
     public function setup()
     {
+       
+
         $this->chart = new Chart();
 
         // MANDATORY. Set the labels for the dataset points
@@ -34,14 +38,16 @@ class WeeklyUsersChartController extends ChartController
      *
      * @return json
      */
-    // public function data()
-    // {
-    //     $users_created_today = \App\User::whereDate('created_at', today())->count();
+    public function data()
+    {
+        $users_created_today = \App\Models\User::whereDate('created_at', today())->count();
 
-    //     $this->chart->dataset('Users Created', 'bar', [
-    //                 $users_created_today,
-    //             ])
-    //         ->color('rgba(205, 32, 31, 1)')
-    //         ->backgroundColor('rgba(205, 32, 31, 0.4)');
-    // }
+        $this->chart->dataset('Users Created', 'bar', [
+                    $users_created_today,
+                ])
+            ->color('rgba(205, 32, 31, 1)')
+            ->backgroundColor('rgba(205, 32, 31, 0.4)');
+    }
+
+    
 }

@@ -22,12 +22,19 @@ class Product extends Model
     	'status', 	
     ];
 
-    public function user() {
-    	return $this->belongsTo(User::class);
+    // public function user() {
+    // 	return $this->belongsTo(User::class);
+    // }
+     public function user() {
+        return $this->belongsTo('App\Models\User');
     }
 
-    public function hiredproduct() {
-    	return $this->hasMany(HiredProduct::class);
+    // public function hiredproduct() {
+    // 	return $this->hasMany(HiredProduct::class);
+    // }
+
+     public function hiredproduct() {
+        return $this->hasMany('App\Models\HiredProduct');
     }
 
     public function userproduct() {

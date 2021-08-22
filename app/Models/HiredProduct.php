@@ -22,11 +22,30 @@ class HiredProduct extends Model
     	'status',    	
     ];
 
+    // public function user() {
+    // 	return $this->belongsTo(User::class, 'hire_id', 'id');
+    // }
+
+    //  public function user() {
+    //     return $this->belongsTo('App\Models\User', 'user_id');
+    // }
+
+    // // public function product() {
+    // // 	return $this->belongsTo(product::class, 'hire_id', 'product_id');
+    // // }
+
+    // public function product() {
+    //     return $this->belongsTo('App\Models\Product', 'product_id');
+    // }
     public function user() {
-    	return $this->belongsTo(User::class, 'hire_id', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     public function product() {
-    	return $this->belongsTo(product::class, 'hire_id', 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
+
+    // public function userproduct() {
+    //     return $this->belongsToMany('App\Models\UserProduct', 'products', 'product_id', 'product_id');
+    // }
 }

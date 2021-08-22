@@ -43,9 +43,11 @@ class HiredproductCrudController extends CrudController
         CRUD::column('product_id');
         CRUD::column('hired_at');
         CRUD::column('duration');
-        CRUD::column('hire_ended_at');
+        CRUD::column('hired_ended_at');
+        CRUD::column('total_price');
         CRUD::column('status');
 
+        $this->crud->enableExportButtons();
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -67,7 +69,7 @@ class HiredproductCrudController extends CrudController
         CRUD::field('product_id');
         CRUD::field('hired_at');
         CRUD::field('duration');
-        CRUD::field('hire_ended_at');
+        CRUD::field('hired_ended_at');
         CRUD::field('status');
 
         /**

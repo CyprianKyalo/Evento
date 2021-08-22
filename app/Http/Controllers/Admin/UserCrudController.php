@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserRequest;
+use Illuminate\Http\Request;
+use App\Models\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use DB;
+use Backpack\CRUD\app\Library\Widget;
 
 /**
  * Class UserCrudController
@@ -39,12 +43,24 @@ class UserCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+         
+
         CRUD::column('id');
         CRUD::column('first_name');
         CRUD::column('last_name');
-        CRUD::column('username');
+        // CRUD::column('username');
+        $this->crud->column('username');
         CRUD::column('email');
+        $this->crud->column('status');
         CRUD::column('password');
+
+
+        $this->crud->enableExportButtons();
+        $this->crud->addButtonFromView('line', 'disable', 'disable', 'end');
+        // $this->crud->addButton('line', 'Suspend', 'suspend', 'beginning');
+      
+        $this->crud->denyAccess('delete');
+
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -68,6 +84,7 @@ class UserCrudController extends CrudController
         CRUD::field('username');
         CRUD::field('email');
         CRUD::field('password');
+        CRUD::field('status');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -84,6 +101,25 @@ class UserCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
+        // $this->crud->modifyField('status', 'Enabled');
         $this->setupCreateOperation();
+    }
+
+    public function disable($id) {
+        $user = User::find($id);
+        // dd($user);
+
+
+         if($user->save()) {
+            DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'status' => 'Enabled']);
+
+
+            return redirect('/admin/user')->with('success', 'Product updated successfully!');
+        }
+        dd($id);
+
     }
 }

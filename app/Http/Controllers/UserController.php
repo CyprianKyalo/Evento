@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use DB;
 use Session;
@@ -16,11 +17,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $users = User::all();
-        // return view('users.index')->withUser($users);
-        $users = User::all();
+        if (Auth::user()->hasRole('administrator')) {
+            $users = User::all();
+            // dd(0);
+            return view('admin.user_admin.index', compact('users'));
+        } elseif (Auth::user()->hasRole('user')) {
 
-        return view('users.index', compact('users'));
+            $users = User::all();
+
+            return view('users.index', compact('users'));
+        }
     }
 
     /**
