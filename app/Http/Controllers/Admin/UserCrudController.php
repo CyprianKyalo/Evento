@@ -43,8 +43,63 @@ class UserCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-         
+                // simple filter
+        $this->crud->addFilter([
+          'type'  => 'simple',
+          'name'  => 'active',
+          'label' => 'Disabled'
+        ], 
+        false, 
+        function() { // if the filter is active
+          $this->crud->addClause('where', 'status', 'Disabled'); // apply the "active" eloquent scope 
+        } );
 
+
+        // $this->crud->addFilter([
+        //   'name'  => 'status',
+        //   'type'  => 'dropdown',
+        //   'label' => 'Status'
+        // ], [
+        //   1 => 'Enabled',
+        //   2 => 'Disabled',
+        // ], function($value) { // if the filter is active
+        //   $this->crud->addClause('where', 'status', $value);
+        //     // return User::all()->where('status', $value);
+        // });
+
+        $this->crud->addFilter([
+          'type'  => 'text',
+          'name'  => 'description',
+          'label' => 'Description'
+        ], 
+        false, 
+        function($value) { // if the filter is active
+          $this->crud->addClause('where', 'username', 'LIKE', "%$value%");
+        });
+
+        $this->crud->addFilter([
+          'type'  => 'date',
+          'name'  => 'date',
+          'label' => 'Date'
+        ],
+          false,
+        function ($value) { // if the filter is active, apply these constraints
+          $this->crud->addClause('where', 'created_at', 'LIKE', "$value%");
+        });
+
+        $this->crud->addFilter([
+          'type'  => 'date_range',
+          'name'  => 'from_to',
+          'label' => 'Date range'
+        ],
+        false,
+        function ($value) { // if the filter is active, apply these constraints
+          $dates = json_decode($value);
+          $this->crud->addClause('where', 'created_at', '>=', $dates->from);
+          $this->crud->addClause('where', 'created_at', '<=', $dates->to . ' 23:59:59');
+        });
+
+        
         CRUD::column('id');
         CRUD::column('first_name');
         CRUD::column('last_name');
@@ -53,6 +108,7 @@ class UserCrudController extends CrudController
         CRUD::column('email');
         $this->crud->column('status');
         CRUD::column('password');
+        $this->crud->column('created_at');
 
 
         $this->crud->enableExportButtons();
@@ -60,6 +116,7 @@ class UserCrudController extends CrudController
         // $this->crud->addButton('line', 'Suspend', 'suspend', 'beginning');
       
         $this->crud->denyAccess('delete');
+
 
 
         /**

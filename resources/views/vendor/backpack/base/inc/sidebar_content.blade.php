@@ -10,9 +10,10 @@
 			<li class='nav-item'><a class='nav-link' href='{{ backpack_url('hiredproduct') }}'><i class='nav-icon la la-question'></i> Hiredproducts</a></li>
 			<li class='nav-item'><a class='nav-link' href='{{ backpack_url('role') }}'><i class='nav-icon la la-users'></i> Roles</a></li>
 			<li class='nav-item'><a class='nav-link' href='{{ backpack_url('permission') }}'><i class='nav-icon la la-key'></i> Permissions</a></li>
+
 		</ul>
 </li>	
 
 
-
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('charts') }}'><i class='nav-icon la la-signal'></i> Charts</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('log') }}'><i class='nav-icon la la-terminal'></i> Logs</a></li>

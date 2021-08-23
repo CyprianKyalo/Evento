@@ -23,8 +23,14 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	    Route::crud('hiredproduct', 'HiredproductCrudController');
 	    Route::crud('role', 'RoleCrudController');
 	    Route::crud('permission', 'PermissionCrudController');
+	    Route::get('charts/weekly-products', 'Charts\WeeklyProductsChartController@response')->name('charts.weekly-products.index');
 	    Route::get('charts/weekly-users', 'Charts\WeeklyUsersChartController@response')->name('charts.weekly-users.index');
+	    Route::get('charts/weekly-hired-products', 'Charts\WeeklyHiredProductsChartController@response')->name('charts.weekly-hired-products.index');
+    	Route::get('charts/weekly-uploaded-products', 'Charts\WeeklyUploadedProductsChartController@response')->name('charts.weekly-uploaded-products.index');
+    	Route::get('charts/products', 'Charts\ProductsChartController@response')->name('charts.products.index');
 	    Route::get('user/{id}/disable', 'UserCrudController@disable');
+	    Route::get('charts', 'Charts\ChartController@charts')->name('charts');
 	}); 
 
+    
 });// this should be the absolute last line of this file
