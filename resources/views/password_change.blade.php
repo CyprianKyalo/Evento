@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     <style>
         /* general styling */
         * {
@@ -225,8 +225,8 @@
         </ul>
     </header>
     <main>
-
         <aside>
+            {{-- <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img"> --}}
             <img src="/uploads/avatars/{{Auth::user()->image}}" class="profile-img profile-article-img">
             <ul id="aside-navigation">
                 <li><a href="{{route('view_profile')}}" class="user-navigation">Profile</a></li>
@@ -236,52 +236,52 @@
             </ul>
         </aside>
         <article>
-            @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-                @endforeach
-            </ul>
+
+        <div class="col-sm-12">
+            @if(session()->get('success'))
+            <div class="alert alert-success">
+                {{session()->get('success')}}
+            </div>
+            @endif
         </div>
-        <br>
-        @endif
 
-
-    <div class="col-sm-12">
-        @if(session()->get('success'))
-        <div class="alert alert-success">
-            {{session()->get('success')}}
+        <div class="col-sm-12">
+            @if(session()->get('error'))
+            <div class="alert alert-danger">
+                {{session()->get('error')}}
+            </div>
+            @endif
         </div>
+
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger">
+                    {{$error}}
+            </div>
+            @endforeach
         @endif
-    </div>
-
-
+        {{-- <br> --}}
             <section id="profile-activity">
+                {{-- <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-article-img"> --}}
+                <img src="/uploads/avatars/{{Auth::user()->image}}" class="profile-img profile-article-img">
 
-                <img src="/uploads/avatars/{{$user->image}}" alt="user profile" class="profile-img profile-article-img">
+                <form action="{{route('changepwd')}}" method="POST" enctype="multipart/form-data">
+                    {{method_field('PUT')}}
+                    {{csrf_field()}}
+                    <h1>Change Password</h1>
 
-                    <ul>
-                        <h1>My Profile</h1>
-                        <label>First Name</label>
-                    <pre>{{$user->first_name}}</pre>
-                   
-                    <label>Last Name</label>
-                    <pre>{{$user->last_name}}</pre>
+                    <label for="oldpwd">Old Password</label>
+                    <input type="password" name="oldpwd" placeholder="Old Password">
 
-                    <label>Username</label>
-                    <pre>{{$user->username}}</pre>
-                   
-                    <label>Email</label>
-                    <pre>{{$user->email}}</pre>
+                    <label for="newpwd">New Password</label>
+                    <input type="password" name="newpwd" placeholder="New Password">
+
+                    <label for="confpwd">Confirm New Password</label>
+                    <input type="password" name="confpwd" placeholder="Confirm New Password">
                     
+                    <button id="profile-button">Update Password</button>
                     
-                    <a href="{{route('edit_profile')}}" class="btn btn-primary">Edit Profile</a>
-                    <a href="{{route('pwd')}}" class="btn btn-primary">Change Password</a>
-                    <a href="{{route('my_products')}}" class="btn btn-primary">View my Products</a>
-                            
-                    </ul>
-                    
+                </form>
             </section>
         </article>
     </main>

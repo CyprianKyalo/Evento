@@ -410,7 +410,7 @@
 
                           <?php $total_price += $product->total_price?>
 
-                          <form action="{{route('hire', $product->product_id)}}" method="GET">
+                          <form action="{{route('hire', $product->product_id)}}" method="GET" onsubmit=" return confirm('Are you sure you want to edit the offer?');">
                             {{csrf_field()}}
                             <input type="text" hidden value="{{$product->product_id}}" name="id">
                             {{-- <td><a href="{{route('hire', $product->product_id)}}" class="btn btn-primary">Edit</a></td> --}}
@@ -418,7 +418,7 @@
                             
                             </form>
                           
-                          <td><a href="#" class="btn btn-danger">Cancel</a></td>
+                          <td><a href="{{route('cancel', $product->hired_at)}}" class="btn btn-danger" onclick=" return confirm('Are you sure you want to cancel the offer?');">Cancel</a></td>
                         </tr>
                       </tbody>
                       @endforeach

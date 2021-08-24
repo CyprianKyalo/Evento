@@ -400,10 +400,11 @@
                           <th scope="col">Image</th>
                           <th scope="col">Product Name</th>
                           <th scope="col">Consumer</th>
+                          <th scope="col">Phone Number</th>
                           <th scope="col">Hired On</th>
-                          <th scope="col">Hire ending at</th>
+                          <th scope="col">Closing Date</th>
                           <th scope="col">Duration</th>
-                          {{-- <th scope="col">Location</th> --}}
+                          <th scope="col">Location</th>
                           <th scope="col">Total Price</th>
                           <th scope="col">Action</th>
                          
@@ -415,15 +416,17 @@
                           <th scope="row"><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 100px"></th>
                           <td>{{$product->name}}</td>
                           <td>{{$product->username}}</td>
+                          <td>{{$product->pnumber}}</td>
                           <td>{{$product->hired_at}}</td>
                           <td>{{$product->hired_ended_at}}</td>
                           <td>{{$product->duration}}</td>
+                          <td>{{$product->location}}</td>
                           <td>Ksh. {{$product->total_price}}</td>
 
                           <?php $total_price += $product->total_price?>
 
 
-                          <td><a href="{{route('close', $product->hired_at)}}" class="btn btn-primary">Confirm</a></td>
+                          <td><a href="{{route('close', $product->hired_at)}}" class="btn btn-primary" onclick="return confirm('Are you sure you want to close the offer?');">Close</a></td>
                           
                         </tr>
                       </tbody>
@@ -450,6 +453,7 @@
             </section>
         </article>
     </main>
+    
     <footer>
         <p>&copy2021 Evento, Inc.</p>
     </footer>

@@ -256,7 +256,7 @@
                     <input type="text" placeholder="Username" name="username" value="{{$user->username}}">
                     
                     <input type="text" placeholder="Email" name="email" value="{{$user->email}}">
-                    <input type="password" placeholder="Password" name="password">
+                    {{-- <input type="password" placeholder="Password" name="password"> --}}
                     <input type="text" placeholder="First Name" name="firstname" value="{{$user->first_name}}">
                     <input type="text" placeholder="Last Name" name="lastname" value="{{$user->last_name}}">
 

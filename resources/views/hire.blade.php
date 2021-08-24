@@ -313,9 +313,18 @@
                     <label for="end_time">Choose the completion time</label>
                     <input type="time" name="end_time" id="end_time">
 
+                    <label for="location">Location</label>
+                    <input type="text" name="location" placeholder="E.g. Kawangware, Nairobi">
+
+                    <label for="phone_number">Phone Number</label>
+                    <input type="tel" name="phone_number" placeholder="E.g. 0712345678">
+
+                    <label for="other">Additional Order Information</label>
+                    <textarea name="other" id="vendor-item-description" cols="71.9" rows="10" placeholder="Additional Information"></textarea>
+
 
                     <input type="text" hidden value="{{$price}}" id="item_price">
-                    <h4 id="price"></h4>
+                    <h4 id="price">Ksh. {{$price}}</h4>
     
                     {{-- <label for="description" style="margin: 10px;">Duration</label>
                     <input type="text" name="duration" placeholder="Eg. 5 Hours, 2 Days" id="duration">

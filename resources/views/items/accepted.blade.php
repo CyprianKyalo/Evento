@@ -389,6 +389,7 @@
                           <th scope="col">Image</th>
                           <th scope="col">Product Name</th>
                           <th scope="col">Vendor</th>
+                          <th scope="col">Phone Number</th>
                           <th scope="col">Hired On</th>
                           <th scope="col">Hire ending at</th>
                           <th scope="col">Duration</th>
@@ -402,6 +403,7 @@
                           <th scope="row"><img src="/uploads/products/{{$product->image_path}}" alt="" style="width: 100px; height: 100px"></th>
                           <td>{{$product->name}}</td>
                           <td>{{$product->username}}</td>
+                          <td>{{$product->pnumber}}</td>
                           <td>{{$product->hired_at}}</td>
                           <td>{{$product->hired_ended_at}}</td>
                           <td>{{$product->duration}}</td>

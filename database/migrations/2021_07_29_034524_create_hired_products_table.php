@@ -23,7 +23,10 @@ class CreateHiredProductsTable extends Migration
             $table->string('duration');
             $table->dateTime('hired_ended_at')->nullable();
             $table->integer('total_price');
+            $table->string('info')->nullable();
             $table->string('status')->nullable();
+            $table->string('location');
+            $table->string('pnumber');
             $table->timestamps();
         });
     }

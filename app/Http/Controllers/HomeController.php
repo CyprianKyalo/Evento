@@ -67,7 +67,7 @@ class HomeController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'username' => 'required|max:255',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'password',
             'profile' => 'mimes:png,jpg,jpeg',
         ]);
@@ -75,12 +75,37 @@ class HomeController extends Controller
         $id = Auth::id();
 
         $user = User::find($id);
-        $user->first_name = $request->get('firstname');
-        $user->last_name = $request->get('lastname');
-        $user->username = $request->get('username');
-        $user->email = $request->get('email');
-        $pass = $request->get('password');
-        $user->password = bcrypt($pass);
+
+        if($request->has('firstname')) {
+            $user->first_name = $request->get('firstname');
+        } else {
+            $user->first_name = Auth::user()->firstname;
+        }
+
+        if($request->has('lastname')) {
+            $user->last_name = $request->get('lastname');
+        }
+
+        if($request->has('username')) {
+            $user->username = $request->get('username');
+        }
+
+        if($request->has('email')) {
+            $user->email = $request->get('email');
+        }
+
+        if($request->has('password')) {
+            $pass = $request->get('password');
+            $user->password = bcrypt($pass);
+        }
+
+
+        // $user->first_name = $request->get('firstname');
+        // $user->last_name = $request->get('lastname');
+        // $user->username = $request->get('username');
+        // $user->email = $request->get('email');
+        // $pass = $request->get('password');
+        // $user->password = bcrypt($pass);
 
         if($request->hasFile('profile')) {
             $profile = $request->file('profile');
@@ -88,12 +113,6 @@ class HomeController extends Controller
             Image::make($profile)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
             
             $user = Auth::user();
-            // $user->first_name = $request->get('firstname');
-            // $user->last_name = $request->get('lastname');
-            // $user->username = $request->get('username');
-            // $user->email = $request->get('email');
-            // $pass = $request->get('password');
-            // $user->password = bcrypt($pass);
             $user->image = $filename;            
 
 
@@ -101,6 +120,11 @@ class HomeController extends Controller
             // // $file_path = $request->file('profile')->storeAs('uploads', $file_name, 'public');
             // $user->image = $file_path;
         }
+
+         // $affected = DB::table('users')
+         //                        ->where('id', Auth::id())
+         //                        ->update(['password' => bcrypt($newpwd)]);
+
 
         if($user->save()) {
             return redirect('/view_profile')->with('success', 'User profile updated successfully!');
@@ -110,6 +134,47 @@ class HomeController extends Controller
             return redirect()->route('edit_profile', $id);
         }
  
+    }
+
+    public function pwd() {
+        return view('password_change');
+    }
+
+    //Changing passwords
+    public function changepwd(Request $request) {
+        $this->validate($request, [
+            'oldpwd' => 'required',
+            'newpwd' => 'required',
+            'confpwd' => 'required',
+        ]);
+
+        $pwd = Auth::user()->password;
+       
+        $oldpwd = $request->get('oldpwd');
+        $newpwd = $request->get('newpwd');
+        $confpwd = $request->get('confpwd');
+
+        if ($newpwd == $confpwd) {
+            if (password_verify($request->get('oldpwd'), $pwd)) {
+
+                $affected = DB::table('users')
+                                ->where('id', Auth::id())
+                                ->update(['password' => bcrypt($newpwd)]);
+
+                if ($affected) {
+                     return redirect('/view_profile')->with('success', 'Password changed successfully!');
+                } else {
+                     return redirect('/pwd')->with('error', 'Something went wrong. Please Try Again!!');
+                }
+
+            } else {
+                return redirect('/pwd')->with('error', 'Old Password does not match our records. Please input the correct password!!');
+            }
+        } else {
+            return redirect('/pwd')->with('error', 'Your new passwords do not match. Kindly Try Again!!');
+        }
+
+        return view('password_change');
     }
 
     public function activity() {
@@ -196,6 +261,7 @@ class HomeController extends Controller
                         ->select('products.product_id', 'products.name', 'products.description', 'products.category', 'products.image_path', 'users.username', 'user_products.price')
                         ->where('products.status', '=', 1)
                         ->where('user_products.user_id', '=', Auth::id())
+                        ->orderBy('products.created_at', 'DESC')
                         ->get();
 
 
@@ -209,6 +275,7 @@ class HomeController extends Controller
                         ->select('products.product_id', 'products.name', 'products.image_path', 'users.username', 'products.description', 'users.id', 'users.image')
                         ->where('products.status', '=', 1)
                         ->where('products.category', '=', 'service')
+                        ->orderBy('products.created_at', 'DESC')
                         ->get();
 
         return view('services', compact('products'));
@@ -238,7 +305,8 @@ class HomeController extends Controller
             'end' => 'required',
             'duration' => 'required',
             'total_price' => 'required',
-            
+            'phone_number' => 'required',
+            'location' => 'required',            
         ]);
 
         $user_id = Auth::id();
@@ -256,7 +324,13 @@ class HomeController extends Controller
         $hiredproduct->duration = $request->get('duration');
         $hiredproduct->hired_ended_at = $request->get('end');
         $hiredproduct->total_price = $request->get('total_price');
+        $hiredproduct->location = $request->get('location');
+        $hiredproduct->pnumber = $request->get('phone_number');
         $hiredproduct->status = 'pending';
+
+        if ($request->has('other')) {
+            $hiredproduct->info = $request->get('other');
+        }
        
 
         if ($hiredproduct->save()) {
@@ -372,12 +446,15 @@ class HomeController extends Controller
                         ->join('products', 'hired_products.product_id', '=', 'products.product_id')
                         ->join('user_products', 'hired_products.product_id', '=', 'user_products.product_id')
                         ->join('users', 'user_products.user_id', '=', 'users.id')
+                        ->join('vendor_details', 'users.id', '=', 'vendor_details.user_id')
                         
                         // ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.duration', 'hired_products.hired_ended_at', 'hired_products.hired_at')
+
                         ->where('hired_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'confirmed')
                         ->orderBy('hired_products.created_at', 'DESC')
                         ->get();
+            // dd($products);
 
             return view('items.accepted', compact('products'));
         }
@@ -400,7 +477,7 @@ class HomeController extends Controller
                         // ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.hired_at', 'hired_products.duration', 'hired_products.hired_ended_at')
                         ->where('hired_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'declined')
-                        
+                        ->orderBy('hired_products.created_at', 'DESC')
                         ->get();
 
             return view('items.declined', compact('products'));
@@ -424,7 +501,7 @@ class HomeController extends Controller
                         // ->select('products.product_id', 'products.name', 'products.image_path', 'products.description', 'users.image', 'users.id', 'users.username', 'hired_products.hired_at', 'hired_products.duration', 'hired_products.hired_ended_at')
                         ->where('hired_products.user_id', Auth::id())
                         ->where('hired_products.status', '=', 'cancelled')
-                        
+                        ->orderBy('hired_products.created_at', 'DESC')
                         ->get();
 
             return view('items.cancelled', compact('products'));
@@ -476,9 +553,50 @@ class HomeController extends Controller
 
             return redirect()->route('hired_products')->with('success', 'Offer Confirmed successfully!!');
         } else {
-            return redirect()->route('hired_products')->with('error', 'There was an error accepting the offer! Please Try Again');
+            return redirect()->route('hired_products')->with('error', 'There was an error confirming the offer! Please Try Again');
         }
     }
+
+    public function decline($hire_on) {
+        // $product = Product::find($id);
+        $hiredproduct = new HiredProduct;
+
+        $hiredproduct->status = 'cancelled';
+
+        $affected = DB::table('hired_products')
+                        ->where('hired_at', $hire_on)
+                        ->update(['status' => 'cancelled']);
+
+
+        if($affected) {
+            return redirect()->route('hired_products')->with('success', 'Offer Declined successfully!!');
+        } else {
+            return redirect()->route('hired_products')->with('error', 'There was an error declining the offer! Please Try Again');
+        }
+    }
+
+    public function cancel($hire_on) {
+        // $product = Product::find($id);
+        $hiredproduct = new HiredProduct;
+
+        $hiredproduct->status = 'cancelled';
+
+        $affected = DB::table('hired_products')
+                        ->where('hired_at', $hire_on)
+                        ->update(['status' => 'cancelled']);
+
+        // dd($affected);
+
+
+
+        //$product->update('status' => 0);
+        if($affected) {
+            return redirect()->route('pending')->with('success', 'Offer Cancelled successfully!!');
+        } else {
+            return redirect()->route('pending')->with('error', 'There was an error cancelling the offer! Please Try Again');
+        }
+    }
+
 
     //Closing a product after hire
     public function close($hire_on) {

@@ -403,6 +403,7 @@
                           <th scope="col">Hired On</th>
                           <th scope="col">Hire ending at</th>
                           <th scope="col">Duration</th>
+                          <th scope="col">Location</th>
                           <th scope="col">Total Price</th>
                           <th scope="col">Confirm</th>
                           <th scope="col">Decline</th>
@@ -417,13 +418,14 @@
                           <td>{{$product->hired_at}}</td>
                           <td>{{$product->hired_ended_at}}</td>
                           <td>{{$product->duration}}</td>
+                          <td>{{$product->location}}</td>
                           <td>Ksh. {{$product->total_price}}</td>
 
                           <?php $total_price += $product->total_price?>
 
 
-                          <td><a href="{{route('confirm', $product->hired_at)}}" class="btn btn-primary">Confirm</a></td>
-                          <td><a href="#" class="btn btn-danger">Decline</a></td>
+                          <td><a href="{{route('confirm', $product->hired_at)}}" class="btn btn-primary" onclick="return confirm('Are you sure you want to confirm the offer?');">Confirm</a></td>
+                          <td><a href="{{route('decline', $product->hired_at)}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to decline the offer?');">Decline</a></td>
                         </tr>
                       </tbody>
                         @endforeach
@@ -449,6 +451,7 @@
             </section>
         </article>
     </main>
+
     <footer>
         <p>&copy2021 Evento, Inc.</p>
     </footer>

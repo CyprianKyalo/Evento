@@ -19,7 +19,10 @@ class HiredProduct extends Model
     	'duration',
     	'hire_ended_at',
         'total_price',
-    	'status',    	
+        'info',
+    	'status',
+        'location',
+        'pnumber',    	
     ];
 
     // public function user() {

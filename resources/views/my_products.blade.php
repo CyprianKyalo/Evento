@@ -318,12 +318,12 @@
                             <td>{{$product->description}}</td>
                             <td>{{$product->category}}</td>
                             <td>{{$product->price}}</td>
-                            <td><a href="{{route('products.edit', $product->product_id)}}" class="btn btn-primary">Edit</a></td>
-                            <form action="{{route('products.destroy', $product->product_id)}}" method="POST">
+                            <td><a href="{{route('products.edit', $product->product_id)}}" class="btn btn-primary" id="edit_prod">Edit</a></td>
+                            <form action="{{route('products.destroy', $product->product_id)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete the product?');">
                                     {{csrf_field()}}
                                     {{method_field('DELETE')}}
                                     <td><button type="submit" class="btn btn-danger">Delete</button></td>
-                                </form>                      
+                            </form>                      
                         </tr>
                     </tbody>
                     
@@ -333,6 +333,17 @@
             </section>
         </article>
     </main>
+
+
+    <script>
+        document.getElementById('delete').addEventListener('click', (event) => {
+            event.preventDefault();
+
+            alert('Are you sure you want to?');
+        });
+    </script>
+
+
     <footer>
         <p>&copy2021 Evento, Inc.</p>
     </footer>

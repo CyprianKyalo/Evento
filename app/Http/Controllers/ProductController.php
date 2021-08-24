@@ -42,6 +42,7 @@ class ProductController extends Controller
                         ->select('products.product_id', 'products.name', 'products.image_path', 'users.username', 'products.description', 'users.image', 'users.id')
                         ->where('products.status', '=', 1)
                         ->where('products.category', '=', 'equipment')
+                        ->orderBy('products.created_at', 'DESC')
                         ->get();
 
             //dd($products);

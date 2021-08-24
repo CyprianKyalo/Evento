@@ -40,6 +40,8 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::get('/edit_profile', [App\Http\Controllers\HomeController::class, 'edit_profile'])->name('edit_profile');
 	Route::put('/update_profile', [App\Http\Controllers\HomeController::class, 'update_profile'])->name('update_profile');
 	Route::get('/view_profile', [App\Http\Controllers\HomeController::class, 'view_profile'])->name('view_profile');
+	Route::get('/pwd', [App\Http\Controllers\HomeController::class, 'pwd'])->name('pwd');
+	Route::put('/changepwd', [App\Http\Controllers\HomeController::class, 'changepwd'])->name('changepwd');
 	Route::get('/activity', [App\Http\Controllers\HomeController::class, 'activity'])->name('activity');
 	Route::get('/services', [App\Http\Controllers\HomeController::class, 'services'])->name('services');
 	Route::get('/vendor', [App\Http\Controllers\HomeController::class, 'vendor'])->name('vendor');
@@ -59,6 +61,8 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
 	Route::get('/history', [App\Http\Controllers\HomeController::class, 'pending'])->name('history');
 	Route::get('/hired_products', [App\Http\Controllers\HomeController::class, 'products_hired'])->name('hired_products');
 	Route::get('/confirm/{id}', [App\Http\Controllers\HomeController::class, 'confirm'])->name('confirm');
+	Route::get('/decline/{id}', [App\Http\Controllers\HomeController::class, 'decline'])->name('decline');
+	Route::get('/cancel/{id}', [App\Http\Controllers\HomeController::class, 'cancel'])->name('cancel');
 	//hired_items routes for vendor interface
 	Route::get('/hired_accepted', [App\Http\Controllers\HomeController::class, 'hired_accepted'])->name('hired_accepted');
 	Route::get('/hired_declined', [App\Http\Controllers\HomeController::class, 'hired_declined'])->name('hired_declined');
