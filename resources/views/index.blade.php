@@ -16,7 +16,7 @@
         <!-- Styles -->
         <script src="{{asset('js/app.js')}}" defer></script>
 
-        <link rel="stylesheet" href="{{asset('css/app.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="{{URL::asset('css/styles.css')}}">
 
         <style type="text/css">
         	.custom-class {
@@ -27,6 +27,25 @@
     </head>
 
     <body>
+		<header>
+			<nav>
+				<ul id="site-nav-list">
+					<li class="site-link home-link"><a href="#">Evento</a></li>
+					<li class="site-link"><a href="#">About Us</a></li>
+					<li class="site-link"><a href="#">Equipment</a></li>
+					<li class="site-link"><a href="#">Services</a></li>
+					<li class="site-link"><a href="#">Sign In</a></li>
+					<li class="site-link"><a href="#">Sign Up</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main>
+			<header>
+				<h1>Create your best event yet.</h1>
+				<p>Everything and everyone you need in one place.</p>
+				<p><a href="">Sign Up</a></p>
+			</header>
+		</main>
         <div class="container-fluid">
         	<div class="row border border-dark">
         		<div class="col border p-5">

@@ -1,0 +1,42 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* navigation bar */
+
+nav {
+    background-color: black;
+}
+
+#site-nav-list {
+    display: flex;
+}
+
+li {
+    list-style-type: none;
+}
+
+li.site-link.home-link {
+    margin-right: 52.5%;
+}
+
+li.site-link {
+    margin-right: 5px;
+}
+
+li.site-link > a {
+    text-decoration: none;
+    display: inline-block;
+    color: white;
+    padding: 15px;
+    width: 100px;
+}
+
+li.site-link > a:hover {
+    color: black;
+    background-color: white;
+}
+
+
