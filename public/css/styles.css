@@ -1,42 +1,225 @@
+/* general styling */
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+
+
+body {
+    font-family: inherit;
+    margin: auto;
+    padding-top: auto;
+}
+
+/* typography */
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Suez One', serif;
+}
+
+h1 {
+    font-size: 3em;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 0;
+    color: #932A00;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
 /* navigation bar */
 
-nav {
-    background-color: black;
+header#app {
+    background-color: #FF4900;
+    margin-top: auto;
+    padding: 2.5px 0;
 }
 
-#site-nav-list {
+.navbar-nav {
     display: flex;
-}
+} 
 
 li {
     list-style-type: none;
 }
 
-li.site-link.home-link {
+li.nav-item.nav-brand {
     margin-right: 52.5%;
 }
 
-li.site-link {
+li.nav-item {
     margin-right: 5px;
-}
+} 
 
-li.site-link > a {
+li.nav-item > a.nav-link {
     text-decoration: none;
     display: inline-block;
-    color: white;
+    color: #fff;
     padding: 15px;
+    width: 100px;
+    text-align: center;
+}
+
+li.nav-item > a.nav-link:hover {
+    color: #fff;
+    background-color: #932A00;
+} 
+
+/* main content */
+
+.home-page-content {
+    padding: 0 70px;
+}
+
+.welcome-container {
+    margin-top: 0;
+    text-align: center;
+    background-image: linear-gradient(180deg, rgba(255, 72, 0, 0.5) 0%, rgba(147, 42, 0, 0.5) 100%), 
+                      url(../assets/yvette-de-wit-NYrVisodQ2M-unsplash.jpg);
+    background-size: cover;
+    padding: 150px 0;
+} 
+
+.welcome-text,
+.welcome-sub-text {
+    color: white;
+}
+
+a.intro-signup-button {
+    color: white;
+    text-decoration: #fff;
+    border: 1px solid #fff;
+    border-radius: 25px;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
     width: 100px;
 }
 
-li.site-link > a:hover {
-    color: black;
-    background-color: white;
+a.intro-signup-button:hover {
+    color: #fff;
+    border-color: #932A00;
+    background-color: #FFB192;
 }
 
 
+p.signup-button {
+    margin-top: 25px;
+}
+
+.intro-card {
+    width: 400px;
+    height: auto;
+    margin-right: 22px;
+    border-radius: 10px;
+}
+
+.platform-intro-text {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.platform-images {
+    width: 350px;
+}
+
+.equipment-image {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.services-image {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.items-intro {
+    display: flex;
+
+}
+
+.items-text {
+    width: 30%;
+}
+
+.equipments .items-text {
+    margin-right: 120px;
+}
+
+a.items-link,
+a.card-links {
+    text-decoration: none;
+    color: #932A00;
+    display: inline-block;
+    padding: 10px;
+    border: solid 1px #932A00;
+    border-radius: 25px;
+}
+
+.vendor-consumer-info {
+    text-align: center;
+}
+
+.vendor-consumer-info > p {
+    margin-bottom: 25px;
+}
+
+.vendor-consumer-cards {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.card {
+    width: 400px;
+    height: 250px;
+    border: 1px dotted #932A00;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 20px;
+}
+
+footer {
+    padding: 50px;
+    background-color: #000;
+}
+
+footer > section {
+    display: flex;
+}
+
+footer,
+a.footer-nav-item {
+    color: #FF4900;
+}
+
+.footer-nav-links {
+    padding: 0;
+    margin-right: 80px;
+}
+
+a.footer-nav-item {
+    text-decoration: none;
+}
+
+address {
+    padding-top: 15px;
+}
+
+address a {
+    color: #FF4900;
+}
