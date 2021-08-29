@@ -1,0 +1,33 @@
+.register-container {
+    background-image: linear-gradient(180deg, rgba(255, 72, 0, 0.5) 0%, rgba(147, 42, 0, 0.5) 100%), 
+                      url(../assets/vishnu-r-nair-m1WZS5ye404-unsplash.jpg);
+    background-size: cover;
+    padding: 210px;
+}
+
+input.form-control {
+    width: 400px;
+    height: 35px;
+    padding: 25px;
+    border: none;
+}
+
+button.btn.btn-primary {
+    width: 400px;
+    height: 45px;
+    margin-top: 20px;
+    background-color: #FF4900;
+    color: white;
+    border: none;
+}
+
+button.btn.btn-primary:hover {
+    background-color: #932A00;
+}
+
+.register-form {
+    margin-left: 300px;
+}
+
+
+
