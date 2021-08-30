@@ -192,5 +192,6 @@ article h3 {
 } */
 
 .user-engagement-interface {
-    min-height: 50vh;
+    min-height: 85vh;
+    margin-bottom: 10px;
 }
