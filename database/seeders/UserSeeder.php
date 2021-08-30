@@ -23,6 +23,8 @@ class UserSeeder extends Seeder
                 'username' => 'Admin',
         		'email' => 'admin@evento.com',
         		'password' => bcrypt('admin'),
+                'status' => 'Enabled',
+                'is_admin' => 1,
         	],
         	[
         		'first_name' => 'Job',
@@ -30,6 +32,8 @@ class UserSeeder extends Seeder
                 'username' => 'Jeldy',
         		'email' => 'job@evento.com',
         		'password' => bcrypt('job'),
+                'status' => 'Enabled',
+                'is_admin' => 0,
         	],
         	[
         		'first_name' => 'Mark',
@@ -37,6 +41,8 @@ class UserSeeder extends Seeder
                 'username' => 'theBeast',
         		'email' => 'mark@evento.com',
         		'password' => bcrypt('mark'),
+                'status' => 'Enabled',
+                'is_admin' => 0,
         	],
             [
                 'first_name' => 'Fabian',
@@ -44,6 +50,8 @@ class UserSeeder extends Seeder
                 'username' => 'Fabicy',
                 'email' => 'fabicy@gmail.com',
                 'password' => bcrypt('fabian'),
+                'status' => 'Enabled',
+                'is_admin' => 0,
             ],
         ];
 

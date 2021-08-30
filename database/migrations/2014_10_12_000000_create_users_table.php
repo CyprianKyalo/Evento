@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('image')->default('default.jpg');
             $table->string('verification_code')->nullable();
             $table->integer('is_verified')->default(0);
+            $table->string('status');
+            $table->integer('is_admin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

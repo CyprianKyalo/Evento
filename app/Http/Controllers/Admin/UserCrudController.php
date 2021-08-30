@@ -174,9 +174,11 @@ class UserCrudController extends CrudController
                             'status' => 'Enabled']);
 
 
-            return redirect('/admin/user')->with('success', 'Product updated successfully!');
+            return redirect('/admin/user')->with('success', 'User updated successfully!');
+        } else {
+             return redirect('/admin/user')->with('error', 'Please Try Again!');
         }
-        dd($id);
+        //dd($id);
 
     }
 }
