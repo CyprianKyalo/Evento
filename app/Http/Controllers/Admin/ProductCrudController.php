@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ProductRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Models\Product;
+use DB;
+
 
 /**
  * Class ProductCrudController
@@ -46,6 +49,9 @@ class ProductCrudController extends CrudController
         CRUD::column('status');
 
         $this->crud->enableExportButtons();
+        $this->crud->addButtonFromView('line', 'enable', 'enable', 'end');
+        $this->crud->addButtonFromView('line', 'disable', 'disable', 'end');
+        $this->crud->denyAccess('delete');
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -85,5 +91,45 @@ class ProductCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function disable($id) {
+        $product = Product::find($id);
+        // dd($user);
+
+
+         if($product->save()) {
+            DB::table('products')
+                        ->where('product_id', $id)
+                        ->update([
+                            'status' => 0]);
+
+
+            return redirect('/admin/product')->with('success', 'Product updated successfully!');
+        } else {
+             return redirect('/admin/product')->with('error', 'Please Try Again!');
+        }
+        //dd($id);
+
+    }
+
+     public function enable($id) {
+        $product = Product::find($id);
+        // dd($user);
+
+
+         if($product->save()) {
+            DB::table('products')
+                        ->where('product_id', $id)
+                        ->update([
+                            'status' => 1]);
+
+
+            return redirect('/admin/product')->with('success', 'User updated successfully!');
+        } else {
+             return redirect('/admin/product')->with('error', 'Please Try Again!');
+        }
+        //dd($id);
+
     }
 }

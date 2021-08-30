@@ -168,7 +168,7 @@ class HomeController extends Controller
                 }
 
             } else {
-                return redirect('/pwd')->with('error', 'Old Password does not match our records. Please input the correct password!!');
+                return redirect('/pwd')->withInput()->with('error', 'Old Password does not match our records. Please input the correct password!!');
             }
         } else {
             return redirect('/pwd')->with('error', 'Your new passwords do not match. Kindly Try Again!!');

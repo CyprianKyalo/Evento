@@ -44,15 +44,7 @@ class UserCrudController extends CrudController
     protected function setupListOperation()
     {
                 // simple filter
-        $this->crud->addFilter([
-          'type'  => 'simple',
-          'name'  => 'active',
-          'label' => 'Disabled'
-        ], 
-        false, 
-        function() { // if the filter is active
-          $this->crud->addClause('where', 'status', 'Disabled'); // apply the "active" eloquent scope 
-        } );
+        
 
 
         // $this->crud->addFilter([
@@ -112,7 +104,42 @@ class UserCrudController extends CrudController
 
 
         $this->crud->enableExportButtons();
+
+        $this->crud->addFilter([
+          'type'  => 'simple',
+          'name'  => 'active',
+          'label' => 'Disabled'
+        ], 
+        false, 
+        function() { // if the filter is active
+          $this->crud->addClause('where', 'status', 'Disabled'); // apply the "active" eloquent scope 
+        } );
+
+        // dd($this->crud->column('status'));
+        // $users = DB::table('users')
+        //                 ->select('status')
+        //                 ->get();
+
+        // // dd($users);
+        // $u = array();
+        // for($i = 0; $i < count($users); $i++) {
+        //     // if ($user->status == 'Enabled') {
+        //     //     $this->crud->addButtonFromView('line', 'disable', 'disable', 'end');
+        //     // }
+        //     $u[] = $users[$i]->status;
+        // }
+        // // dd($u);
+        // // dd($user);
+
+        // if (in_array('Enabled', $u)) {
+        
+        //     $this->crud->addButtonFromView('line', 'enable', 'enable', 'end');
+        // }
+        $this->crud->addButtonFromView('line', 'enable', 'enable', 'end');
         $this->crud->addButtonFromView('line', 'disable', 'disable', 'end');
+        $this->crud->addButtonFromView('line', 'reset', 'reset', 'end');
+
+        
         // $this->crud->addButton('line', 'Suspend', 'suspend', 'beginning');
       
         $this->crud->denyAccess('delete');
@@ -143,6 +170,9 @@ class UserCrudController extends CrudController
         CRUD::field('password');
         CRUD::field('status');
 
+        // $password = bcrypt('Password');
+        // CRUD::field($password);
+
         /**
          * Fields can be defined using the fluent syntax or array syntax:
          * - CRUD::field('price')->type('number');
@@ -159,6 +189,8 @@ class UserCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         // $this->crud->modifyField('status', 'Enabled');
+        //$password = bcrypt('Password');
+        //$this->crud->modifyField('password', bcrypt('Password'));
         $this->setupCreateOperation();
     }
 
@@ -171,10 +203,52 @@ class UserCrudController extends CrudController
             DB::table('users')
                         ->where('id', $id)
                         ->update([
+                            'status' => 'Disabled']);
+
+
+            return redirect('/admin/user')->with('success', 'User updated successfully!');
+        } else {
+             return redirect('/admin/user')->with('error', 'Please Try Again!');
+        }
+        //dd($id);
+
+    }
+
+     public function enable($id) {
+        $user = User::find($id);
+        // dd($user);
+
+
+         if($user->save()) {
+            DB::table('users')
+                        ->where('id', $id)
+                        ->update([
                             'status' => 'Enabled']);
 
 
             return redirect('/admin/user')->with('success', 'User updated successfully!');
+        } else {
+             return redirect('/admin/user')->with('error', 'Please Try Again!');
+        }
+        //dd($id);
+
+    }
+
+     public function reset($id) {
+        $user = User::find($id);
+        // dd($user);
+
+
+         if($user->save()) {
+            $pwd = bcrypt('Password');
+
+            DB::table('users')
+                        ->where('id', $id)
+                        ->update([
+                            'password' => $pwd]);
+
+
+            return redirect('/admin/user')->with('success', 'User password resetted successfully!');
         } else {
              return redirect('/admin/user')->with('error', 'Please Try Again!');
         }

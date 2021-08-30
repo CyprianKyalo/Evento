@@ -271,13 +271,13 @@
                     <h1>Change Password</h1>
 
                     <label for="oldpwd">Old Password</label>
-                    <input type="password" name="oldpwd" placeholder="Old Password">
+                    <input type="password" name="oldpwd" value="{{old('oldpwd')}}" placeholder="Old Password">
 
                     <label for="newpwd">New Password</label>
-                    <input type="password" name="newpwd" placeholder="New Password">
+                    <input type="password" name="newpwd" placeholder="New Password" value="{{old('newpwd')}}">
 
                     <label for="confpwd">Confirm New Password</label>
-                    <input type="password" name="confpwd" placeholder="Confirm New Password">
+                    <input type="password" name="confpwd" placeholder="Confirm New Password" value="{{old('confpwd')}}">
                     
                     <button id="profile-button">Update Password</button>
                     

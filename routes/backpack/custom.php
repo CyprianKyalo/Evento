@@ -29,6 +29,10 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
     	Route::get('charts/weekly-uploaded-products', 'Charts\WeeklyUploadedProductsChartController@response')->name('charts.weekly-uploaded-products.index');
     	Route::get('charts/products', 'Charts\ProductsChartController@response')->name('charts.products.index');
 	    Route::get('user/{id}/disable', 'UserCrudController@disable');
+	    Route::get('user/{id}/enable', 'UserCrudController@enable');
+	    Route::get('user/{id}/reset', 'UserCrudController@reset');
+	    Route::get('product/{product_id}/disable', 'ProductCrudController@disable');
+	    Route::get('product/{product_id}/enable', 'ProductCrudController@enable');
 	    Route::get('charts', 'Charts\ChartController@charts')->name('charts');
 	}); 
 
