@@ -54,3 +54,14 @@
     height: 150px;
     border-radius: 50%;
 }
+
+.thead-dark > tr > th {
+    padding: 10px;
+    width: 130px;
+    text-align: center;
+    color: #fff;
+}
+
+.thead-dark {
+    background-color: #932A00;
+}

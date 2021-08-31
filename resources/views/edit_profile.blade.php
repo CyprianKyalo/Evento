@@ -52,7 +52,7 @@
             </ul>
         </nav>
     </header>
-    <main class="user-engagement-interface edit-profile-interface">
+    <main class="user-engagement-interface">
         <!-- <aside>
             {{-- <img src="https://via.placeholder.com/150" alt="user profile" class="profile-img profile-aside-img"> --}}
             <img src="/uploads/avatars/{{$user->image}}" class="profile-img profile-article-img">
