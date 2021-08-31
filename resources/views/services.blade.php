@@ -12,6 +12,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -64,24 +67,38 @@
 
             <form action="{{route('search_serv')}}" class="navbar-form navbar-left">
                 <div class="form-group">
-                    <input type="text" name="query" class="form-control" placeholder="Search" style="width: 200px !important">
+                    <input type="text" name="query" class="search-control" placeholder="Search" style="width: 300px !important">
                 </div>
-                <button class="btn btn-primary">Search</button>
+                <button class="search-btn btn-primary">Search</button>
             </form>
 
             <section id="item-equipment">
                 @foreach($products as $product)
-                <div class="card-link">
-                    <div class="card equipment">
-                        <ul>
-                            <li><span><a href="{{route('products.show', $product->product_id)}}"><img src="/uploads/products/{{$product->image_path}}" alt=""></a></span></li>
+                
+                    <div class="card-container">
+                        <div class="equipment-img">
+                            <a href="{{route('products.show', $product->product_id)}}" class="card-link">
+                                <img src="/uploads/products/{{$product->image_path}}" style="width: 298px; height: 250px;" alt="">
+                            </a>
+                        </div>
+                        <div class="equipment-info">
+                            <p><span class="card-info-labels">Service:</span> {{$product->name}}</p>
+                            <div class="owner-info">
+                                <img src="/uploads/avatars/{{$product->image}}" alt="" style="width: 30px; height: 30px; border-radius: 50%">
+                                <p>{{$product->username}}</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                        <!-- <ul>
+                            <li><span><a href="{{route('products.show', $product->product_id)}}"></a></span></li>
                             <li><span class="card-info-labels">Equipment:</span> {{$product->name}}</li>
                              <li><span class="card-info-labels"></span> {{$product->description}}</li>
-                              <li><span class="card-info-labels"></span><img src="/uploads/avatars/{{$product->image}}" alt="" style="width: 50px; height: 50px; border-radius: 50%"></li>
+                              <li><span class="card-info-labels"></span><img src="/uploads/avatars/{{$product->image}}" alt="" style="width: 30px; height: 30px; border-radius: 50%"></li>
                             <li><span class="card-info-labels">by </span> <a href="{{route('vendor_profile', $product->id)}}">{{$product->username}}</a></li>
                         </ul>
-                    </div>
-                </div>
+                    </div> -->
+                
                 
                 @endforeach
                 {{-- <a href="{{route('description')}}" class="card-link">
