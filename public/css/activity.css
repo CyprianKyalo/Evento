@@ -14,3 +14,23 @@
 .user-mode-navigations > li > .interactive-links {
     margin: 5px;
 }
+
+.vendor-info > input,
+.vendor-info > textarea {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.vendor-info > input {
+    height: 35px;
+    width: 250px;
+}
+
+.vendor-buttons {
+    background-color: #FF4900;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    padding: 10px;
+    width: 250px;
+}
