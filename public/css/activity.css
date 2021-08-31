@@ -193,5 +193,6 @@ article h3 {
 
 .user-engagement-interface {
     min-height: 85vh;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
