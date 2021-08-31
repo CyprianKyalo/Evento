@@ -12,6 +12,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -89,51 +92,50 @@
                 @endif
             </div>
 
-            <nav id="user-mode-navigations">
-                <ul>
-                    <li><a href="{{route('activity')}}">Consumer</a></li>
-                    <li>/</li>
-                    <li><?php
-                        use Illuminate\Support\Facades\DB;
+            <!-- <nav id="user-mode-navigations"> -->
+            <ul class="user-mode-navigations">
+                <li><a href="{{route('activity')}}" class="interactive-links">Consumer</a></li>
+                <li><?php
+                    use Illuminate\Support\Facades\DB;
 
-                        $ids = DB::table('vendor_details')
-                                     ->select('user_id')
-                                     ->get();
+                    $ids = DB::table('vendor_details')
+                                    ->select('user_id')
+                                    ->get();
+                
+                    //Create an array of all the user_ids in the vendor_details table
+                    $id_arr = array();
+                    for ($i=0; $i < count($ids); $i++) { 
+                        $id_arr[] = $ids[$i]->user_id;
+                        
+                    }
                     
-                        //Create an array of all the user_ids in the vendor_details table
-                        $id_arr = array();
-                        for ($i=0; $i < count($ids); $i++) { 
-                            $id_arr[] = $ids[$i]->user_id;
-                            
-                        }
-                      
-                        //Check if the logged in user is in the vendors_details table
-                        if(in_array(Auth::id(), $id_arr)){
-                           ?><a href="{{route('products.create')}}">Vendor</a><?php
-                        } else{
-                            ?><a href="{{route('vendor_details')}}">Vendor</a><?php
-                        }
+                    //Check if the logged in user is in the vendors_details table
+                    if(in_array(Auth::id(), $id_arr)){
+                        ?><a href="{{route('products.create')}}" class="interactive-links">Vendor</a><?php
+                    } else{
+                        ?><a href="{{route('vendor_details')}}" class="interactive-links">Vendor</a><?php
+                    }
 
-                        //$ids = array('1', '2');
+                    //$ids = array('1', '2');
 
-                        //if(in_array('4', $ids)) {
-                            //return 1;
-                          //  ?>{{-- <a href="{{route('products.create')}}">Vendor</a> --}}<?php
-                        //} else {
-                        //    ?>{{-- <a href="{{route('vendor_details')}}">Vendor</a> --}}<?php
-                        //}
-                    ?></li>
-                </ul>
-            </nav>
+                    //if(in_array('4', $ids)) {
+                        //return 1;
+                        //  ?>{{-- <a href="{{route('products.create')}}" class="interactive-links">Vendor</a> --}}<?php
+                    //} else {
+                    //    ?>{{-- <a href="{{route('vendor_details')}}" class="interactive-links">Vendor</a> --}}<?php
+                    //}
+                ?></li>
+            </ul>
+            <!-- </nav> -->
 
             <h1>Welcome to your consumer mode.</h1>
             <h3>Here's where you can view all the items you have hired or bought after payment completion.</h3>
 
-            <a href="{{route('pending')}}" class="btn btn-primary">Pending</a>
-            <a href="{{route('accepted')}}" class="btn btn-primary">Accepted</a>
-            <a href="{{route('declined')}}" class="btn btn-primary">Declined</a>
-            <a href="{{route('cancelled')}}" class="btn btn-primary">Cancelled</a>
-            <a href="{{route('history')}}" class="btn btn-primary">History</a>
+            <a href="{{route('pending')}}" class="btn btn-primary interactive-links">Pending</a>
+            <a href="{{route('accepted')}}" class="btn btn-primary interactive-links">Accepted</a>
+            <a href="{{route('declined')}}" class="btn btn-primary interactive-links">Declined</a>
+            <a href="{{route('cancelled')}}" class="btn btn-primary interactive-links">Cancelled</a>
+            <a href="{{route('history')}}" class="btn btn-primary interactive-links">History</a>
 
             <section id="consumer-items">
 

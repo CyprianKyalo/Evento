@@ -165,7 +165,8 @@ p.signup-button {
 }
 
 a.items-link,
-a.card-links {
+a.card-links,
+a.interactive-links {
     text-decoration: none;
     color: #932A00;
     display: inline-block;
