@@ -12,6 +12,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -101,8 +104,8 @@
                     <pre>{{$user->email}}</pre>
                     
                     
-                    <a href="{{route('edit_profile')}}" class="btn btn-primary">Edit Profile</a>
-                    <a href="{{route('my_products')}}" class="btn btn-primary">View my Products</a>
+                    <a href="{{route('edit_profile')}}" class="btn btn-primary interactive-links">Edit Profile</a>
+                    <a href="{{route('my_products')}}" class="btn btn-primary interactive-links">View my Products</a>
                             
                     </ul>
                     
