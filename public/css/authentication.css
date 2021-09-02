@@ -1,0 +1,68 @@
+.register-container {
+    background-image: linear-gradient(180deg, rgba(255, 72, 0, 0.3) 0%, rgba(147, 42, 0, 0.3) 100%), 
+                      url(../assets/vishnu-r-nair-m1WZS5ye404-unsplash.jpg);
+    background-size: cover;
+    padding: 210px;
+    height: 92vh;
+}
+
+.login-container {
+    background-image: linear-gradient(180deg, rgba(255, 72, 0, 0.3) 0%, rgba(147, 42, 0, 0.3) 100%), 
+                      url(../assets/vishnu-r-nair-m1WZS5ye404-unsplash.jpg);
+    background-size: cover;
+    padding: 230px;
+    height: 92vh;
+}
+
+input.form-control {
+    width: 400px;
+    height: 35px;
+    padding: 25px;
+    border: none;
+}
+
+button.btn.btn-primary {
+    width: 400px;
+    height: 45px;
+    margin-top: 20px;
+    background-color: #FF4900;
+    color: white;
+    border: none;
+}
+
+button.btn.btn-primary:hover {
+    background-color: #932A00;
+}
+
+.register-form {
+    margin-left: 20px;
+    margin-top: 17px;
+}
+
+.form-check  {
+    margin-top: 5px;
+}
+
+.form-check-input {
+    margin-left: 0;
+}
+
+.form-check-label {
+    color: #fff;
+}
+
+a.btn.btn-link {
+    text-decoration: none;
+    display: block;
+    color: #fff;
+    margin-top: 10px;
+}
+
+a.btn.btn-link:hover {
+    text-decoration: underline;
+}
+
+.invalid-feedback {
+    color: #fff;
+}
+

@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/activity';
 
     /**
      * Create a new controller instance.
@@ -40,6 +40,6 @@ class LoginController extends Controller
     }
 
     public function credentials(Request $request) {
-        return array_merge($request->only($this->username(), 'password'), ['is_verified' => 1]);
+        return array_merge($request->only($this->username(), 'password'), ['is_verified' => 1], ['status' => 'Enabled']);
     }
 }
